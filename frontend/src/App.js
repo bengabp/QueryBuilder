@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { Box, Container, Stack } from '@mui/material'
+import React from 'react';
+
+import HomeAppBar from './components/HomeAppBar';
+import QueryBuilder from './components/QueryBuilder';
+import SearchResultsTable from './components/SearchResultsTable';
+import QueryBlock from './components/QueryBlock';
+
 
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box>
+      <Stack direction="column" spacing={3}>
+        <HomeAppBar></HomeAppBar>
+        <Container>
+          <QueryBlock></QueryBlock>
+        </Container>
+        <SearchResultsTable></SearchResultsTable>
+      </Stack>
+    </Box>
   );
 }
 
