@@ -6,6 +6,7 @@ import HomeAppBar from './components/HomeAppBar';
 import QueryBuilder from './components/QueryBuilder';
 import SearchResultsTable from './components/SearchResultsTable';
 import QueryBlock from './components/QueryBlock';
+import FiltersDialog from './components/FiltersDialog';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <QueryBlock></QueryBlock>
         </Container>
         <SearchResultsTable></SearchResultsTable>
+        <FiltersDialog></FiltersDialog>
       </Stack>
     </Box>
   );

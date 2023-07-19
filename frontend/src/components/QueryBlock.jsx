@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Container, Typography, TextField } from '@mui/material';
+import { Stack, Container, Typography, TextField, Button } from '@mui/material';
 import TitleBlock from './queryblocks/TitleBlock';
 import OptionBlock from './queryblocks/OptionBlock';
 
@@ -16,19 +16,23 @@ const QueryBlock  = (props) => {
         "does not include any",
         "starts from"
     ]
-
-    return (
+    console.log(queries)
+    return(
         <Stack direction="row" spacing={2}>
-            <OptionBlock></OptionBlock>
             {queries.map((queryBlock, index) => {
                 if (queryBlock.type === "firstBlock"){
-                    return <TitleBlock title={queryBlock.title}></TitleBlock>
+                    return (<TitleBlock title={queryBlock.title}></TitleBlock>)
                 } else if (queryBlock.type === "option"){
-                    return <OptionBlock options={queryBlock.options}></OptionBlock>
+                    return (<OptionBlock options={queryBlock.options}></OptionBlock>)
+                } else {
+                    return <></>
                 }
             })}
+            <Button variant="contained" onclick={(event) => {
+                console.log("Clicked !")
+            }}>Add Companies Filter</Button>
         </Stack>
-    );
+    );   
 }
 
 export default QueryBlock
