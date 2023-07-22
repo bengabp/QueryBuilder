@@ -119,8 +119,22 @@ export default function QueryBuilder(props) {
   let [currentFilterKey, setCurrentFilterKey] = React.useState("Basic Info");
   let [currentFirstPanelFilters, setFirstPanelFilters] = React.useState(filters);
   let [currentSecondPanelFilters, setSecondPanelFilters] = React.useState(currentFirstPanelFilters[currentFilterKey]);
-
+  let [keyTree, setKeyTree] = React.useState([]);
   const [filterBreadCrumbs, setFilterBreadCrumbs] = React.useState([currentFilterKey]);
+  let [queries, setQueries] = React.useState([]);
+
+  /// Implement breadcrumb tracking and moving back to previous page.
+
+  const onFilterSelect = (selected) => {
+    // Fires when the user selects a filter.
+    setFiltersDialogIsOpen(false); // Close dialog
+    console.log(currentFilterKey);
+    console.log(selected)
+    queries.push(`${currentFilterKey}-${selected}`)
+    console.log(queries);
+    setQueries(queries);
+
+  }
 
   return (
     <Material.Stack>
@@ -130,6 +144,9 @@ export default function QueryBuilder(props) {
           setFiltersDialogIsOpen={setFiltersDialogIsOpen}
         />
       </Material.Container>
+      {queries.map((query, index) => {
+        return <Material.Button key={index}>{query}</Material.Button>
+      })}
       <FiltersDialog
         filters={filters}
         setFiltersDialogIsOpen={setFiltersDialogIsOpen}
@@ -145,6 +162,10 @@ export default function QueryBuilder(props) {
 
         filterBreadCrumbs={filterBreadCrumbs}
         setFilterBreadCrumbs={setFilterBreadCrumbs}
+
+        onFilterSelect={onFilterSelect}
+        keyTree={keyTree}
+        setKeyTree={setKeyTree}
       ></FiltersDialog>
     </Material.Stack>
   );

@@ -14,7 +14,7 @@ export default function FilterBlock(props) {
                 justifyContent: 'space-between',
                 whiteSpace:'nowrap'
             }}
-            endIcon={<NavigateNextIcon />}
+            endIcon={props.hasNextIcon ? <NavigateNextIcon />:null}
             onClick = {() => {props.onClick(props.text)}}
         >
             <Typography>{props.text}</Typography>

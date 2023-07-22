@@ -30,18 +30,27 @@ export default function FiltersDialog(props) {
   };
 
   const onFirstPanelFilterBlockClicked = (clickText) => {
-    console.log(clickText);
-
+    // Code logic when user clicks blocks on the first panel
     currentFilterKey = clickText;
     currentSecondPanelFilters = props.currentFirstPanelFilters[currentFilterKey];
     props.setSecondPanelFilters(currentSecondPanelFilters);
-    filterBreadCrumbs.push(currentFilterKey);
-    props.setFilterBreadCrumbs(filterBreadCrumbs);
+    props.setCurrentFilterKey(currentFilterKey)
+
+    
   }
 
   const onSecondPanelFilterBlockClicked = (clickedText) => {
+     // Code logic when user clicks blocks on the second panel
     console.log(clickedText);
+    currentFilterKey = clickedText 
 
+    if (filterBreadCrumbs.length > 0){
+      const lastBreadCrumb = filterBreadCrumbs[filterBreadCrumbs.length-1]
+      if (lastBreadCrumb.toLowerCase() != currentFilterKey.toLowerCase()){
+        filterBreadCrumbs.push(currentFilterKey);
+        props.setFilterBreadCrumbs(filterBreadCrumbs);
+      }
+    } 
     // props.currentFilterKey = clickedText;
     // props.currentFirstPanelFilters = props.currentFirstPanelFilters[props.currentFilterKey];
     // props.setCurrentFilterKey(props.currentFilterKey);
@@ -121,6 +130,7 @@ export default function FiltersDialog(props) {
                       return <FilterBlock 
                         text={filter}
                         key={index}
+                        hasNextIcon={true}
                         onClick={onFirstPanelFilterBlockClicked}
                       />
                 })}
@@ -133,7 +143,10 @@ export default function FiltersDialog(props) {
                     return <FilterBlock 
                       text={filter}
                       key={index}
-                      onClick={onSecondPanelFilterBlockClicked}
+                      hasNextIcon={false}
+                      onClick={()=>{
+                        props.onFilterSelect(filter)
+                      }}
                     />
                   })
                 :
@@ -141,6 +154,7 @@ export default function FiltersDialog(props) {
                       return <FilterBlock 
                         text={filter}
                         key={index}
+                        hasNextIcon={true}
                         onClick={onSecondPanelFilterBlockClicked}
                       />
                 })}
