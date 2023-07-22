@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
@@ -18,13 +16,10 @@ import FilterBlock from './filterblocks/FilterBlock';
 
 export default function FiltersDialog(props) {
   let currentFilterKey = props.currentFilterKey;
-  let currentFirstPanelFilters = props.currentFirstPanelFilters;
+  // let currentFirstPanelFilters = props.currentFirstPanelFilters;
   let currentSecondPanelFilters = props.currentSecondPanelFilters;
-  let filterBreadCrumbs = props.filterBreadCrumbs;
-  let filterTransitionHistory = props.filterTransitionHistory;
-  const stackRef = React.useRef(null);
-  let previousPanelFilters = [];
 
+  let filterBreadCrumbs = props.filterBreadCrumbs;
 
   const handleClose = () => {
     props.setFiltersDialogIsOpen(false);
@@ -33,13 +28,11 @@ export default function FiltersDialog(props) {
   const onFirstPanelFilterBlockClicked = (clickText) => {
     // Code logic when user clicks blocks on the first panel
     currentFilterKey = clickText;
-    previousPanelFilters = props.currentFirstPanelFilters
     currentSecondPanelFilters = props.currentFirstPanelFilters[currentFilterKey];
     props.setSecondPanelFilters(currentSecondPanelFilters);
     props.setCurrentFilterKey(currentFilterKey)
 
     console.log(filterBreadCrumbs);
-    console.log(previousPanelFilters);
     if (filterBreadCrumbs.length > 0){
       filterBreadCrumbs[filterBreadCrumbs.length-1] = currentFilterKey
       props.setFilterBreadCrumbs(filterBreadCrumbs);
@@ -65,12 +58,6 @@ export default function FiltersDialog(props) {
 
   }
 
-  React.useEffect(() => {
-    // Scroll to the right end when a new breadcrumb is added
-    if (stackRef.current){
-      stackRef.current.scrollLeft = stackRef.current.scrollWidth;
-    }
-  }, [filterBreadCrumbs]);
 
   return (
     <React.Fragment>
