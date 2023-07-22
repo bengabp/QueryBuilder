@@ -1,84 +1,151 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material';
+import React from 'react';
+import * as Material from '@mui/material';
 
-const QueryBuilder = () => {
-  const [queries, setQueries] = useState([]);
-  const [selectedField, setSelectedField] = useState('');
-  const [selectedOperator, setSelectedOperator] = useState('');
-  const [value, setValue] = useState('');
+import FiltersDialog from './FiltersDialog';
+import AddFilterButton from './AddFilterButton';
 
-  const handleFieldChange = (event) => {
-    setSelectedField(event.target.value);
-  };
 
-  const handleOperatorChange = (event) => {
-    setSelectedOperator(event.target.value);
-  };
+export default function QueryBuilder(props) {
+  const filters = {
+    "Basic Info":[
+        "name",
+        "crunchbase_url",
+        "create_date",
+        "company_status",
+        "facebook_url",
+        "launch_month",
+        "launch_year",
+        "linkedin_url",
+        "tags",
+        "tagline",
+        "technologies",
+        "total_jobs_available",
+        "type",
+        "tech_stack",
+        "twitter_url",
+        "year_became_unicorn",
+        "year_became_future_unicorn",
+        "job_roles",
+        "hq_locations",
+        "startup_ranking_rating",
+        "growth_stage",
+        "is_ai_data",
+        "is_editorial",
+        "is_from_traderegister",
+        "matching_score"            
+    ],
+    "Employees":[
+        "employees",
+        "employees_latest",
+        "employees_chart",
+        "employee_12_months_growth_delta",
+        "employee_12_months_growth_percentile",
+        "employee_12_months_growth_relative",
+        "employee_12_months_growth_unique",
+        "employee_3_months_growth_delta",
+        "employee_3_months_growth_percentile",
+        "employee_3_months_growth_relative",
+        "employee_3_months_growth_unique",
+        "employee_6_months_growth_delta",
+        "employee_6_months_growth_percentile",
+        "employee_6_months_growth_relative",
+        "employee_6_months_growth_unique"
+    ],
+    "Investor & Investments":[
+        "investors",
+        "investments"
+    ],
+    "Industries":[
+        "indstries",
+        "sub_industries",
+        "service_industries"
+    ],
+    "Income & Funding":{
+        "fundings":[],
+        "total_funding_enhanced":[],
+        "income_streams":{}
+    },
+    "Similar Companies":[
+        "similarweb_12_months_growth_delta",
+        "similarweb_12_months_growth_percentile",
+        "similarweb_12_months_growth_relative",
+        "similarweb_12_months_growth_unique",
+        "similarweb_3_months_growth_delta",
+        "similarweb_3_months_growth_percentile",
+        "similarweb_3_months_growth_relative",
+        "similarweb_3_months_growth_unique",
+        "similarweb_6_months_growth_delta",
+        "similarweb_6_months_growth_percentile",
+        "similarweb_6_months_growth_relative",
+        "similarweb_6_months_growth_unique",
+        "similarweb_chart"
+    ],
+    "IPO":[
+        "ipo_round"
+    ],
+    "Patents":[
+        "patents_count"
+    ],
+    "revenues":[
+        "revenues",
+        "latest_revenue_enhanced"
+    ],
+    "Founders":[
+        "founders_score_cumulated",
+        "founders",
+        "founders_top_university",
+        "founders_top_past_companies",
+        "has_strong_founder",
+        "has_super_founder",
+        "has_promising_founder",
+        "past_founders",
+        "past_founders_raised_10m"
+    ],
+    "Kpi":[
+        "kpi_summary"
+    ],
+    "Innovations":[
+        "innovations",
+        "innovations_count",
+        "innovation_corporate_rank"
+    ],
+    "Events":[
+        "participated_events"
 
-  const handleValueChange = (event) => {
-    setValue(event.target.value);
-  };
+    ]
+  }
 
-  const handleAddQuery = () => {
-    const query = {
-      field: selectedField,
-      operator: selectedOperator,
-      value: value,
-    };
-    setQueries([...queries, query]);
-    setSelectedField('');
-    setSelectedOperator('');
-    setValue('');
-  };
+  const [filtersDialogIsOpen, setFiltersDialogIsOpen] = React.useState(false);
+  let [currentFilterKey, setCurrentFilterKey] = React.useState("Basic Info");
+  let [currentFirstPanelFilters, setFirstPanelFilters] = React.useState(filters);
+  let [currentSecondPanelFilters, setSecondPanelFilters] = React.useState(currentFirstPanelFilters[currentFilterKey]);
+
+  const [filterBreadCrumbs, setFilterBreadCrumbs] = React.useState([currentFilterKey]);
 
   return (
-    <div>
-      <FormControl>
-        <InputLabel>Field</InputLabel>
-        <Select value={selectedField} onChange={handleFieldChange}>
-          <MenuItem value="name">Name</MenuItem>
-          <MenuItem value="location">Location</MenuItem>
-          <MenuItem value="funding">Funding</MenuItem>
-          {/* Add more fields */}
-        </Select>
-      </FormControl>
-      <FormControl>
-        <InputLabel>Operator</InputLabel>
-        <Select value={selectedOperator} onChange={handleOperatorChange}>
-          <MenuItem value="equals">Equals</MenuItem>
-          <MenuItem value="contains">Contains</MenuItem>
-          <MenuItem value="greaterThan">Greater Than</MenuItem>
-          {/* Add more operators */}
-        </Select>
-      </FormControl>
-      <TextField
-        label="Value"
-        value={value}
-        onChange={handleValueChange}
-        style={{ marginLeft: '10px' }}
-      />
-      <Button variant="contained" color="primary" onClick={handleAddQuery}>
-        Add Query
-      </Button>
-      <div>
-        {queries.map((query, index) => (
-          <div key={index}>
-            <Typography>
-              Field: {query.field}, Operator: {query.operator}, Value: {query.value}
-            </Typography>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+    <Material.Stack>
+      <Material.Container>
+        <AddFilterButton
+          filteresDialogIsOpen={filtersDialogIsOpen}
+          setFiltersDialogIsOpen={setFiltersDialogIsOpen}
+        />
+      </Material.Container>
+      <FiltersDialog
+        filters={filters}
+        setFiltersDialogIsOpen={setFiltersDialogIsOpen}
+        filtersDialogIsOpen={filtersDialogIsOpen}
 
-export default QueryBuilder;
+        currentFilterKey={currentFilterKey}
+        currentFirstPanelFilters={currentFirstPanelFilters}
+        currentSecondPanelFilters={currentSecondPanelFilters}
+
+        setCurrentFilterKey={setCurrentFilterKey}
+        setFirstPanelFilters={setFirstPanelFilters}
+        setSecondPanelFilters={setSecondPanelFilters}
+
+        filterBreadCrumbs={filterBreadCrumbs}
+        setFilterBreadCrumbs={setFilterBreadCrumbs}
+      ></FiltersDialog>
+    </Material.Stack>
+  );
+}

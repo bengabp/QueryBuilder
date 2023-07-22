@@ -28,7 +28,7 @@ const QueryBlock  = (props) => {
                     return <></>
                 }
             })}
-            <Button variant="contained" onclick={(event) => {
+            <Button variant="contained" onClick={(event) => {
                 console.log("Clicked !")
             }}>Add Companies Filter</Button>
         </Stack>
