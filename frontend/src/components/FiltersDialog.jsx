@@ -21,8 +21,9 @@ export default function FiltersDialog(props) {
   let currentFirstPanelFilters = props.currentFirstPanelFilters;
   let currentSecondPanelFilters = props.currentSecondPanelFilters;
   let filterBreadCrumbs = props.filterBreadCrumbs;
-
+  let filterTransitionHistory = props.filterTransitionHistory;
   const stackRef = React.useRef(null);
+  let previousPanelFilters = [];
 
 
   const handleClose = () => {
@@ -32,11 +33,17 @@ export default function FiltersDialog(props) {
   const onFirstPanelFilterBlockClicked = (clickText) => {
     // Code logic when user clicks blocks on the first panel
     currentFilterKey = clickText;
+    previousPanelFilters = props.currentFirstPanelFilters
     currentSecondPanelFilters = props.currentFirstPanelFilters[currentFilterKey];
     props.setSecondPanelFilters(currentSecondPanelFilters);
     props.setCurrentFilterKey(currentFilterKey)
 
-    
+    console.log(filterBreadCrumbs);
+    console.log(previousPanelFilters);
+    if (filterBreadCrumbs.length > 0){
+      filterBreadCrumbs[filterBreadCrumbs.length-1] = currentFilterKey
+      props.setFilterBreadCrumbs(filterBreadCrumbs);
+    }
   }
 
   const onSecondPanelFilterBlockClicked = (clickedText) => {
@@ -46,7 +53,7 @@ export default function FiltersDialog(props) {
 
     if (filterBreadCrumbs.length > 0){
       const lastBreadCrumb = filterBreadCrumbs[filterBreadCrumbs.length-1]
-      if (lastBreadCrumb.toLowerCase() != currentFilterKey.toLowerCase()){
+      if (lastBreadCrumb.toLowerCase() !== currentFilterKey.toLowerCase()){
         filterBreadCrumbs.push(currentFilterKey);
         props.setFilterBreadCrumbs(filterBreadCrumbs);
       }

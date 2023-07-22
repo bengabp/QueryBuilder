@@ -122,6 +122,8 @@ export default function QueryBuilder(props) {
   let [keyTree, setKeyTree] = React.useState([]);
   const [filterBreadCrumbs, setFilterBreadCrumbs] = React.useState([currentFilterKey]);
   let [queries, setQueries] = React.useState([]);
+  let [filterTransitionHistory, setFilterTransitionHistory] = React.useState([currentFirstPanelFilters]);
+
 
   /// Implement breadcrumb tracking and moving back to previous page.
 
@@ -166,6 +168,9 @@ export default function QueryBuilder(props) {
         onFilterSelect={onFilterSelect}
         keyTree={keyTree}
         setKeyTree={setKeyTree}
+
+        filterTransitionHistory={filterTransitionHistory}
+        setFilterTransitionHistory={setFilterTransitionHistory}
       ></FiltersDialog>
     </Material.Stack>
   );
