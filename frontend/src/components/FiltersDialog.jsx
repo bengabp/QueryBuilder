@@ -1,71 +1,33 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import CloseIcon from '@mui/icons-material/Close';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import FirstPanel from './filterpanels/FirstPanel';
+import SecondPanel from './filterpanels/SecondPanel';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import NavigateNext from '@mui/icons-material/NavigateNext';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 
-import FilterBlock from './filterblocks/FilterBlock';
-
+import { filterKeyIndices } from '../constants/filters';
 
 export default function FiltersDialog(props) {
-  let currentFilterKey = props.currentFilterKey;
-  // let currentFirstPanelFilters = props.currentFirstPanelFilters;
-  let currentSecondPanelFilters = props.currentSecondPanelFilters;
 
-  let filterBreadCrumbs = props.filterBreadCrumbs;
-
-  const handleClose = () => {
-    props.setFiltersDialogIsOpen(false);
+  const closeFiltersDialog = () => {
+    props.toggleFiltersDialog(false);
   };
-
-  const onFirstPanelFilterBlockClicked = (clickText) => {
-    // Code logic when user clicks blocks on the first panel
-    currentFilterKey = clickText;
-    currentSecondPanelFilters = props.currentFirstPanelFilters[currentFilterKey];
-    props.setSecondPanelFilters(currentSecondPanelFilters);
-    props.setCurrentFilterKey(currentFilterKey)
-
-    console.log(filterBreadCrumbs);
-    if (filterBreadCrumbs.length > 0){
-      filterBreadCrumbs[filterBreadCrumbs.length-1] = currentFilterKey
-      props.setFilterBreadCrumbs(filterBreadCrumbs);
-    }
-  }
-
-  const onSecondPanelFilterBlockClicked = (clickedText) => {
-     // Code logic when user clicks blocks on the second panel
-    console.log(clickedText);
-    currentFilterKey = clickedText 
-
-    if (filterBreadCrumbs.length > 0){
-      const lastBreadCrumb = filterBreadCrumbs[filterBreadCrumbs.length-1]
-      if (lastBreadCrumb.toLowerCase() !== currentFilterKey.toLowerCase()){
-        filterBreadCrumbs.push(currentFilterKey);
-        props.setFilterBreadCrumbs(filterBreadCrumbs);
-      }
-    } 
-    // props.currentFilterKey = clickedText;
-    // props.currentFirstPanelFilters = props.currentFirstPanelFilters[props.currentFilterKey];
-    // props.setCurrentFilterKey(props.currentFilterKey);
-    // props.setFirstPanelFilters(props.currentFirstPanelFilters);
-
-  }
-
 
   return (
     <React.Fragment>
       <Dialog
         fullWidth={true}
         maxWidth={'sm'}
-        open={props.filtersDialogIsOpen}
-        onClose={handleClose}
+        open={props.filtersDialogState}
+        onClose={closeFiltersDialog}
         sx={{padding:0}}
       >
         <AppBar position="sticky" sx={{display:'flex',
@@ -74,89 +36,52 @@ export default function FiltersDialog(props) {
           <Toolbar disableGutters={false}>
             <Typography variant="h5" fontWeight="bold">Edit Filters</Typography>
           </Toolbar>
-          <IconButton onClick={handleClose} sx={{
+          <IconButton onClick={closeFiltersDialog} sx={{
               color:'white'
             }}>
             <CloseIcon></CloseIcon>
           </IconButton>
         </AppBar>
- 
         <Container sx={{marginTop:'10px'}}>
           <Stack direction="row" sx={{
-              overflowX:"scroll",
-              whiteSpace:"nowrap",
+            overflowX:"scroll",
+            whiteSpace:"nowrap",
             }}
-            divider={<NavigateNextIcon />}
+            divider={<NavigateNext />}
             alignItems="center"
           >
-            {props.filterBreadCrumbs.map((breadCrumb, index) => {
-              return <Button
-                variant="text"
-                key={index}
-                style={{
-                  textTransform:'capitalize',
-                  textAlign:'left',
-                  whiteSpace:'nowrap',
-                  flexShrink:'0'
-                }}
-                onClick={() => {console.log("haha");}}
-              >{breadCrumb}</Button>
-            })}
+            {filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((breadCrumb, index) => {
+                return <Button
+                    variant="text"
+                    key={index}
+                    style={{
+                        textTransform:'capitalize',
+                        textAlign:'left',
+                        whiteSpace:'nowrap',
+                        flexShrink:'0'
+                    }}
+                    onClick={props.onNavBlockClicked}
+                >{breadCrumb}</Button>
+              })
+            }
           </Stack>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Stack sx={
-                { height: '300px',
-                  overflowY: 'auto'
-                }} direction="column"
-                alignItems="stretch"
-              >
-                {Array.isArray(props.currentFirstPanelFilters) ?
-                  props.currentFirstPanelFilters.map((filter, index) => {
-                    return <FilterBlock 
-                      text={filter}
-                      key={index}
-                      onClick={onFirstPanelFilterBlockClicked}
-                    />
-                  })
-                :
-                  Object.keys(props.currentFirstPanelFilters).map((filter, index) => {
-                      return <FilterBlock 
-                        text={filter}
-                        key={index}
-                        hasNextIcon={true}
-                        onClick={onFirstPanelFilterBlockClicked}
-                      />
-                })}
-              </Stack>
-            </Grid>
-            <Grid item xs={6}>
-              <Stack sx={{ height: '300px', overflowY: 'auto', overflowX:"hidden" }} direction="column">
-                {Array.isArray(props.currentSecondPanelFilters) ?
-                  props.currentSecondPanelFilters.map((filter, index) => {
-                    return <FilterBlock 
-                      text={filter}
-                      key={index}
-                      hasNextIcon={false}
-                      onClick={()=>{
-                        props.onFilterSelect(filter)
-                      }}
-                    />
-                  })
-                :
-                  Object.keys(props.currentSecondPanelFilters).map((filter, index) => {
-                      return <FilterBlock 
-                        text={filter}
-                        key={index}
-                        hasNextIcon={true}
-                        onClick={onSecondPanelFilterBlockClicked}
-                      />
-                })}
-              </Stack>
-            </Grid>
+            <FirstPanel
+              filterKeysHistory={props.filterKeysHistory}
+              setFilterKeysHistory={props.setFilterKeysHistory}
+              onNewFilter={props.onNewFilter}
+            ></FirstPanel>
+            <SecondPanel
+              filterKeysHistory={props.filterKeysHistory}
+              setFilterKeysHistory={props.setFilterKeysHistory}
+              secondPanelFilters={props.secondPanelFilters}
+              onNewFilter={props.onNewFilter}
+            ></SecondPanel>
           </Grid>
         </Container>
       </Dialog>
     </React.Fragment>
   );
 }
+
+

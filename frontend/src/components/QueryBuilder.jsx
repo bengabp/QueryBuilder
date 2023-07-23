@@ -3,60 +3,52 @@ import * as Material from '@mui/material';
 
 import FiltersDialog from './FiltersDialog';
 import AddFilterButton from './AddFilterButton';
-import { filters } from '../constants/filters';
 
 
 export default function QueryBuilder(props) {
 
-  const [filtersDialogIsOpen, setFiltersDialogIsOpen] = React.useState(false);
-  let [currentFilterKey, setCurrentFilterKey] = React.useState("Basic Info");
-  let [currentFirstPanelFilters, setFirstPanelFilters] = React.useState(filters);
-  let [currentSecondPanelFilters, setSecondPanelFilters] = React.useState(currentFirstPanelFilters[currentFilterKey]);
+  const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
+  const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
   
-  const [filterBreadCrumbs, setFilterBreadCrumbs] = React.useState([currentFilterKey]);
-  let [queries, setQueries] = React.useState([]);
-
-  /// Implement breadcrumb tracking and moving back to previous page.
-
-  const onFilterSelect = (selected) => {
-    // Fires when the user selects a filter.
-    setFiltersDialogIsOpen(false); // Close dialog
-    console.log(currentFilterKey);
-    console.log(selected)
-    queries.push(`${currentFilterKey}-${selected}`)
-    console.log(queries);
-    setQueries(queries);
-
+  const onNewFilter = (filter, panelN) => {
+    let filtersArray = [...filterKeysHistory]
+    if (panelN === 1){
+      filtersArray.pop();
+    }
+    console.log(`New Filter => ${filtersArray}/${filter.text}`)
   }
 
+  const onNavBlockClicked = () => {
+    setFilterKeysHistory((current) => {
+      if (current.length > 1){
+        const currentCopy = [...current];
+        currentCopy.pop();
+        return currentCopy;
+      } else {
+        return current
+      }
+      
+    })
+  }
+
+  // React.useEffect(() => {
+  //   console.log("New value => ",filterKeysHistory);
+  // }, [filterKeysHistory])
   return (
     <Material.Stack>
       <Material.Container>
-        <AddFilterButton
-          filteresDialogIsOpen={filtersDialogIsOpen}
-          setFiltersDialogIsOpen={setFiltersDialogIsOpen}
+        <AddFilterButton // Open Dialog to add new companies filter
+          toggleFiltersDialog={toggleFiltersDialog}
         />
       </Material.Container>
-      {queries.map((query, index) => {
-        return <Material.Button key={index}>{query}</Material.Button>
-      })}
       <FiltersDialog
-        filters={filters}
-        setFiltersDialogIsOpen={setFiltersDialogIsOpen}
-        filtersDialogIsOpen={filtersDialogIsOpen}
+        toggleFiltersDialog={toggleFiltersDialog}
+        filtersDialogState={filtersDialogState}
 
-        currentFilterKey={currentFilterKey}
-        currentFirstPanelFilters={currentFirstPanelFilters}
-        currentSecondPanelFilters={currentSecondPanelFilters}
-
-        setCurrentFilterKey={setCurrentFilterKey}
-        setFirstPanelFilters={setFirstPanelFilters}
-        setSecondPanelFilters={setSecondPanelFilters}
-
-        filterBreadCrumbs={filterBreadCrumbs}
-        setFilterBreadCrumbs={setFilterBreadCrumbs}
-
-        onFilterSelect={onFilterSelect}
+        filterKeysHistory={filterKeysHistory}
+        setFilterKeysHistory={setFilterKeysHistory}
+        onNewFilter={onNewFilter}
+        onNavBlockClicked={onNavBlockClicked}
       ></FiltersDialog>
     </Material.Stack>
   );

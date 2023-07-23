@@ -5,7 +5,7 @@ import React from 'react';
 export default function AddFilterButton(props){
     return(
         <Material.Button variant="contained" onClick={(event) => {
-            props.setFiltersDialogIsOpen(true);
+            props.toggleFiltersDialog(true);
         }}>Add Companies Filter</Material.Button>
     );
 } 

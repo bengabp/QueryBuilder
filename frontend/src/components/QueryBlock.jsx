@@ -16,7 +16,6 @@ const QueryBlock  = (props) => {
         "does not include any",
         "starts from"
     ]
-    console.log(queries)
     return(
         <Stack direction="row" spacing={2}>
             {queries.map((queryBlock, index) => {
