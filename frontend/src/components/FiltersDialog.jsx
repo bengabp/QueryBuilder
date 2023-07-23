@@ -1,17 +1,17 @@
-import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import FirstPanel from './filterpanels/FirstPanel';
-import SecondPanel from './filterpanels/SecondPanel';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import NavigateNext from '@mui/icons-material/NavigateNext';
+import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Dialog from '@mui/material/Dialog';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import FirstPanel from './filterpanels/FirstPanel';
+import SecondPanel from './filterpanels/SecondPanel';
 
 import { filterKeyIndices } from '../constants/filters';
 
@@ -58,7 +58,8 @@ export default function FiltersDialog(props) {
                         textTransform:'capitalize',
                         textAlign:'left',
                         whiteSpace:'nowrap',
-                        flexShrink:'0'
+                        flexShrink:'0',
+                        backgroundColor:'#4f98e03d'
                     }}
                     onClick={props.onNavBlockClicked}
                 >{breadCrumb}</Button>

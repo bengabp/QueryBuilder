@@ -1,0 +1,6 @@
+matching_score - Needs to be converted to number because its in 0% to 100%
+score your sata in a mongodb database
+convert employee_range to max and min employees
+
+convert- arrtibutes- to date => [ipo_round, kpi_summary.valuations, kpi_summary.values]
+                                launch_month, launch_year

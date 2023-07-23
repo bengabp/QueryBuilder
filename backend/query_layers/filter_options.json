@@ -6,39 +6,23 @@
         "before",
         "is_blank"
     ],
-    "string-literal":[
+    "string":[
         "includes_any",
+        "includes_all",
         "does_not_include",
+        "does_not_include_all",
+        "does_not_equal",
         "starts_with",
-        "contains_any",
         "is_blank",
-        "does_not_contain"
+        "equals"
     ],
-    "location/place/company":[
+    "location":[
         "includes_any",
         "does_not_include",
         "is_blank",
         "includes_all"
     ],
-    "string-long":[
-        "contains_any",
-        "is_blank",
-        "does_not_contain"
-    ],
-    "string-options1":[
-        "includes_any",
-        "does_not_include",
-        "does_not_equal",
-        "equals",
-        "is_blank"
-    ],
-    "string-options2":[
-        "includes_any",
-        "does_not_include",
-        "does_not_include_all",
-        "includes_all",
-        "is_blank"
-    ],
+
     "number":[
         "between",
         "does_not_equal",
@@ -47,5 +31,8 @@
         "less_than_or_equal_to",
         "is_blank"
     ],
-    ""
+    "boolean":[
+        "true",
+        "false"
+    ]
 }
