@@ -183,11 +183,10 @@ export const filters = {
         {dataKey:"round",dType:"string",text:"Round"},
         {dataKey:"investors",dType:"date",text:"Investors", nextFilterKey:"ipo_round_investors"},
         {dataKey:"unknown_investors",dType:"date",text:"Unknown Investors"},
-        {dataKey:"year",dType:"date",text:"Is Undisclosed", dType:"boolean"},
-        {dataKey:"year",dType:"date",text:"News Source"},
-        {dataKey:"year",dType:"date",text:"Valuation"},
-        {dataKey:"year",dType:"date",text:"Min Valuation Generated"},
-        {dataKey:"year",dType:"date",text:"Max Valuation Generated"}
+        {dataKey:"boolean",dType:"date",text:"Is Undisclosed"},
+        {dataKey:"number",dType:"date",text:"Valuation"},
+        {dataKey:"number",dType:"date",text:"Min Valuation Generated"},
+        {dataKey:"number",dType:"date",text:"Max Valuation Generated"}
     ],
     ipo_round_investors:[
         {dataKey:"name", dType:"string", text:"Name"},
