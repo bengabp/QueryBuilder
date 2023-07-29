@@ -6,39 +6,58 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
+import { filters, parentFilters, filterKeyIndices } from '../constants/filters';
+
 import TitleBlock from './queryblocks/TitleBlock';
 import OptionBlock from './queryblocks/OptionBlock';
+import SubQueryBlock from './queryblocks/SubQueryBlock.';
+import LastBlock from './queryblocks/LastBlock';
 
 
 const QueryBlock  = (props) => {
-    let [queries, setQueries] = React.useState([]);
 
     return(
-        <Stack direction="row" spacing={-.5} divider={<HorizontalRuleIcon
-                htmlColor='grey'
-            />}
-            sx={{margin:'5px', alignItems:"center"}}
+        <Stack direction="column" spacing={1}
+            sx={{
+                marginBottom:'3px',
+                backgroundColor:"whitesmoke",
+                margin:'0',
+                justifyItems:"center",
+            }}
         >
             {
-                props.query.path.map((query, index) => {
-                    return <Button variant='contained' element="span"
-                        style={{
-                            textTransform:'capitalize',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            whiteSpace:'nowrap'
-                        }}
-                    >{query}</Button>
+                Object.keys(props.queryObjects).map((query, index) => {
+                    if (typeof props.queryObjects[query] === "object" && props.queryObjects[query] !== null){
+                        return <Stack 
+                                direction="row"
+                                sx={{
+                                    alignItems:"flex-start",
+                                    gap:"30px"
+                                }}
+                            >
+                                {
+                                    props.parent != undefined ? 
+                                    <TitleBlock text={query} addLeftLine={true} position={index} />
+                                    : <TitleBlock text={query} />
+                                }
+                                <QueryBlock
+                                    queryObjects={props.queryObjects[query]}
+                                    key={index}
+                                ></QueryBlock>
+                        </Stack>
+                    } else {
+                        return <Stack 
+                        direction="row"
+                        divider={<HorizontalRuleIcon
+                            htmlColor='grey'
+                        />}
+                        >
+                            <LastBlock text={query} />
+                        </Stack>
+                    }
+
                 })
             }
-            <Button variant="contained"
-                style={{
-                    textTransform:'ca[ot',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    whiteSpace:'nowrap'
-                }}
-            >{props.query.dataKey}</Button>
         </Stack>
     );   
 }

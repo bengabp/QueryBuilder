@@ -14,7 +14,9 @@ export default function QueryBuilder(props) {
 
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
-  const [queryLines, setQueryLines] = React.useState([])
+  const [queryLines, setQueryLines] = React.useState([]);
+  const [queryList, setQueryList] = React.useState([]); 
+  let [queryObjects, setQueryObjects] = React.useState({});
 
   /* 
     const querySchema = {
@@ -26,12 +28,16 @@ export default function QueryBuilder(props) {
       
     }
   */
+  React.useEffect(()=>{
+    console.log(queryObjects);
+  }, [queryObjects]);
+  
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
     if (panelN === 1){
       filtersArray.pop();
     }
-    console.log(`New Filter => ${filtersArray}/${filter.dataKey}[${filter.dType}]`)
+    toggleFiltersDialog(false);
     setQueryLines((current)=>{
       const currentCopy = [...current];
       const query = {
@@ -43,6 +49,43 @@ export default function QueryBuilder(props) {
       currentCopy.push(query);
       return currentCopy;
     })
+    
+    const dict = convertStringToDict([...filtersArray, filter.dataKey]);
+    const merged = mergeDicts(queryObjects, dict)
+    setQueryObjects(merged);
+  }
+
+  function mergeDicts(dict1, dict2) {
+    const mergedDict = { ...dict1 }; // Create a shallow copy of dict1
+  
+    for (const [key, value] of Object.entries(dict2)) {
+      if (key in mergedDict && typeof mergedDict[key] === 'object' && typeof value === 'object') {
+        // Recursively merge nested objects
+        mergedDict[key] = mergeDicts(mergedDict[key], value);
+      } else {
+        mergedDict[key] = value;
+      }
+    }
+  
+    return mergedDict;
+  }
+
+
+  function convertStringToDict(keysValues) {
+    const result = {};
+    let currentDict = result;
+  
+    for (let i = 0; i < keysValues.length; i++) {
+      const key = keysValues[i];
+      if (i === keysValues.length - 1) {
+        currentDict[key] = key;
+      } else {
+        currentDict[key] = {};
+        currentDict = currentDict[key];
+      }
+    }
+  
+    return result;
   }
 
   const onNavBlockClicked = () => {
@@ -54,34 +97,54 @@ export default function QueryBuilder(props) {
       } else {
         return current
       }
-      
+     
     })
   }
 
   return (
-    <Stack
+    <Grid
       direction="column"
-      minHeight={0}
-      minWidth={0}
-      justifyContent={"stretch"}
       sx={{
-        height:'100%'
+        height:'100vh',
+        margin:'0'
       }}
+      container
     >
-      {
-        queryLines.map((query, index) => {// Last element is the query key 
-          
-          return <QueryBlock 
-            query={query}
-            key={index}
-            index={index}
-            setQueryLines={setQueryLines}
+      <Stack
+        sx={{
+          height:'40%',
+          overflow:'scroll',
+          paddingLeft:'30px',
+          justifyItems:"center"
+        }}
+        spacing={2}
+      >
+        {
+          Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
+            return <QueryBlock 
+              queryObjects={queryObjects[queryObject]}
+              parent={queryObject}
+              key={index}
+            />
+          })
+        }
+        <Box sx={{margin:'0', padding:'0'}}>
+          <AddFilterButton // Open Dialog to add new companies filter
+            toggleFiltersDialog={toggleFiltersDialog}
           />
-        })
-      }
-      <AddFilterButton // Open Dialog to add new companies filter
-        toggleFiltersDialog={toggleFiltersDialog}
-      />
+        </Box>
+      </Stack>
+      <Grid
+      
+        direction="column"
+        container
+        sx={{
+          height:'60%',
+          backgroundColor:'red',
+          
+        }}
+      >
+      </Grid>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}
         filtersDialogState={filtersDialogState}
@@ -90,6 +153,6 @@ export default function QueryBuilder(props) {
         onNewFilter={onNewFilter}
         onNavBlockClicked={onNavBlockClicked}
       ></FiltersDialog>
-    </Stack>
+    </Grid>
   );
 }

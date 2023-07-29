@@ -1,26 +1,22 @@
 import React, {
     useState
 } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
+import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 
 
 
 const TitleBlock = (props) => {
-    let [count, setCount] = useState(0);
-
-    let openFiltersDialog = (event) => {
-        count += 1;
-        setCount(count);
-    }
-
     return (
-        <div>
+        <Box className="blockWithConnectors">
             <Button 
-                onClick={openFiltersDialog}
                 variant='contained'
+                element="span"
                 color='primary'
-            >{props.title}</Button>
-        </div>
+            >
+                {props.text}
+            </Button>
+        </Box>
     )
 }
 

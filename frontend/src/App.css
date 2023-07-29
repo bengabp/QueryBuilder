@@ -55,3 +55,61 @@
 ::-webkit-scrollbar-thumb{
   background-color:#ccced1;
 }
+
+.titleBlock{
+  text-transform:lowercase;
+  display: flex;
+  text-overflow:ellipsis;
+  justify-content: space-between;
+  border-radius:0;
+  white-space:nowrap;
+  width:150px;
+  height:40px;
+}
+
+.blockWithConnectors::before{
+  content:"";
+  background-color:grey;
+  left:15px;
+  height:50px;
+  width:4px;
+  position: absolute;
+}
+
+.blockWithConnectors::after{
+  content:"";
+  background-color:grey;
+  right:-15px;
+  height:50px;
+  width:4px;
+  position: absolute;
+}
+
+.blockWithConnectors button{
+  height:40px;
+  width:150px;
+  border-radius:0;
+}
+
+.blockWithConnectors button::before{
+  content:"";
+  position:absolute;
+  display:block;
+  left:-15px;
+  width:15px;
+  height:4px;
+  background-color:grey;
+  top:18px;
+}
+
+.blockWithConnectors button::after{
+  content:"";
+  position:absolute;
+  display:block;
+  right:-15px;
+  width:15px;
+  height:4px;
+  background-color:grey;
+  top:18px;
+}
+

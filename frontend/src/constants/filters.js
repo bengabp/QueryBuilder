@@ -13,6 +13,7 @@ export const parentFilters = [
     "revenues"
 ]
 
+
 export const filterKeyIndices = {
     basic_info: ["Basic Info"],
         hq_details:["Basic Info", "Headquaters"],
@@ -197,7 +198,7 @@ export const filters = {
     kpi_summary:[
         {dType:"date",dataKey:"last_update_date",text:"Last Updated"},
         {dType:"boolean",dataKey:"revenues_hidden",text:"Revenues Hidden"},
-        {dType:"boolean",dataKey:"ebitda_hidden",text:"Ebida Hidden"},
+        {dType:"boole an",dataKey:"ebitda_hidden",text:"Ebida Hidden"},
         {dType:"boolean",dataKey:"rnd_hidden", text:"Rnd Hidden"},
         {dType:"boolean",dataKey:"market_cap_hidden",text:"Market Cap Hidden"},
         {dType:"boolean",dataKey:"valuation_hidden",text:"Valuation Hidden"},
@@ -259,7 +260,7 @@ export const filters = {
    innovations:[
         {dType:"string",dataKey:"innovations",text:"Innovations"},
         {dType:"number",dataKey:"innovations_count",text:"Total Innovations"},
-        {dType:"number",dataKey:"innovations",text:"Innovation Corporate Rank"}
+        {dType:"number",dataKey:"innovations_corporate_rank",text:"Innovation Corporate Rank"}
     ]
 }
 

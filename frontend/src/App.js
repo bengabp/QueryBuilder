@@ -1,23 +1,30 @@
 import './App.css';
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, createTheme, ThemeProvider } from '@mui/material'
+
 import React from 'react';
 
 import HomeAppBar from './components/HomeAppBar';
 import QueryBuilder from './components/QueryBuilder';
 import SearchResultsTable from './components/SearchResultsTable';
 
+const theme = createTheme({
+  typography:{
+    fontSize:12
+  }
+})
 
-
-function App() {
+const App = () => {
     
   return (
-    <Box>
-      <Stack direction="column" spacing={3}>
-        <HomeAppBar></HomeAppBar>
-        <QueryBuilder></QueryBuilder>
-        <SearchResultsTable></SearchResultsTable>
-      </Stack>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box>
+        <Stack direction="column" spacing={3}>
+          <HomeAppBar></HomeAppBar>
+          <QueryBuilder></QueryBuilder>
+          <SearchResultsTable></SearchResultsTable>
+        </Stack>
+      </Box>
+    </ThemeProvider>
   );
 }
 
