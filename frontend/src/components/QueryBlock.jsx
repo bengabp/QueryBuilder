@@ -1,29 +1,21 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 import { filters, parentFilters, filterKeyIndices } from '../constants/filters';
 
 import TitleBlock from './queryblocks/TitleBlock';
-import OptionBlock from './queryblocks/OptionBlock';
-import SubQueryBlock from './queryblocks/SubQueryBlock.';
 import LastBlock from './queryblocks/LastBlock';
 
 
 const QueryBlock  = (props) => {
-
     return(
         <Stack direction="column" spacing={1}
             sx={{
-                marginBottom:'3px',
-                backgroundColor:"whitesmoke",
-                margin:'0',
-                justifyItems:"center",
+                borderLeft:"2px solid grey",
+                margin:'0'
             }}
+            className="nestedQueryBlock"
         >
             {
                 Object.keys(props.queryObjects).map((query, index) => {
@@ -32,6 +24,7 @@ const QueryBlock  = (props) => {
                                 direction="row"
                                 sx={{
                                     alignItems:"flex-start",
+                                    justifyContent:"flex-start",
                                     gap:"30px"
                                 }}
                             >

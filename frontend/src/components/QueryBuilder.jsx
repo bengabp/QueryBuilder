@@ -11,12 +11,21 @@ import AddFilterButton from './AddFilterButton';
 import QueryBlock from './QueryBlock';
 
 export default function QueryBuilder(props) {
-
+  const blockBackgroundColors = [
+    "red",
+    "lightyellow",
+    "grey",
+    "whitesmoke",
+    "brown",
+    "yellow",
+    "orange"
+  ];
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
-  const [queryLines, setQueryLines] = React.useState([]);
-  const [queryList, setQueryList] = React.useState([]); 
-  let [queryObjects, setQueryObjects] = React.useState({});
+  const [queryObjects, setQueryObjects] = React.useState({});
+  let [queryBlockColors, setQueryBlockColors] = React.useState(blockBackgroundColors);
+
+  
 
   /* 
     const querySchema = {
@@ -37,19 +46,7 @@ export default function QueryBuilder(props) {
     if (panelN === 1){
       filtersArray.pop();
     }
-    toggleFiltersDialog(false);
-    setQueryLines((current)=>{
-      const currentCopy = [...current];
-      const query = {
-        queryKey:filter.dataKey,
-        dataKey:filter.text,
-        dType:filter.dType,
-        path:filtersArray
-      }
-      currentCopy.push(query);
-      return currentCopy;
-    })
-    
+    toggleFiltersDialog(false);    
     const dict = convertStringToDict([...filtersArray, filter.dataKey]);
     const merged = mergeDicts(queryObjects, dict)
     setQueryObjects(merged);
@@ -115,17 +112,22 @@ export default function QueryBuilder(props) {
           height:'40%',
           overflow:'scroll',
           paddingLeft:'30px',
-          justifyItems:"center"
         }}
-        spacing={2}
+        spacing={1}
       >
         {
           Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
-            return <QueryBlock 
-              queryObjects={queryObjects[queryObject]}
-              parent={queryObject}
-              key={index}
-            />
+            queryBlockColors = [...blockBackgroundColors];
+            return (
+              <div className="queryBlock">
+                <QueryBlock 
+                  queryObjects={queryObjects[queryObject]}
+                  parent={queryObject}
+                  key={index}
+                  backgroundColors={queryBlockColors}
+                  setBackgroundColors={setQueryBlockColors}
+                />
+              </div>)
           })
         }
         <Box sx={{margin:'0', padding:'0'}}>
@@ -140,7 +142,7 @@ export default function QueryBuilder(props) {
         container
         sx={{
           height:'60%',
-          backgroundColor:'red',
+          backgroundColor:'grey',
           
         }}
       >
