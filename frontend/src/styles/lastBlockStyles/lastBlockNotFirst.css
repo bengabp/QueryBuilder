@@ -1,0 +1,18 @@
+
+.lastBlockNotFirst{
+    position:relative;
+}
+
+.lastBlockNotFirst::before{
+    content: "";
+    background-color: grey;
+    height: calc(100% + 12px);
+    width: 4px;
+    left: -17px;
+    position: absolute;
+    top: -30px;
+}
+
+.noUpLine::before{
+    content:none;
+}

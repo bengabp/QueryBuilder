@@ -6,12 +6,17 @@ import { Button, Typography, Box } from '@mui/material';
 
 const TitleBlock = (props) => {
     return (
-        <Box className="titleBlock blockWithConnectors">
+        <Box className={"blockWithConnectors " + props.blockClassName}>
+            <div className="first"></div>
+            <div className="second"></div>
             <Button 
                 variant='contained'
                 color='primary'
             >
-                {props.text}
+                {
+                    props.text
+                }
+
             </Button>
         </Box>
     )

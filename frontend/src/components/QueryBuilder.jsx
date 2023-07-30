@@ -47,7 +47,7 @@ export default function QueryBuilder(props) {
       filtersArray.pop();
     }
     toggleFiltersDialog(false);    
-    const dict = convertStringToDict([...filtersArray, filter.dataKey]);
+    const dict = convertStringToDict([...filtersArray, `${filter.text}|${filter.dataKey}|${filter.dType}`]);
     const merged = mergeDicts(queryObjects, dict)
     setQueryObjects(merged);
   }
@@ -109,39 +109,47 @@ export default function QueryBuilder(props) {
     >
       <Stack
         sx={{
-          height:'40%',
+          height:'70%',
           overflow:'scroll',
           paddingLeft:'30px',
         }}
-        spacing={1}
+        
+        
       >
-        {
-          Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
-            queryBlockColors = [...blockBackgroundColors];
-            return (
-              <div className="queryBlock">
-                <QueryBlock 
-                  queryObjects={queryObjects[queryObject]}
-                  parent={queryObject}
-                  key={index}
-                  backgroundColors={queryBlockColors}
-                  setBackgroundColors={setQueryBlockColors}
-                />
-              </div>)
-          })
-        }
-        <Box sx={{margin:'0', padding:'0'}}>
-          <AddFilterButton // Open Dialog to add new companies filter
-            toggleFiltersDialog={toggleFiltersDialog}
-          />
-        </Box>
+        <Stack className="queryBuilder" spacing={1}>
+          {
+            Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
+              queryBlockColors = [...blockBackgroundColors];
+              return (
+                <div className="queryBlock">
+                  <QueryBlock 
+                    queryObjects={queryObjects[queryObject]}
+                    parent={queryObject}
+                    key={index}
+                    index={index}
+                    backgroundColors={queryBlockColors}
+                    setBackgroundColors={setQueryBlockColors}
+                  />
+                </div>)
+            })
+          }
+          <Box sx={{margin:'0', padding:'0'}}>
+            <AddFilterButton // Open Dialog to add new companies filter
+              toggleFiltersDialog={toggleFiltersDialog}
+              className={
+                Object.keys(queryObjects).length > 0 &&
+                "blockWithConnectors addFilterButton"
+              }
+            />
+          </Box>
+        </Stack>
       </Stack>
       <Grid
       
         direction="column"
         container
         sx={{
-          height:'60%',
+          height:'30%',
           backgroundColor:'grey',
           
         }}

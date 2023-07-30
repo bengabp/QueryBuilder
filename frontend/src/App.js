@@ -1,4 +1,10 @@
 import './App.css';
+import './styles/titleBlockStyles/titleBlockFirst.css';
+import './styles/titleBlockStyles/titleBlockNotFirst.css';
+
+import './styles/lastBlockStyles/lastBlockFirst.css';
+import './styles/lastBlockStyles/lastBlockNotFirst.css'; 
+
 import { Box, Stack, createTheme, ThemeProvider } from '@mui/material'
 
 import React from 'react';

@@ -69,25 +69,93 @@
   
 }
 
+.blockWithConnectors button::before{
+  content:"";
+  position:absolute;
+  display:block;
+  left:-15px;
+  width:15px;
+  height:4px;
+  background-color:grey;
+}
+
+
 .blockWithConnectors button::after{
   content:"";
   position:absolute;
   display:block;
-  right:-30px;
-  width:30px;
+  right:-15px;
+  width:15px;
   height:4px;
   background-color:grey;
   top:18px;
 }
 
+.addFilterButton button::after{
+  content:none;
+}
+
+
+
 .nestedQueryBlock{
   position:relative;
 }
 
-.nestedQueryBlock::before{
-
+.queryBuilder{
+  position:relative;
 }
 
-.nestedQueryBlock::after{
-
+.queryBuilder::before{
+  content: "";
+  position: absolute;
+  height: calc(100% - 38px);
+  background-color: grey;
+  width: 4px;
+  left: -15px;
+  top: 19px;
 }
+
+/* 
+.titleBlock::before{
+  content: "";
+  background-color: grey;
+  height: calc(100% + 2px);
+  width: 4px;
+  left: -17px;
+  position: absolute;
+  top: 18px;
+} */
+
+
+/* .titleBlockNotFirst::before{
+  height:calc(73.5%);
+  
+} */
+
+/* .titleBlock > div::before{
+  content: "";
+  background-color: red;
+  height: 4px;
+  width: 17px;
+  left: -17px;
+  position: absolute;
+  top: calc(100% + 20px);
+} */
+
+
+
+
+/* .titleBlock::after{
+  content:"";
+  background-color:grey;
+  position:absolute;
+  height:4px;
+  width:17px;
+  top:100%;
+  left:-100%;
+} */
+
+
+/* .nestedQueryBlock::after{
+
+} */

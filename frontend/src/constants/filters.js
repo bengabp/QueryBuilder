@@ -74,7 +74,7 @@ export const filters = {
     hq_details:[
         {dataKey:"address", text:"Address", dType:"location"},
         {dataKey:"country", text:"Country", dType:"string"},
-        {datakey:"continent", text:"Continent", dType:"string"},
+        {dataKey:"continent", text:"Continent", dType:"string"},
         {dataKey:"city",text:"City", dType:"string"},
         {dataKey:"is_headquaters", dType:"boolean", text:"Is Headquaters"},
         {dataKey:"is_founding_location", dType:"boolean", text:"Is Founding Location"},
@@ -82,7 +82,7 @@ export const filters = {
     ],
     tech_stacks:[
         {datKey:"company", text:"Company", dType:"string", nextFilterKey:"tech_stacks_company"},
-        {dataKeys:"categories", text:"Categories", dType:"string"}
+        {dataKey:"categories", text:"Categories", dType:"string"}
     ],
     tech_stacks_company:[
         {dataKey:"name", text:"Name", dType:"string"},
@@ -155,9 +155,9 @@ export const filters = {
         {dataKey:"lead", dType:"boolean", text:"Lead"}
     ],
     investors:[
-        {text:"Investors", nextFilterKey:"investor_details"},
+        {text:"Investors", nextFilterKey:"investor_details", dataKey:"investors"},
         {text:"Total Investors", dType:"number", dataKey:"total_investors"},
-        {text:"Investments", nextFilterKey:"investment_details"}
+        {text:"Investments", nextFilterKey:"investment_details", dataKey:"investments"}
     ],
     investor_details:[
         {dataKey:"type", dType:"string",text:"Type"},
@@ -184,7 +184,7 @@ export const filters = {
         {dataKey:"round",dType:"string",text:"Round"},
         {dataKey:"investors",dType:"date",text:"Investors", nextFilterKey:"ipo_round_investors"},
         {dataKey:"unknown_investors",dType:"date",text:"Unknown Investors"},
-        {dataKey:"boolean",dType:"date",text:"Is Undisclosed"},
+        {dataKey:"is_undisclosed",dType:"date",text:"Is Undisclosed"},
         {dataKey:"number",dType:"date",text:"Valuation"},
         {dataKey:"number",dType:"date",text:"Min Valuation Generated"},
         {dataKey:"number",dType:"date",text:"Max Valuation Generated"}
@@ -228,8 +228,8 @@ export const filters = {
         {dType:"number",dataKey:"ev_ebitda",text:"Ev Ebitda"},
     ],
     kpi_summary_valuations:[
-        {text:"Date", dType:"date", datakey:"date"},
-        {text:"Source", dType:"string", datakey:"source"},
+        {text:"Date", dType:"date", dataKey:"date"},
+        {text:"Source", dType:"string", dataKey:"source"},
         {text:"Source Round", dType:"string", dataKey:"source_round"},
         {text:"Valuation",dType:"number", dataKey:"valuation"},
         {text:"Min Valuation", dType:"number", dataKey:"valuation_min"},

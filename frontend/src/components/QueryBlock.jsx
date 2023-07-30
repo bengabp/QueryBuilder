@@ -1,5 +1,6 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 import { filters, parentFilters, filterKeyIndices } from '../constants/filters';
@@ -8,11 +9,19 @@ import TitleBlock from './queryblocks/TitleBlock';
 import LastBlock from './queryblocks/LastBlock';
 
 
+
+const classNames = {
+    titleBlockNotFirst:"titleBlockNotFirst",
+    titleBlockFirst:"titleBlockFirst",
+    lastBlockNotFirst:"lastBlockNotFirst",
+    lastBlockFirst:"lastBlockFirst"
+}
+
+
 const QueryBlock  = (props) => {
     return(
         <Stack direction="column" spacing={1}
             sx={{
-                borderLeft:"2px solid grey",
                 margin:'0'
             }}
             className="nestedQueryBlock"
@@ -30,9 +39,10 @@ const QueryBlock  = (props) => {
                             >
                                 {
                                     props.parent != undefined ? 
-                                    <TitleBlock text={query} addLeftLine={true} position={index} />
-                                    : <TitleBlock text={query} />
+                                    <TitleBlock text={query} blockClassName={classNames.titleBlockFirst} />
+                                    : <TitleBlock text={query} blockClassName={classNames.titleBlockNotFirst} />
                                 }
+                                
                                 <QueryBlock
                                     queryObjects={props.queryObjects[query]}
                                     key={index}
@@ -40,12 +50,13 @@ const QueryBlock  = (props) => {
                         </Stack>
                     } else {
                         return <Stack 
-                        direction="row"
-                        divider={<HorizontalRuleIcon
-                            htmlColor='grey'
-                        />}
+                            direction="row"
                         >
-                            <LastBlock text={query} />
+                            {
+                                props.parent != undefined ?
+                                <LastBlock text={query} blockClassName={classNames.lastBlockFirst} index={index} />
+                                : <LastBlock text={query} blockClassName={classNames.lastBlockNotFirst} index={index} />
+                            }
                         </Stack>
                     }
 
