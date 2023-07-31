@@ -1,44 +1,67 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
+import { filters, parentFilters, filterKeyIndices } from '../constants/filters';
+
 import TitleBlock from './queryblocks/TitleBlock';
-import OptionBlock from './queryblocks/OptionBlock';
+import LastBlock from './queryblocks/LastBlock';
+
+
+
+const classNames = {
+    titleBlockNotFirst:"titleBlockNotFirst",
+    titleBlockFirst:"titleBlockFirst",
+    lastBlockNotFirst:"lastBlockNotFirst",
+    lastBlockFirst:"lastBlockFirst"
+}
 
 
 const QueryBlock  = (props) => {
-    let [queries, setQueries] = React.useState([]);
-
     return(
-        <Stack direction="row" spacing={-.5} divider={<HorizontalRuleIcon
-                htmlColor='grey'
-            />}
-            sx={{margin:'5px', alignItems:"center"}}
+        <Stack direction="column" spacing={1}
+            sx={{
+                margin:'0'
+            }}
+            className="nestedQueryBlock"
         >
             {
-                props.query.path.map((query, index) => {
-                    return <Button variant='contained' element="span"
-                        style={{
-                            textTransform:'capitalize',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            whiteSpace:'nowrap'
-                        }}
-                    >{query}</Button>
+                Object.keys(props.queryObjects).map((query, index) => {
+                    if (typeof props.queryObjects[query] === "object" && props.queryObjects[query] !== null){
+                        return <Stack 
+                                direction="row"
+                                sx={{
+                                    alignItems:"flex-start",
+                                    justifyContent:"flex-start",
+                                    gap:"30px"
+                                }}
+                            >
+                                {
+                                    props.parent != undefined ? 
+                                    <TitleBlock text={query} blockClassName={classNames.titleBlockFirst} />
+                                    : <TitleBlock text={query} blockClassName={classNames.titleBlockNotFirst} index={ index } />
+                                }
+                                
+                                <QueryBlock
+                                    queryObjects={props.queryObjects[query]}
+                                    key={index}
+                                ></QueryBlock>
+                        </Stack>
+                    } else {
+                        return <Stack 
+                            direction="row"
+                        >
+                            {
+                                props.parent != undefined ?
+                                <LastBlock text={query} blockClassName={classNames.lastBlockFirst} index={index} />
+                                : <LastBlock text={query} blockClassName={classNames.lastBlockNotFirst} index={index} />
+                            }
+                        </Stack>
+                    }
+
                 })
             }
-            <Button variant="contained"
-                style={{
-                    textTransform:'ca[ot',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    whiteSpace:'nowrap'
-                }}
-            >{props.query.dataKey}</Button>
         </Stack>
     );   
 }

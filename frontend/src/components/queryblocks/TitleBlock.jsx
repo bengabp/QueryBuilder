@@ -1,26 +1,34 @@
 import React, {
     useState
 } from 'react';
-import { Button } from '@mui/material';
-
+import { Button, Typography, Box } from '@mui/material';
+import { filterKeyIndices } from '../../constants/filters';
 
 
 const TitleBlock = (props) => {
-    let [count, setCount] = useState(0);
 
-    let openFiltersDialog = (event) => {
-        count += 1;
-        setCount(count);
+    const keyList = filterKeyIndices[props.text];
+    const lastText = keyList[keyList.length-1]
+
+    let className = `blockWithConnectors ${props.blockClassName}`;
+    if (props.index == 0){
+        className += ` noUpLine`;
     }
 
     return (
-        <div>
+        <Box className={className}>
+            <div className="first"></div>
+            <div className="second"></div>
             <Button 
-                onClick={openFiltersDialog}
                 variant='contained'
                 color='primary'
-            >{props.title}</Button>
-        </div>
+            >
+                {
+                    lastText
+                }
+
+            </Button>
+        </Box>
     )
 }
 

@@ -11,10 +11,20 @@ import AddFilterButton from './AddFilterButton';
 import QueryBlock from './QueryBlock';
 
 export default function QueryBuilder(props) {
-
+  const blockBackgroundColors = [
+    "red",
+    "lightyellow",
+    "grey",
+    "whitesmoke",
+    "brown",
+    "yellow",
+    "orange"
+  ];
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
-  const [queryLines, setQueryLines] = React.useState([])
+  const [queryObjects, setQueryObjects] = React.useState({});
+  let [queryBlockColors, setQueryBlockColors] = React.useState(blockBackgroundColors);
+  
 
   /* 
     const querySchema = {
@@ -26,23 +36,52 @@ export default function QueryBuilder(props) {
       
     }
   */
+  React.useEffect(()=>{
+    console.log(queryObjects);
+  }, [queryObjects]);
+  
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
     if (panelN === 1){
       filtersArray.pop();
     }
-    console.log(`New Filter => ${filtersArray}/${filter.dataKey}[${filter.dType}]`)
-    setQueryLines((current)=>{
-      const currentCopy = [...current];
-      const query = {
-        queryKey:filter.dataKey,
-        dataKey:filter.text,
-        dType:filter.dType,
-        path:filtersArray
+    toggleFiltersDialog(false);    
+    const dict = convertStringToDict([...filtersArray, `${filter.text}|${filter.dataKey}|${filter.dType}`]);
+    const merged = mergeDicts(queryObjects, dict)
+    setQueryObjects(merged);
+  }
+
+  function mergeDicts(dict1, dict2) {
+    const mergedDict = { ...dict1 }; // Create a shallow copy of dict1
+  
+    for (const [key, value] of Object.entries(dict2)) {
+      if (key in mergedDict && typeof mergedDict[key] === 'object' && typeof value === 'object') {
+        // Recursively merge nested objects
+        mergedDict[key] = mergeDicts(mergedDict[key], value);
+      } else {
+        mergedDict[key] = value;
       }
-      currentCopy.push(query);
-      return currentCopy;
-    })
+    }
+  
+    return mergedDict;
+  }
+
+
+  function convertStringToDict(keysValues) {
+    const result = {};
+    let currentDict = result;
+  
+    for (let i = 0; i < keysValues.length; i++) {
+      const key = keysValues[i];
+      if (i === keysValues.length - 1) {
+        currentDict[key] = key;
+      } else {
+        currentDict[key] = {};
+        currentDict = currentDict[key];
+      }
+    }
+  
+    return result;
   }
 
   const onNavBlockClicked = () => {
@@ -54,34 +93,63 @@ export default function QueryBuilder(props) {
       } else {
         return current
       }
-      
+     
     })
   }
 
+  const onOptionSelect = (path, option) => {
+    console.log(option);
+  }
+
   return (
-    <Stack
+    <Grid
       direction="column"
-      minHeight={0}
-      minWidth={0}
-      justifyContent={"stretch"}
-      sx={{
-        height:'100%'
-      }}
+      container
+      id="queryBuilderScaffold"
     >
-      {
-        queryLines.map((query, index) => {// Last element is the query key 
+      <Stack
+        id="queryBuilderContainer"
+        
+      >
+        <Stack className="queryBuilder" spacing={1}>
+          {
+            Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
+              queryBlockColors = [...blockBackgroundColors];
+              return (
+                <div className="queryBlock">
+                  <QueryBlock 
+                    queryObjects={queryObjects[queryObject]}
+                    parent={queryObject}
+                    key={index}
+                    index={index}
+                    backgroundColors={queryBlockColors}
+                    setBackgroundColors={setQueryBlockColors}
+                  />
+                </div>)
+            })
+          }
+          <Box sx={{margin:'0', padding:'0'}}>
+            <AddFilterButton // Open Dialog to add new companies filter
+              toggleFiltersDialog={toggleFiltersDialog}
+              className={
+                Object.keys(queryObjects).length > 0 &&
+                "blockWithConnectors addFilterButton"
+              }
+            />
+          </Box>
+        </Stack>
+      </Stack>
+      <Grid
+      
+        direction="column"
+        container
+        sx={{
+          height:'60%',
+          backgroundColor:'grey',
           
-          return <QueryBlock 
-            query={query}
-            key={index}
-            index={index}
-            setQueryLines={setQueryLines}
-          />
-        })
-      }
-      <AddFilterButton // Open Dialog to add new companies filter
-        toggleFiltersDialog={toggleFiltersDialog}
-      />
+        }}
+      >
+      </Grid>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}
         filtersDialogState={filtersDialogState}
@@ -90,6 +158,6 @@ export default function QueryBuilder(props) {
         onNewFilter={onNewFilter}
         onNavBlockClicked={onNavBlockClicked}
       ></FiltersDialog>
-    </Stack>
+    </Grid>
   );
 }

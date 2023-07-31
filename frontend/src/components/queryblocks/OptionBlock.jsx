@@ -2,34 +2,47 @@ import React from 'react';
 import {MenuItem, Menu, Button} from '@mui/material';
 
 
-const OptionBlock = (props) => {
-    const [option, setOption] = React.useState("equals");
-    let [open, setMenuState] = React.useState(false);
+export default function OptionBlock (props) {
+    const [menuState, setMenuState] = React.useState(null);
+    const [selectedOption, setSelectedOption] = React.useState(props.options[0]);
 
-    const onOptionSelected = (event) => {
-        setMenuState(false);
-        setOption(event.target.value);
+    const toggleMenuState = (event) => {
+        setMenuState(event.currentTarget);
+    }
+
+    const onOptionSelect = (option) => {
+        closeMenu()
+        setSelectedOption(option)
+    }
+    
+    const closeMenu = () => {
+        setMenuState(null);
     }
 
     return (
         <div>
-            <Button onClick={(event) => {
-                open = ! open;
-                setMenuState(open);
-            }}>
-                {option}
+            <Button 
+                id="open-menu-btn"
+                onClick={toggleMenuState}
+            >
+                {selectedOption}
             </Button>
             <Menu
-                anchorEl = {option}
-                open = {open}
-                onchange = {onOptionSelected}
+                open = {Boolean(menuState)}
+                onClose={closeMenu}
+                anchorEl={menuState}
+                className="queryOptionMenu"
             >
                 {props.options.map((menuOption, index) => {
-                    return <MenuItem onClick={onOptionSelected}>{menuOption}</MenuItem>
+                    return <MenuItem 
+                            key={index}
+                            className="queryOptionItem"
+                            onClick={() => onOptionSelect(menuOption)}
+                        >
+                        {menuOption}</MenuItem>
                 })}
             </Menu>
         </div>
     )
 }
 
-export default OptionBlock
