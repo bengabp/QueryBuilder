@@ -24,7 +24,6 @@ export default function QueryBuilder(props) {
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
   const [queryObjects, setQueryObjects] = React.useState({});
   let [queryBlockColors, setQueryBlockColors] = React.useState(blockBackgroundColors);
-
   
 
   /* 
@@ -96,6 +95,10 @@ export default function QueryBuilder(props) {
       }
      
     })
+  }
+
+  const onOptionSelect = (path, option) => {
+    console.log(option);
   }
 
   return (

@@ -11,7 +11,7 @@ class HomeAppBar extends React.Component{
                 sx={{}}
             >
                 <Toolbar>
-                    <Typography variant='h5'>Query Builder</Typography>
+                    <Typography variant='h5' fontWeight="bold">Companies Query Builder</Typography>
                 </Toolbar>
             </AppBar>
         );

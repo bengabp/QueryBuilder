@@ -141,6 +141,8 @@
   background-color: #2a60d533;
   border-bottom: 2px solid #0043ff8a;
   position:relative;
+  text-transform:lowercase;
+  font-weight:bold;
 }
 
 #open-menu-btn::after{
