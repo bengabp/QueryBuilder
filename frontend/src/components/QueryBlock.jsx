@@ -40,7 +40,7 @@ const QueryBlock  = (props) => {
                                 {
                                     props.parent != undefined ? 
                                     <TitleBlock text={query} blockClassName={classNames.titleBlockFirst} />
-                                    : <TitleBlock text={query} blockClassName={classNames.titleBlockNotFirst} />
+                                    : <TitleBlock text={query} blockClassName={classNames.titleBlockNotFirst} index={ index } />
                                 }
                                 
                                 <QueryBlock

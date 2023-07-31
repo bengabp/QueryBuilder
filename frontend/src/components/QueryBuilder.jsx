@@ -101,19 +101,11 @@ export default function QueryBuilder(props) {
   return (
     <Grid
       direction="column"
-      sx={{
-        height:'100vh',
-        margin:'0'
-      }}
       container
+      id="queryBuilderScaffold"
     >
       <Stack
-        sx={{
-          height:'70%',
-          overflow:'scroll',
-          paddingLeft:'30px',
-        }}
-        
+        id="queryBuilderContainer"
         
       >
         <Stack className="queryBuilder" spacing={1}>
@@ -149,7 +141,7 @@ export default function QueryBuilder(props) {
         direction="column"
         container
         sx={{
-          height:'30%',
+          height:'60%',
           backgroundColor:'grey',
           
         }}

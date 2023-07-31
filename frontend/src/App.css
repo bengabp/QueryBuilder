@@ -57,11 +57,26 @@
 }
 
 
-.blockWithConnectors button{
+#queryBuilderScaffold{
+  margin-top:10px;
+  height:100vh;
+  padding:0;
+}
+
+#queryBuilderContainer{
+  height:40%;
+  width:100%;
+  overflow:scroll;
+  padding-left:20px;
+}
+
+.blockWithConnectors button, #open-menu-btn{
   height:40px;
-  width:200px;
+  width:180px;
   border-radius:0;
   text-align: left;
+  text-transform:capitalize;
+  align-content: flex-start;
 }
 
 .queryBlock{
@@ -115,47 +130,34 @@
   top: 19px;
 }
 
-/* 
-.titleBlock::before{
-  content: "";
-  background-color: grey;
-  height: calc(100% + 2px);
-  width: 4px;
-  left: -17px;
-  position: absolute;
-  top: 18px;
-} */
+.optionsBlock{
+  width:100px;
+  height: 35px;
+  background-color:whitesmoke;
+  text-transform: lowercase;
+}
 
+#open-menu-btn{
+  background-color: #2a60d533;
+  border-bottom: 2px solid #0043ff8a;
+  position:relative;
+}
 
-/* .titleBlockNotFirst::before{
-  height:calc(73.5%);
-  
-} */
-
-/* .titleBlock > div::before{
-  content: "";
-  background-color: red;
-  height: 4px;
-  width: 17px;
-  left: -17px;
-  position: absolute;
-  top: calc(100% + 20px);
-} */
-
-
-
-
-/* .titleBlock::after{
+#open-menu-btn::after{
   content:"";
   background-color:grey;
   position:absolute;
+  display:block;
+  right:-15px;
+  width:15px;
   height:4px;
-  width:17px;
-  top:100%;
-  left:-100%;
-} */
+  background-color:grey;
+  top:18px;
+}
+
+.queryOptionItem{
+  width:180px;
+}
 
 
-/* .nestedQueryBlock::after{
 
-} */

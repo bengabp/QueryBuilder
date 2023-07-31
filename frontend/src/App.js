@@ -15,10 +15,7 @@ import SearchResultsTable from './components/SearchResultsTable';
 
 const theme = createTheme({
   typography:{
-    fontSize:12,
-    button:{
-      borderRadius:'none'
-    }
+    fontSize:12
   }
 })
 

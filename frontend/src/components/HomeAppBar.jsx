@@ -7,7 +7,9 @@ class HomeAppBar extends React.Component{
     }
     render() {
         return (
-            <AppBar position='static'>
+            <AppBar position='static'
+                sx={{}}
+            >
                 <Toolbar>
                     <Typography variant='h5'>Query Builder</Typography>
                 </Toolbar>

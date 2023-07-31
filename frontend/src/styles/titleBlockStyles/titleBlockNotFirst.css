@@ -12,3 +12,7 @@
     position: absolute;
     top: -30px;
 }
+
+.noUpLine::before{
+    content:none;
+}
