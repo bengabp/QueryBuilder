@@ -16,7 +16,39 @@ export default function LastBlock(props) {
         className += ` noUpLine`
     }
 
-    const [text, dataKey, dType] = props.text.split("|");
+    const queryObject = JSON.parse(props.text);
+    const text = queryObject.text;
+    const dataKey = queryObject.dataKey;
+    const parentsList = queryObject.parents
+    const dType = queryObject.dType
+
+    console.log("Request Queries => ",props.requestQueries);
+
+    const [values, setValues] = React.useState([]);
+
+    /* 
+        requestQueries={props.requestQueries}
+        etRequestQueries={props.setRequestQueries}
+
+    */
+    const onOptionSelect = (option) => {
+        const query = [...parentsList, dataKey].join(".") ;
+        const jsonString = JSON.stringify({
+            dataKey:dataKey,
+            dType:dType,
+            text: text,
+            parents: parentsList,
+            currentOption: option,
+            values:values
+        })
+        props.setRequestQueries((currentVal) => {
+            const currentObjects = {...currentVal};
+            currentObjects[query] = jsonString
+            return currentObjects;
+        });
+        console.log(`query=> ${query} | Selected => ${option}`)
+    }
+    
 
     return (
         <Stack 
@@ -43,10 +75,9 @@ export default function LastBlock(props) {
             </Box>
             <OptionBlock
                 options={dataTypesAndOptions[dType]}
+                onOptionSelect={onOptionSelect}
             ></OptionBlock>
-            <MyAutocompleteTextField>
 
-            </MyAutocompleteTextField>
         </Stack>
     );
 }

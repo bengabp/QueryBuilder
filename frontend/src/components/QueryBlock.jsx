@@ -39,13 +39,29 @@ const QueryBlock  = (props) => {
                             >
                                 {
                                     props.parent != undefined ? 
-                                    <TitleBlock text={query} blockClassName={classNames.titleBlockFirst} />
-                                    : <TitleBlock text={query} blockClassName={classNames.titleBlockNotFirst} index={ index } />
+                                    <TitleBlock 
+                                        text={query} 
+                                        blockClassName={classNames.titleBlockFirst} 
+                                        key={index}
+                                        requestQueries={props.requestQueries}
+                                    setRequestQueries={props.setRequestQueries}
+                                    />
+                                    : 
+                                    <TitleBlock 
+                                        text={query} 
+                                        blockClassName={classNames.titleBlockNotFirst} 
+                                        index={ index } 
+                                        key={index}
+                                        requestQueries={props.requestQueries}
+                                        setRequestQueries={props.setRequestQueries} 
+                                    />
                                 }
                                 
                                 <QueryBlock
                                     queryObjects={props.queryObjects[query]}
                                     key={index}
+                                    requestQueries={props.requestQueries}
+                                    setRequestQueries={props.setRequestQueries}
                                 ></QueryBlock>
                         </Stack>
                     } else {
@@ -54,8 +70,23 @@ const QueryBlock  = (props) => {
                         >
                             {
                                 props.parent != undefined ?
-                                <LastBlock text={query} blockClassName={classNames.lastBlockFirst} index={index} />
-                                : <LastBlock text={query} blockClassName={classNames.lastBlockNotFirst} index={index} />
+                                <LastBlock 
+                                    text={query} 
+                                    blockClassName={classNames.lastBlockFirst} 
+                                    index={index} 
+                                    key={index} 
+                                    requestQueries={props.requestQueries}
+                                    setRequestQueries={props.setRequestQueries}
+                                />
+                                : 
+                                <LastBlock 
+                                    text={query} 
+                                    blockClassName={classNames.lastBlockNotFirst} 
+                                    index={index} 
+                                    key={index} 
+                                    requestQueries={props.requestQueries}
+                                    setRequestQueries={props.setRequestQueries}
+                                />
                             }
                         </Stack>
                     }

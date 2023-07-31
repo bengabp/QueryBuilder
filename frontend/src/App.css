@@ -64,7 +64,7 @@
 }
 
 #queryBuilderContainer{
-  height:40%;
+  height:100%;
   width:100%;
   overflow:scroll;
   padding-left:20px;
