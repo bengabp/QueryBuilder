@@ -118,7 +118,7 @@ export default function QueryBuilder(props) {
         id="queryBuilderContainer"
         
       >
-        <Stack className="queryBuilder" spacing={1}>
+        <Stack className="queryBuilder" spacing={1} marginBottom={"10px"}>
           {
             Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
               return (
@@ -154,19 +154,21 @@ export default function QueryBuilder(props) {
           
         }}
       >
-        <Stack 
-          direction="row" 
-          justifyContent={"space-between"}
-          padding={"8px 20px"}
-          borderBottom={"1px solid grey"}
-        >
-          <Box display={'flex'} alignItems={"center"} gap={"20px"}>
-            <Button variant="contained">SEARCH</Button>
-            <Typography variant="span">1-5 of 45,000 results</Typography>
+        <Stack direction="column">
+          <Box
+            display="flex"
+            justifyContent={"space-between"}
+            padding={"8px 20px"}
+            borderBottom={"1px solid grey"}
+          >
+            <Box display={'flex'} alignItems={"center"} gap={"20px"}>
+              <Button variant="contained">SEARCH</Button>
+              <Typography variant="span">1-5 of 45,000 results</Typography>
+            </Box>
+            <Button variant="contained">Export Companies</Button>
           </Box>
-          <Button variant="contained">Export Companies</Button>
+          <SearchResultsTable></SearchResultsTable>
         </Stack>
-        <SearchResultsTable></SearchResultsTable>
       </Grid>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}

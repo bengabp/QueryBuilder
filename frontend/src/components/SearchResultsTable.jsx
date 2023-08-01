@@ -3,11 +3,10 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
   {
     field: 'firstName',
     headerName: 'First name',
-    width: 150,
+    width: 250,
     editable: true,
   },
   {
@@ -48,7 +47,6 @@ const rows = [
 
 export default function SearchResultsTable() {
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -63,6 +61,5 @@ export default function SearchResultsTable() {
         checkboxSelection
         disableRowSelectionOnClick
       />
-    </Box>
   );
 }
