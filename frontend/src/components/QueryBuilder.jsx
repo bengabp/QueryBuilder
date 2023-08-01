@@ -1,6 +1,7 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -8,6 +9,7 @@ import FiltersDialog from './FiltersDialog';
 import AddFilterButton from './AddFilterButton';
 import QueryBlock from './QueryBlock';
 import { dataTypesAndOptions } from '../constants/options';
+import SearchResultsTable from './SearchResultsTable';
 
 
 export default function QueryBuilder(props) {
@@ -144,15 +146,27 @@ export default function QueryBuilder(props) {
         </Stack>
       </Stack>
       <Grid
-      
         direction="column"
         container
         sx={{
-          height:'0%',
-          backgroundColor:'grey',
+          height:'60%',
+          borderTop:'1px solid grey',
           
         }}
       >
+        <Stack 
+          direction="row" 
+          justifyContent={"space-between"}
+          padding={"8px 20px"}
+          borderBottom={"1px solid grey"}
+        >
+          <Box display={'flex'} alignItems={"center"} gap={"20px"}>
+            <Button variant="contained">SEARCH</Button>
+            <Typography variant="span">1-5 of 45,000 results</Typography>
+          </Box>
+          <Button variant="contained">Export Companies</Button>
+        </Stack>
+        <SearchResultsTable></SearchResultsTable>
       </Grid>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}

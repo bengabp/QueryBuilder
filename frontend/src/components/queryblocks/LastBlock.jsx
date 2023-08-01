@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 // import ValueBlock from './ValueBlock';
 import MyAutocompleteTextField from './ValueBlock';
 import { dataTypesAndOptions } from '../../constants/options';
+import Tags from './AutocompleteField';
 
 
 
@@ -48,6 +49,10 @@ export default function LastBlock(props) {
         });
         console.log(`query=> ${query} | Selected => ${option}`)
     }
+
+    const onAutoCompleteOpen = () => {
+        
+    }
     
 
     return (
@@ -77,7 +82,7 @@ export default function LastBlock(props) {
                 options={dataTypesAndOptions[dType]}
                 onOptionSelect={onOptionSelect}
             ></OptionBlock>
-
+            <Tags></Tags>
         </Stack>
     );
 }
