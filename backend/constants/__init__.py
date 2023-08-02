@@ -1,486 +1,632 @@
 frontend_backend_mapping = {
 	"basic_info.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "name",
+		
 	},
 	"basic_info.crunchbase_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "crunchbase_url"
 	},
 	"basic_info.create_date": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "create_date"
 	},
 	"basic_info.company_status": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "company_status"
 	},
 	"basic_info.facebook_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "facebook_url"
 	},
 	"basic_info.launch_month": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "launch_month"
 	},
 	"basic_info.launch_year": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "launch_year"
 	},
 	"basic_info.linkedin_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "linkedin_url"
 	},
 	"basic_info.tags": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "tags.name"
 	},
 	"basic_info.tagline": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "tagline"
 	},
 	"basic_info.technologies": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "technologies.name"
 	},
 	"basic_info.total_jobs_available": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "total_jobs_available"
 	},
 	"basic_info.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "type"
 	},
 	"basic_info.twitter_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "twitter_url"
 	},
 	"basic_info.year_became_unicorn": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "year_became_unicorn"
 	},
 	"basic_info.year_became_future_unicorn": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "year_became_future_unicorn"
 	},
 	"basic_info.job_roles": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "job_roles"
 	},
 	"basic_info.startup_ranking_rating": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "startup_ranking_rating"
 	},
 	"basic_info.growth_stage": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "growth_stage"
 	},
 	"basic_info.is_ai_data": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "is_ai_data"
 	},
 	"basic_info.is_editorial": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "is_editorial"
 	},
 	"basic_info.is_from_traderegister": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "is_from_traderegister"
 	},
 	"basic_info.matching_score": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "matching_score"
 	},
 	"basic_info.sdgs": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "sdgs.name"
 	},
 	"basic_info.patents_count": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "patents_count"
 	},
 	"basic_info.hq_details.address": {
-		"dType": "location"
+		"dType": "location",
+		"dKey": "hq_locations.address"
 	},
 	"basic_info.hq_details.country": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "hq_locations.country.name"
 	},
 	"basic_info.hq_details.continent": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "hq_locations.continent.name"
 	},
 	"basic_info.hq_details.city": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "hq_locations.city.name"
 	},
 	"basic_info.hq_details.is_headquaters": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "hq_locations.is_headquarters"
 	},
 	"basic_info.hq_details.is_founding_location": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "hq_locations.is_founding_location"
 	},
 	"basic_info.hq_details.state": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "hq_locations.state.name"
 	},
-
+	
 	"basic_info.tech_stacks.categories": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "tech_stack.categories.name"
 	},
 	"basic_info.tech_stacks_company.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "tech_stack.company.name"
 	},
 	"basic_info.tech_stacks_company.path": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "tech_stack.company.path"
 	},
 	"basic_info.tech_stacks_company.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "tech_stack.company.type"
 	},
 	"employees.employees": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "employees"
 	},
 	"employees.employees_latest": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employees_latest"
 	},
 	"employees.employee_12_months_growth_percentile": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "employee_12_months_growth_percentile"
 	},
 	"employees.employee_12_months_growth_delta": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_12_months_growth_delta"
 	},
 	"employees.employee_12_months_growth_unique": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_12_months_growth_unique"
 	},
 	"employees.employee_12_months_growth_relative": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_12_months_growth_relative"
 	},
 	"employees.employee_3_months_growth_delta": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_3_months_growth_delta"
 	},
 	"employees.employee_3_months_growth_percentile": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_3_months_growth_percentile"
 	},
 	"employees.employee_3_months_growth_relative": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_3_months_growth_relative"
 	},
 	"employees.employee_3_months_growth_unique": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_3_months_growth_unique"
 	},
 	"employees.employee_6_months_growth_delta": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_6_months_growth_delta"
 	},
 	"employees.employee_6_months_growth_percentile": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "employee_6_months_growth_percentile"
 	},
 	"employees.employee_6_months_growth_relative": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_6_months_growth_relative"
 	},
 	"employees.employee_6_months_growth_unique": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "employee_6_months_growth_unique"
 	},
-
+	
 	"events.total": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "participated_events.total"
 	},
 	"events.participated_events.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "participated_events.items.name"
 	},
 	"events.participated_events.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "participated_events.items.type"
 	},
 	"events.participated_events.path": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "participated_events.items.path"
 	},
 	"events.participated_events.twitter_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "participated_events.items.twitter_url"
 	},
 	"events.participated_events.event_date_start": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "participated_events.items.event_date_start"
 	},
 	"events.participated_events.event_date_end": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "participated_events.items.event_date_end"
 	},
 	"events.participated_events.angellist_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "participated_events.items.angellist_url"
 	},
 	"events.participated_events.linkedin_url": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "participated_events.items.linkedin_url"
 	},
 	"founders.founders_score_cumulated": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "founders_score_cumulated"
 	},
 	"founders.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "founders.name"
 	},
 	"founders.founders_top_university": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "founders_top_university"
 	},
 	"founders.founders_top_past_companies": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "founders_top_past_companies"
 	},
 	"founders.has_strong_founder": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "has_strong_founder"
 	},
 	"founders.has_super_founder": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "has_super_founder"
 	},
 	"founders.has_promising_founder": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "has_promising_founder"
 	},
 	"founders.past_founders": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "past_founders"
 	},
 	"founders.past_founders_raised_10m": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "past_founders_raised_10m"
 	},
-
+	
 	"income_funding.total_funding_enhanced": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "total_funding_enhanced.amount"
 	},
 	"income_funding.income_streams": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "income_streams.name"
 	},
 	"income_funding.funding_details.total": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "fundings.total"
 	},
 	"income_funding.funding_details.date": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "fundings.items.date"
 	},
 	"income_funding.funding_details.amount": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "fundings.items.amount"
 	},
 	"income_funding.funding_details.round": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "fundings.items.round"
 	},
 	"income_funding.funding_details.unknown_investors": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "fundings.items.unknown_investors"
 	},
 	"income_funding.funding_details.valuation_generated_max": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "fundings.items.valuation_generated_max"
 	},
 	"income_funding.funding_details.valuation_generated_min": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "fundings.items.valuation_generated_min"
 	},
 	"income_funding.funding_details.valuation": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "fundings.items.valuation"
 	},
 	"income_funding.funding_details.is_undisclosed": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "fundings.items.is_undisclosed"
 	},
-	"income_funding.funding_details.investors": {
-		"dType": "string"
-	},
+
 	"income_funding.funding_details.funding_investors.investor_details.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "fundings.items.investors.type"
 	},
 	"income_funding.funding_details.funding_investors.investor_details.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "fundings.items.investors.name"
 	},
 	"income_funding.funding_details.funding_investors.investor_details.path": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "fundings.items.investors.path"
 	},
 	"income_funding.funding_details.funding_investors.investor_details.lead": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "fundings.items.investors.lead"
 	},
 	"investors.total_investors": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "investors.total"
 	},
 	"investors.investor_details.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "investors.items.type"
 	},
 	"investors.investor_details.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "investors.items.name"
 	},
 	"investors.investor_details.path": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "investors.items.path"
 	},
 	"investors.investor_details.lead": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "investors.items.lead"
 	},
 	"investors.investor_details.exited": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "investors.items.exited"
 	},
 	"investors.investment_details.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "investments.items.type"
 	},
 	"investors.investment_details.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "investments.items.name"
 	},
 	"investors.investment_details.path": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "investments.items.path"
 	},
 	"investors.investment_details.lead": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "investments.items.lead"
 	},
 	"investors.investment_details.exited": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "investments.items.exited"
 	},
 	"industries.industries": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "industries.name"
 	},
 	"industries.sub_industries": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "sub_industries.name"
 	},
 	"industries.service_industries": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "service_industries.name"
 	},
 	"ipo_round.date": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": ""
 	},
 	"ipo_round.amount": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "ipo_round.amount"
 	},
 	"ipo_round.round": {
-		"dType": "string"
-	},
-	"ipo_round.investors": {
-		"dType": "date"
-	},
-	"ipo_round.unknown_investors": {
-		"dType": "date"
+		"dType": "string",
+		"dKey": "ipo_round.round"
 	},
 	"ipo_round.is_undisclosed": {
-		"dType": "date"
+		"dType": "boolean",
+		"dKey": "ipo_round.is_undisclosed"
 	},
 	"ipo_round.number": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "ipo_round.date"
 	},
 	"ipo_round.ipo_round_investors.name": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "ip_round.investors.name"
 	},
 	"ipo_round.ipo_round_investors.path": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "ip_round.investors.path"
 	},
 	"ipo_round.ipo_round_investors.type": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "ip_round.investors.type"
 	},
 	"ipo_round.ipo_round_investors.lead": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "ip_round.investors.lead"
 	},
 	"kpi_summary.last_update_date": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "kpi_summary.last_updated_date"
 	},
 	"kpi_summary.revenues_hidden": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "kpi_summary.revenues_hidden"
 	},
 	"kpi_summary.ebitda_hidden": {
-		"dType": "boole an"
+		"dType": "boolean",
+		"dKey": "kpi_summary.ebitda_hidden"
 	},
 	"kpi_summary.rnd_hidden": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "kpi_summary.rnd_hidden"
 	},
 	"kpi_summary.market_cap_hidden": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "kpi_summary.market_cap_hidden"
 	},
 	"kpi_summary.valuation_hidden": {
-		"dType": "boolean"
+		"dType": "boolean",
+		"dKey": "kpi_summary.valuation_hidden"
 	},
 	"kpi_summary.profit_hidden": {
-		"dType": "boolean"
-	},
-	"kpi_summary.last_updated": {},
-	"kpi_summary.valuations": {
-		"dType": "string"
+		"dType": "boolean",
+		"dKey": "kpi_summary.profit_hidden"
 	},
 	"kpi_summary.kpi_summary_values.year": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "kpi_summary.values.year"
 	},
 	"kpi_summary.kpi_summary_values.valuation": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.valuation"
 	},
 	"kpi_summary.kpi_summary_values.revenue": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.revenue"
 	},
 	"kpi_summary.kpi_summary_values.revenue_growth": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "kpi_summary.values.revenue_growth"
 	},
 	"kpi_summary.kpi_summary_values.revenue_source": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.revenue_source"
 	},
 	"kpi_summary.kpi_summary_values.ebitda": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.ebitda"
 	},
 	"kpi_summary.kpi_summary_values.ebitda_margin": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.ebitda_margin"
 	},
 	"kpi_summary.kpi_summary_values.ebitda_source": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.ebitda_source"
 	},
 	"kpi_summary.kpi_summary_values.profit": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.profit"
 	},
 	"kpi_summary.kpi_summary_values.profit_source": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.profit_source"
 	},
 	"kpi_summary.kpi_summary_values.profit_margin": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.profit_margin"
 	},
 	"kpi_summary.kpi_summary_values.rnd": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.rnd"
 	},
 	"kpi_summary.kpi_summary_values.rnd_margin": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.rnd_margin"
 	},
 	"kpi_summary.kpi_summary_values.rnd_source": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.rnd_source"
 	},
+	
 	"kpi_summary.kpi_summary_values.rnd_revenue": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.rnd_revenue"
 	},
 	"kpi_summary.kpi_summary_values.rnd_ebitda": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.rnd_ebitda"
 	},
 	"kpi_summary.kpi_summary_values.ev_revenue": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.ev_revenue"
 	},
 	"kpi_summary.kpi_summary_values.ev_ebitda": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.values.ev_ebitda"
 	},
 	"kpi_summary.kpi_summary_valuations.date": {
-		"dType": "date"
+		"dType": "date",
+		"dKey": "kpi_summary.valuations.date"
 	},
 	"kpi_summary.kpi_summary_valuations.source": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "kpi_summary.valuations.source"
 	},
 	"kpi_summary.kpi_summary_valuations.source_round": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "kpi_summary.valuations.source_round"
 	},
 	"kpi_summary.kpi_summary_valuations.valuation": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.valuations.valuation"
 	},
 	"kpi_summary.kpi_summary_valuations.valuation_min": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.valuations.valuation_min"
 	},
 	"kpi_summary.kpi_summary_valuations.valuation_max": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.valuations.valuation_max"
 	},
 	"kpi_summary.kpi_summary_valuations.market_cap": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.valuations.market_cap"
 	},
 	"kpi_summary.kpi_summary_valuations.net_debt": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "kpi_summary.valuations.net_debt"
 	},
 	"similar_companies.similarweb_12_months_growth_delta": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_12_months_growth_delta"
 	},
 	"similar_companies.similarweb_12_months_growth_percentile": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "similarweb_12_months_growth_percentile"
 	},
 	"similar_companies.similarweb_12_months_growth_relative": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_12_months_growth_percentile"
 	},
 	"similar_companies.similarweb_12_months_growth_unique": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_12_months_growth_unique"
 	},
 	"similar_companies.similarweb_3_months_growth_delta": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_3_months_growth_delta"
 	},
 	"similar_companies.similarweb_3_months_growth_percentile": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "similarweb_3_months_growth_percentile"
 	},
 	"similar_companies.similarweb_3_months_growth_relative": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_3_months_growth_relative"
 	},
 	"similar_companies.similarweb_3_months_growth_unique": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_3_months_growth_unique"
 	},
 	"similar_companies.similarweb_6_months_growth_delta": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_6_months_growth_delta"
 	},
 	"similar_companies.similarweb_6_months_growth_percentile": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "similarweb_6_months_growth_percentile"
 	},
 	"similar_companies.similarweb_6_months_growth_relative": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_6_months_growth_relative"
 	},
 	"similar_companies.similarweb_6_months_growth_unique": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "similarweb_6_months_growth_unique"
 	},
 	"revenues.revenues": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "revenues.name"
 	},
 	"revenues.latest_revenue_enhanced": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "latest_revenue_enhanced"
 	},
 	"innovations.innovations": {
-		"dType": "string"
+		"dType": "string",
+		"dKey": "innovations"
 	},
 	"innovations.innovations_count": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "innovations_count"
 	},
 	"innovations.innovations_corporate_rank": {
-		"dType": "number"
+		"dType": "number",
+		"dKey": "innovation_corporate_rank"
 	}
 }

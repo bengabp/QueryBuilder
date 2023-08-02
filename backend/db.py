@@ -56,6 +56,5 @@ class DBConnection:
 
 db = DBConnection()
 db.connect()
-db.migrate_companies_data()
 
 

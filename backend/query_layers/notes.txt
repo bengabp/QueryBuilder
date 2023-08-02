@@ -3,4 +3,5 @@ score your sata in a mongodb database
 convert employee_range to max and min employees
 
 convert- arrtibutes- to date => [ipo_round, kpi_summary.valuations, kpi_summary.values]
-                                launch_month, launch_year
+                                launch_month, launch_year,
+                                fundings.items.month, fundings.items.year
