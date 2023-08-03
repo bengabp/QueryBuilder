@@ -161,5 +161,18 @@
   width:180px;
 }
 
+#valuesAutoCompleteContainer{
+  width:max-content;
+  border:1px solid rgba(128, 128, 128, 0.274);
+  border-radius:5px;
+  padding-top:3px;
+  padding-right:5px;
+  margin-right:20px;
+}
+
+
+#values-autocomplete{
+  
+}
 
 

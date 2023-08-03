@@ -4,10 +4,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OptionBlock from './OptionBlock';
 import Stack from "@mui/material/Stack";
-// import ValueBlock from './ValueBlock';
-import MyAutocompleteTextField from './ValueBlock';
 import { dataTypesAndOptions } from '../../constants/options';
-import Tags from './AutocompleteField';
+import AutoCompleteSearchField from './AutocompleteField';
 
 
 
@@ -49,12 +47,7 @@ export default function LastBlock(props) {
         });
         console.log(`query=> ${query} | Selected => ${option}`)
     }
-
-    const onAutoCompleteOpen = () => {
-        
-    }
     
-
     return (
         <Stack 
             direction="row"
@@ -82,7 +75,10 @@ export default function LastBlock(props) {
                 options={dataTypesAndOptions[dType]}
                 onOptionSelect={onOptionSelect}
             ></OptionBlock>
-            <Tags></Tags>
+            <AutoCompleteSearchField
+                queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
+                setRequestQueries={props.setRequestQueries}
+            />
         </Stack>
     );
 }
