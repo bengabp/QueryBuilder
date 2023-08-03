@@ -1,4 +1,4 @@
-frontend_backend_mapping = {
+field_mappings = {
 	"basic_info.name": {
 		"dType": "string",
 		"dKey": "name",
