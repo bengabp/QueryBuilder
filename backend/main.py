@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import logger
 from db import db
 from response_models import CompletionsResponse
-
+from constants import field_mappings
 from utils.completions import get_search_suggestions
 
 app = FastAPI()
@@ -44,6 +44,7 @@ def get_completions(request: Request,
 	)
 ):
 	""" Get completions for search query using mongodb aggregate queries/pipelines """
-	completions = get_search_suggestions(field_path, q, limit = 10)
+	corresponding_field = field_mappings[field_path]["dKey"]
+	completions = get_search_suggestions(corresponding_field, q, limit = 20)
 	return CompletionsResponse(completions = completions)
 	

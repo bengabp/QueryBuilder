@@ -12,7 +12,9 @@ export default function AutoCompleteSearchField(props) {
   const getSuggestions = async (inputValue) => {
     try {
       // Replace 'your-api-endpoint' with the actual API endpoint
-      const response = await fetch(`${api_uri}/completions?q=${inputValue}&field_path=hq_locations.address`);
+      const query = [...props.queryProperties.parents, props.queryProperties.dataKey].join(".") ;
+
+      const response = await fetch(`${api_uri}/completions?q=${inputValue}&field_path=${query}`);
       const data = await response.json();
       const suggestionsSet = new Set(data.completions);
       setSuggestions([...suggestionsSet]);
