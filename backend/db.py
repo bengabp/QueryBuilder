@@ -2,7 +2,7 @@
 
 import pymongo
 from pymongo.mongo_client import MongoClient
-from settings import create_logger, BASE_DIR
+from config import create_logger, BASE_DIR
 import os
 from pymongo.errors import BulkWriteError, DuplicateKeyError
 from pymongo.collection import Collection
@@ -56,6 +56,5 @@ class DBConnection:
 
 db = DBConnection()
 db.connect()
-db.migrate_companies_data()
 
 

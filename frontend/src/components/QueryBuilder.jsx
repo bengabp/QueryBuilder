@@ -1,59 +1,70 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-
-
 import FiltersDialog from './FiltersDialog';
 import AddFilterButton from './AddFilterButton';
 import QueryBlock from './QueryBlock';
+import { dataTypesAndOptions } from '../constants/options';
+import SearchResultsTable from './SearchResultsTable';
+
 
 export default function QueryBuilder(props) {
-  const blockBackgroundColors = [
-    "red",
-    "lightyellow",
-    "grey",
-    "whitesmoke",
-    "brown",
-    "yellow",
-    "orange"
-  ];
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
   const [queryObjects, setQueryObjects] = React.useState({});
-  let [queryBlockColors, setQueryBlockColors] = React.useState(blockBackgroundColors);
-  
+  const [onQueryOptionSelect, setQueryOptionSelect] = React.useState("");
+  const [onQueryLineDelete, setQueryLineDelete] = React.useState("");
+  const [requestQueries, setRequestQueries] = React.useState({});
 
-  /* 
-    const querySchema = {
-      queryKey:"Name",
-      dataKey:'real_db_value",
-      dType:"number",
-      path:['basic_info']
-      
-      
-    }
-  */
   React.useEffect(()=>{
-    console.log(queryObjects);
-  }, [queryObjects]);
+    let dict = {};
+    Object.keys(requestQueries).forEach((item, index) => {
+      let list = item.split(".");
+      list[list.length-1] = requestQueries[item]
+      const listDict = convertStringToDict(list);
+      dict = mergeDicts(dict, listDict);
+    })
+    setQueryObjects(dict);
+  }, 
+  [requestQueries]);
+
   
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
     if (panelN === 1){
       filtersArray.pop();
     }
-    toggleFiltersDialog(false);    
-    const dict = convertStringToDict([...filtersArray, `${filter.text}|${filter.dataKey}|${filter.dType}`]);
-    const merged = mergeDicts(queryObjects, dict)
-    setQueryObjects(merged);
+    toggleFiltersDialog(false);  // Close filters dialog   
+    // Convert last querykey details to json string so it can be parsed and converted back to a js object
+    const jsonString = JSON.stringify({
+      dataKey:filter.dataKey,
+      dType:filter.dType,
+      text: filter.text,
+      parents: [...filtersArray],
+      currentOption: dataTypesAndOptions[filter.dType][0],
+      values:[]
+    })
+
+    const longQueryString = [...filtersArray, filter.dataKey].join(".")
+    setRequestQueries((current) => {
+      const currentQueries = {...current}
+      currentQueries[longQueryString] = jsonString
+      return currentQueries;
+    });
+
+    // const dict = convertStringToDict([...filtersArray, jsonString]);
+    // const merged = mergeDicts(queryObjects, dict)
+    // setQueryObjects(merged);
+    
+
   }
 
   function mergeDicts(dict1, dict2) {
     const mergedDict = { ...dict1 }; // Create a shallow copy of dict1
-  
     for (const [key, value] of Object.entries(dict2)) {
       if (key in mergedDict && typeof mergedDict[key] === 'object' && typeof value === 'object') {
         // Recursively merge nested objects
@@ -62,7 +73,6 @@ export default function QueryBuilder(props) {
         mergedDict[key] = value;
       }
     }
-  
     return mergedDict;
   }
 
@@ -70,7 +80,6 @@ export default function QueryBuilder(props) {
   function convertStringToDict(keysValues) {
     const result = {};
     let currentDict = result;
-  
     for (let i = 0; i < keysValues.length; i++) {
       const key = keysValues[i];
       if (i === keysValues.length - 1) {
@@ -80,7 +89,6 @@ export default function QueryBuilder(props) {
         currentDict = currentDict[key];
       }
     }
-  
     return result;
   }
 
@@ -93,7 +101,6 @@ export default function QueryBuilder(props) {
       } else {
         return current
       }
-     
     })
   }
 
@@ -111,10 +118,9 @@ export default function QueryBuilder(props) {
         id="queryBuilderContainer"
         
       >
-        <Stack className="queryBuilder" spacing={1}>
+        <Stack className="queryBuilder" spacing={1} marginBottom={"10px"}>
           {
             Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
-              queryBlockColors = [...blockBackgroundColors];
               return (
                 <div className="queryBlock">
                   <QueryBlock 
@@ -122,8 +128,8 @@ export default function QueryBuilder(props) {
                     parent={queryObject}
                     key={index}
                     index={index}
-                    backgroundColors={queryBlockColors}
-                    setBackgroundColors={setQueryBlockColors}
+                    requestQueries={requestQueries}
+                    setRequestQueries={setRequestQueries}
                   />
                 </div>)
             })
@@ -140,15 +146,29 @@ export default function QueryBuilder(props) {
         </Stack>
       </Stack>
       <Grid
-      
         direction="column"
         container
         sx={{
           height:'60%',
-          backgroundColor:'grey',
+          borderTop:'1px solid grey',
           
         }}
       >
+        <Stack direction="column">
+          <Box
+            display="flex"
+            justifyContent={"space-between"}
+            padding={"8px 20px"}
+            borderBottom={"1px solid grey"}
+          >
+            <Box display={'flex'} alignItems={"center"} gap={"20px"}>
+              <Button variant="contained">SEARCH</Button>
+              <Typography variant="span">1-5 of 45,000 results</Typography>
+            </Box>
+            <Button variant="contained">Export Companies</Button>
+          </Box>
+          <SearchResultsTable></SearchResultsTable>
+        </Stack>
       </Grid>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}

@@ -12,13 +12,9 @@ BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 LOG_FILES_DIR = os.path.join(BASE_DIR, "logs")
-TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 DIRECTORIES = [
-	LOG_FILES_DIR,
-	TEMPLATES_DIR,
-	STATIC_DIR
+	LOG_FILES_DIR
 ]
 
 
@@ -62,3 +58,5 @@ def create_logger(name):
 	stream_handler.setFormatter(formatter)
 	logger.addHandler(stream_handler)
 	return logger
+
+logger = create_logger("querybuilder")

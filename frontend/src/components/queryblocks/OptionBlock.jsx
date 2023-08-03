@@ -1,7 +1,6 @@
 import React from 'react';
 import {MenuItem, Menu, Button} from '@mui/material';
 
-
 export default function OptionBlock (props) {
     const [menuState, setMenuState] = React.useState(null);
     const [selectedOption, setSelectedOption] = React.useState(props.options[0]);
@@ -13,10 +12,15 @@ export default function OptionBlock (props) {
     const onOptionSelect = (option) => {
         closeMenu()
         setSelectedOption(option)
+        props.onOptionSelect(option);
     }
     
     const closeMenu = () => {
         setMenuState(null);
+    }
+
+    const refineOptionText = (textWithUnderscores) =>{
+        return textWithUnderscores.replaceAll("_", " ")
     }
 
     return (
@@ -25,7 +29,7 @@ export default function OptionBlock (props) {
                 id="open-menu-btn"
                 onClick={toggleMenuState}
             >
-                {selectedOption}
+                {refineOptionText(selectedOption)}
             </Button>
             <Menu
                 open = {Boolean(menuState)}
@@ -37,9 +41,9 @@ export default function OptionBlock (props) {
                     return <MenuItem 
                             key={index}
                             className="queryOptionItem"
-                            onClick={() => onOptionSelect(menuOption)}
+                            onClick={() => onOptionSelect(menuOption.replaceAll(" ","_"))}
                         >
-                        {menuOption}</MenuItem>
+                        {refineOptionText(menuOption)}</MenuItem>
                 })}
             </Menu>
         </div>
