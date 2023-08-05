@@ -12,11 +12,11 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import FirstPanel from './filterpanels/FirstPanel';
 import SecondPanel from './filterpanels/SecondPanel';
-
-import { filterKeyIndices } from '../constants/filters';
+import { SettingsContext } from '../contexts/SettingsContext';
+import {v4} from 'uuid';
 
 export default function FiltersDialog(props) {
-
+  const settings = React.useContext(SettingsContext);
   const closeFiltersDialog = () => {
     props.toggleFiltersDialog(false);
   };
@@ -50,10 +50,10 @@ export default function FiltersDialog(props) {
             divider={<NavigateNext />}
             alignItems="center"
           >
-            {filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((breadCrumb, index) => {
+            {settings.filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((breadCrumb, index) => {
                 return <Button
                     variant="text"
-                    key={index}
+                    key={v4()}
                     style={{
                         textTransform:'capitalize',
                         textAlign:'left',

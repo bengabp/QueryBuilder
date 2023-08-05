@@ -1,11 +1,12 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-
+import {v4} from 'uuid';
 import FilterBlock from '../filterblocks/FilterBlock';
-import { parentFilters, filterKeyIndices, filters } from '../../constants/filters';
+import { SettingsContext } from '../../contexts/SettingsContext';
 
 export default function FirstPanel(props){
+    const settings = React.useContext(SettingsContext);
 
     const onFilterBlockClicked = (filter) => {
 
@@ -28,10 +29,10 @@ export default function FirstPanel(props){
             >
                 {
                     props.filterKeysHistory.length > 1 ?
-                        filters[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {
+                        settings.filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {
                             return <FilterBlock 
                                 text={filter.text}
-                                key={index}
+                                key={v4()}
                                 hasNextIcon={filter.nextFilterKey !== undefined}
                                 onClick={() => {
                                     filter.nextFilterKey !== undefined ?
@@ -41,12 +42,12 @@ export default function FirstPanel(props){
                             />
                         })
                     :
-                        parentFilters.map((parentFilter, index) => {
+                        settings.parentFilters.map((parentFilter, index) => {
                             return <FilterBlock
                                 hasNextIcon={true}
-                                key={index}
+                                key={v4()}
                                 onClick={() => {onFilterBlockClicked(parentFilter)}}
-                                text={filterKeyIndices[parentFilter][0]}
+                                text={settings.filterKeyIndices[parentFilter][0]}
                             />
                         })
                 }

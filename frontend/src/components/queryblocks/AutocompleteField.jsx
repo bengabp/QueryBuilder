@@ -3,7 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
-const api_uri = "http://localhost:8000"
+export const api_uri = "http://20.77.89.95:8080"
 
 export default function AutoCompleteSearchField(props) {
   const [suggestions, setSuggestions] = React.useState([]);
@@ -76,7 +76,7 @@ export default function AutoCompleteSearchField(props) {
             height:'10px',
             width:'max-content',
             minWidth:'300px',
-            borderBottomColor:'grey',
+            borderBottomColor:'#808080a1',
             paddingLeft:'10px',
             
         }}

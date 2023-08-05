@@ -12,6 +12,7 @@ import React from 'react';
 import HomeAppBar from './components/HomeAppBar';
 import QueryBuilder from './components/QueryBuilder';
 import SearchResultsTable from './components/SearchResultsTable';
+import { SettingsProvider } from './contexts/SettingsContext';
 
 const theme = createTheme({
   typography:{
@@ -19,15 +20,19 @@ const theme = createTheme({
   }
 })
 
+
 const App = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
     
   return (
     <ThemeProvider theme={theme}>
       <Box>
         <Stack direction="column" spacing={3}>
-          <HomeAppBar></HomeAppBar>
-          <QueryBuilder></QueryBuilder>
-          <SearchResultsTable></SearchResultsTable>
+          <HomeAppBar isLoading={isLoading}></HomeAppBar>
+          <SettingsProvider>
+            <QueryBuilder isLoading={isLoading} setIsLoading={setIsLoading}></QueryBuilder>
+            <SearchResultsTable></SearchResultsTable>
+          </SettingsProvider>
         </Stack>
       </Box>
     </ThemeProvider>

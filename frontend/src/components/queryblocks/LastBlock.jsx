@@ -4,13 +4,14 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OptionBlock from './OptionBlock';
 import Stack from "@mui/material/Stack";
-import { dataTypesAndOptions } from '../../constants/options';
-import AutoCompleteSearchField from './AutocompleteField';
+import {SettingsContext} from '../../contexts/SettingsContext';
+import DynamicValuesBlock from './ValueBlock';
 
 
 
 export default function LastBlock(props) {
     let className = `blockWithConnectors ${props.blockClassName}`;
+    const settings = React.useContext(SettingsContext);
     if (props.index == 0){
         className += ` noUpLine`
     }
@@ -72,13 +73,16 @@ export default function LastBlock(props) {
                 </Button>
             </Box>
             <OptionBlock
-                options={dataTypesAndOptions[dType]}
+                options={settings.dataTypesAndOptions[dType]}
                 onOptionSelect={onOptionSelect}
             ></OptionBlock>
-            <AutoCompleteSearchField
-                queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
+            <DynamicValuesBlock
+                queryPropsString={props.requestQueries[[...parentsList, dataKey].join(".")]}
                 setRequestQueries={props.setRequestQueries}
-            />
+                query={[...parentsList, dataKey].join(".")}
+            >
+
+            </DynamicValuesBlock>
         </Stack>
     );
 }

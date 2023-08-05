@@ -1,5 +1,6 @@
 import React from 'react';
 import {MenuItem, Menu, Button} from '@mui/material';
+import {v4} from 'uuid';
 
 export default function OptionBlock (props) {
     const [menuState, setMenuState] = React.useState(null);
@@ -39,7 +40,7 @@ export default function OptionBlock (props) {
             >
                 {props.options.map((menuOption, index) => {
                     return <MenuItem 
-                            key={index}
+                            key={v4()}
                             className="queryOptionItem"
                             onClick={() => onOptionSelect(menuOption.replaceAll(" ","_"))}
                         >

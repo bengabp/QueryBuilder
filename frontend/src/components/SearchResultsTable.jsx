@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { SettingsContext } from '../contexts/SettingsContext';
+
 
 const columns = [
   {
@@ -46,6 +48,8 @@ const rows = [
 ];
 
 export default function SearchResultsTable() {
+  const settings = React.useContext(SettingsContext);
+  console.log("Settings : ", settings)
   return (
       <DataGrid
         rows={rows}

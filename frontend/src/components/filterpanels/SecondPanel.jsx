@@ -1,12 +1,12 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
-
+import {v4} from 'uuid';
 import FilterBlock from '../filterblocks/FilterBlock';
-import { filters } from '../../constants/filters';
+import { SettingsContext } from '../../contexts/SettingsContext';
 
 export default function SecondPanel(props){
-
+    const settings = React.useContext(SettingsContext);
     const onFilterBlockClicked = (filter) => {
         props.setFilterKeysHistory((current) => {
             const currentCopy = [...current];
@@ -27,10 +27,10 @@ export default function SecondPanel(props){
             >
 
                 {
-                    filters[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((filter, index) => {
+                    settings.filters[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((filter, index) => {
                         return <FilterBlock 
                             text={filter.text}
-                            key={index}
+                            key={v4()}
                             hasNextIcon={filter.nextFilterKey !== undefined}
                             onClick={() => {
                                 filter.nextFilterKey !== undefined ?

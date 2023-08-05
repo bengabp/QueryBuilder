@@ -91,7 +91,7 @@
   left:-15px;
   width:15px;
   height:4px;
-  background-color:grey;
+  background-color:#808080a1;
 }
 
 
@@ -102,7 +102,7 @@
   right:-15px;
   width:15px;
   height:4px;
-  background-color:grey;
+  background-color:#808080a1;
   top:18px;
 }
 
@@ -124,7 +124,7 @@
   content: "";
   position: absolute;
   height: calc(100% - 38px);
-  background-color: grey;
+  background-color: #808080a1;
   width: 4px;
   left: -15px;
   top: 19px;
@@ -147,13 +147,13 @@
 
 #open-menu-btn::after{
   content:"";
-  background-color:grey;
+  background-color:#808080a1;
   position:absolute;
   display:block;
   right:-15px;
   width:15px;
   height:4px;
-  background-color:grey;
+  background-color:#808080a1;
   top:18px;
 }
 
@@ -173,6 +173,14 @@
 
 #values-autocomplete{
   
+}
+
+.MuiLinearProgress-indeterminate{
+  transition: width 0.1s;
+}
+
+.MuiLinearProgress-determinate{
+  transition: width 0.1s;
 }
 
 
