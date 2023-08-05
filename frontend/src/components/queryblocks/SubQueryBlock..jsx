@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { filterKeyIndices } from '../../constants/filters';
+import { SettingsContext } from '../../contexts/SettingsContext';
 
 
 export default function SubQueryBlock (props){

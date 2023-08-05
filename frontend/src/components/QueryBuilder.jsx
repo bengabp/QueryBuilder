@@ -8,17 +8,44 @@ import Grid from '@mui/material/Grid';
 import FiltersDialog from './FiltersDialog';
 import AddFilterButton from './AddFilterButton';
 import QueryBlock from './QueryBlock';
-import { dataTypesAndOptions } from '../constants/options';
 import SearchResultsTable from './SearchResultsTable';
+import LinearProgress from '@mui/material/LinearProgress';
+import { SettingsContext } from '../contexts/SettingsContext';
+import {v4} from 'uuid';
 
 
 export default function QueryBuilder(props) {
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
   const [queryObjects, setQueryObjects] = React.useState({});
-  const [onQueryOptionSelect, setQueryOptionSelect] = React.useState("");
-  const [onQueryLineDelete, setQueryLineDelete] = React.useState("");
   const [requestQueries, setRequestQueries] = React.useState({});
+  const [isSearching, setIsSearching] = React.useState(false);
+  
+  const settings = React.useContext(SettingsContext);
+  const [searchResults, setSearchResults] = React.useState(settings.companies);
+
+
+  /* 
+  searchResults = {
+    totalResults:456,
+    index: 1,
+    resultsPerPage: 5,
+    results: [
+
+    ]
+  }
+  */
+  React.useEffect(() => {
+    props.setIsLoading(false);
+  },[])
+
+  React.useEffect(() => {
+    if (isSearching === true) {
+      setTimeout(() => {
+        setIsSearching(false);
+      }, 2000);
+    }
+  }, [isSearching])
 
   React.useEffect(()=>{
     let dict = {};
@@ -29,9 +56,9 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
+
   }, 
   [requestQueries]);
-
   
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
@@ -45,7 +72,7 @@ export default function QueryBuilder(props) {
       dType:filter.dType,
       text: filter.text,
       parents: [...filtersArray],
-      currentOption: dataTypesAndOptions[filter.dType][0],
+      currentOption: settings.dataTypesAndOptions[filter.dType][0],
       values:[]
     })
 
@@ -55,12 +82,7 @@ export default function QueryBuilder(props) {
       currentQueries[longQueryString] = jsonString
       return currentQueries;
     });
-
-    // const dict = convertStringToDict([...filtersArray, jsonString]);
-    // const merged = mergeDicts(queryObjects, dict)
-    // setQueryObjects(merged);
     
-
   }
 
   function mergeDicts(dict1, dict2) {
@@ -104,8 +126,11 @@ export default function QueryBuilder(props) {
     })
   }
 
-  const onOptionSelect = (path, option) => {
-    console.log(option);
+  const search = (event) => {
+    if (Object.keys(requestQueries).length > 0){
+      setIsSearching(true);
+    }
+    
   }
 
   return (
@@ -122,11 +147,10 @@ export default function QueryBuilder(props) {
           {
             Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
               return (
-                <div className="queryBlock">
+                <div className="queryBlock" key={index}>
                   <QueryBlock 
                     queryObjects={queryObjects[queryObject]}
                     parent={queryObject}
-                    key={index}
                     index={index}
                     requestQueries={requestQueries}
                     setRequestQueries={setRequestQueries}
@@ -137,6 +161,7 @@ export default function QueryBuilder(props) {
           <Box sx={{margin:'0', padding:'0'}}>
             <AddFilterButton // Open Dialog to add new companies filter
               toggleFiltersDialog={toggleFiltersDialog}
+              isSearching={isSearching}
               className={
                 Object.keys(queryObjects).length > 0 &&
                 "blockWithConnectors addFilterButton"
@@ -150,24 +175,32 @@ export default function QueryBuilder(props) {
         container
         sx={{
           height:'60%',
-          borderTop:'1px solid grey',
+          borderTop:'1px solid #808080a1',
           
         }}
       >
         <Stack direction="column">
+          <Box sx={{width:'100%'}}>
+            { isSearching && <LinearProgress />}
+          </Box>
           <Box
             display="flex"
             justifyContent={"space-between"}
             padding={"8px 20px"}
-            borderBottom={"1px solid grey"}
+            borderBottom={"1px solid #808080a1"}
           >
             <Box display={'flex'} alignItems={"center"} gap={"20px"}>
-              <Button variant="contained">SEARCH</Button>
-              <Typography variant="span">1-5 of 45,000 results</Typography>
+              <Button variant="contained"
+                onClick={search}
+                disabled={isSearching}
+              >SEARCH</Button>
+              <Typography variant="span">{`${searchResults.index}-${searchResults.index + searchResults.resultsPerPage} of ${searchResults.totalResults} results`}</Typography>
             </Box>
             <Button variant="contained">Export Companies</Button>
           </Box>
-          <SearchResultsTable></SearchResultsTable>
+          <SearchResultsTable>
+
+          </SearchResultsTable>
         </Stack>
       </Grid>
       <FiltersDialog

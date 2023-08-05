@@ -10,6 +10,7 @@ export default function AddFilterButton(props){
                 props.toggleFiltersDialog(true);
             }}
             variant="contained"
+            disabled={props.isSearching}
             >Add Companies Filter</Button>
         </Box>
     );

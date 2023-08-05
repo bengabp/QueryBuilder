@@ -3,7 +3,6 @@ import {MenuItem, Menu, Button} from '@mui/material';
 
 export default function OptionBlock (props) {
     const [menuState, setMenuState] = React.useState(null);
-    const [selectedOption, setSelectedOption] = React.useState(props.options[0]);
 
     const toggleMenuState = (event) => {
         setMenuState(event.currentTarget);
@@ -11,8 +10,7 @@ export default function OptionBlock (props) {
 
     const onOptionSelect = (option) => {
         closeMenu()
-        setSelectedOption(option)
-        props.onOptionSelect(option);
+        props.setCurrentOption(option)
     }
     
     const closeMenu = () => {
@@ -29,7 +27,7 @@ export default function OptionBlock (props) {
                 id="open-menu-btn"
                 onClick={toggleMenuState}
             >
-                {refineOptionText(selectedOption)}
+                {refineOptionText(props.currentOption)}
             </Button>
             <Menu
                 open = {Boolean(menuState)}

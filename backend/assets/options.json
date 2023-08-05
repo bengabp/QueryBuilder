@@ -1,12 +1,12 @@
-export const dataTypesAndOptions = {
-    date:[
+{
+    "date": [
         "after",
         "between",
         "equals",
         "before",
         "is_blank"
     ],
-    string:[
+    "string": [
         "includes_any",
         "includes_all",
         "does_not_include",
@@ -16,14 +16,13 @@ export const dataTypesAndOptions = {
         "is_blank",
         "equals"
     ],
-    location:[
+    "location": [
         "includes_any",
         "does_not_include",
         "is_blank",
         "includes_all"
     ],
-
-    number:[
+    "number": [
         "between",
         "does_not_equal",
         "greater_than_or_equal_to",
@@ -31,7 +30,7 @@ export const dataTypesAndOptions = {
         "less_than_or_equal_to",
         "is_blank"
     ],
-    boolean:[
+    "boolean": [
         "true",
         "false"
     ]

@@ -32,7 +32,10 @@
         "is_blank"
     ],
     "boolean":[
-        "true",
-        "false"
+        "includes_any",
+        "does_not_include",
+        "does_not_equal",
+        "equals",
+        "is_blank"
     ]
 }

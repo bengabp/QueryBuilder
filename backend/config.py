@@ -9,6 +9,7 @@ from colorlog import ColoredFormatter
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # Load env file
+# print(BASE_DIR, ".env")
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 LOG_FILES_DIR = os.path.join(BASE_DIR, "logs")

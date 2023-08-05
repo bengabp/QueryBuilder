@@ -293,7 +293,8 @@ field_mappings = {
 	},
 	"income_funding.funding_details.amount": {
 		"dType": "number",
-		"dKey": "fundings.items.amount"
+		"dKey": ""
+				" "
 	},
 	"income_funding.funding_details.round": {
 		"dType": "string",

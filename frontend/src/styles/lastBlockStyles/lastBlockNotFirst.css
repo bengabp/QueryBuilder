@@ -4,7 +4,7 @@
 
 .lastBlockNotFirst::before{
     content: "";
-    background-color: grey;
+    background-color: #808080a1;
     height: calc(100% - 38px);
     width: 4px;
     left: -17px;

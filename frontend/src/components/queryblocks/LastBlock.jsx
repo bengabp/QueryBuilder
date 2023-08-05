@@ -3,16 +3,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OptionBlock from './OptionBlock';
+import TwoValues from '../valueBlockTypes/TwoValues';
+import SingleValue from '../valueBlockTypes/SingleValue';
 import Stack from "@mui/material/Stack";
-// import ValueBlock from './ValueBlock';
-import MyAutocompleteTextField from './ValueBlock';
-import { dataTypesAndOptions } from '../../constants/options';
-import Tags from './AutocompleteField';
-
+import AutoCompleteSearchField from './AutocompleteField';
+import { SettingsContext } from '../../contexts/SettingsContext';
 
 
 export default function LastBlock(props) {
     let className = `blockWithConnectors ${props.blockClassName}`;
+    const settings = React.useContext(SettingsContext);
     if (props.index == 0){
         className += ` noUpLine`
     }
@@ -26,20 +26,21 @@ export default function LastBlock(props) {
     console.log("Request Queries => ",props.requestQueries);
 
     const [values, setValues] = React.useState([]);
-
+    const options = settings.dataTypesAndOptions[dType];
+    const [currentOption, setCurrentOption] = React.useState(options[0]);
     /* 
         requestQueries={props.requestQueries}
         etRequestQueries={props.setRequestQueries}
 
     */
-    const onOptionSelect = (option) => {
+    React.useEffect(() => {
         const query = [...parentsList, dataKey].join(".") ;
         const jsonString = JSON.stringify({
             dataKey:dataKey,
             dType:dType,
             text: text,
             parents: parentsList,
-            currentOption: option,
+            currentOption: currentOption,
             values:values
         })
         props.setRequestQueries((currentVal) => {
@@ -47,14 +48,10 @@ export default function LastBlock(props) {
             currentObjects[query] = jsonString
             return currentObjects;
         });
-        console.log(`query=> ${query} | Selected => ${option}`)
-    }
+    }, [currentOption])
 
-    const onAutoCompleteOpen = () => {
-        
-    }
+
     
-
     return (
         <Stack 
             direction="row"
@@ -79,10 +76,15 @@ export default function LastBlock(props) {
                 </Button>
             </Box>
             <OptionBlock
-                options={dataTypesAndOptions[dType]}
-                onOptionSelect={onOptionSelect}
+                currentOption={currentOption}
+                setCurrentOption={setCurrentOption}
+                options={options}
             ></OptionBlock>
-            <Tags></Tags>
+            {<AutoCompleteSearchField
+                queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
+                setRequestQueries={props.setRequestQueries}
+                setValues={setValues}
+            />}
         </Stack>
     );
 }
