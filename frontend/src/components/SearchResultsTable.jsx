@@ -49,7 +49,6 @@ const rows = [
 
 export default function SearchResultsTable() {
   const settings = React.useContext(SettingsContext);
-  console.log("Settings : ", settings)
   return (
       <DataGrid
         rows={rows}

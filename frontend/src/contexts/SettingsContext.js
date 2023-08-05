@@ -25,7 +25,7 @@ const SettingsProvider = ({ children }) => {
       fetchSettings()
     }, []);
 
-    console.log(settings)
+    console.log("Settings => ",settings)
     return (
         <SettingsContext.Provider value={settings}>
             {settings && children}

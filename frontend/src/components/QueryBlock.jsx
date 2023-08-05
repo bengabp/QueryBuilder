@@ -30,7 +30,7 @@ const QueryBlock  = (props) => {
                     if (typeof props.queryObjects[query] === "object" && props.queryObjects[query] !== null){
                         return <Stack 
                                 direction="row"
-                                key={v4()}
+                                key={index}
                                 sx={{
                                     alignItems:"flex-start",
                                     justifyContent:"flex-start",
@@ -42,7 +42,7 @@ const QueryBlock  = (props) => {
                                     <TitleBlock 
                                         text={query} 
                                         blockClassName={classNames.titleBlockFirst} 
-                                        key={v4()}
+                                        key={index+classNames.titleBlockFirst}
                                         requestQueries={props.requestQueries}
                                     setRequestQueries={props.setRequestQueries}
                                     />
@@ -51,7 +51,7 @@ const QueryBlock  = (props) => {
                                         text={query} 
                                         blockClassName={classNames.titleBlockNotFirst} 
                                         index={ index } 
-                                        key={v4()}
+                                        key={index+classNames.titleBlockNotFirst}
                                         requestQueries={props.requestQueries}
                                         setRequestQueries={props.setRequestQueries} 
                                     />
@@ -59,7 +59,7 @@ const QueryBlock  = (props) => {
                                 
                                 <QueryBlock
                                     queryObjects={props.queryObjects[query]}
-                                    key={v4()}
+                                    key={index+1}
                                     requestQueries={props.requestQueries}
                                     setRequestQueries={props.setRequestQueries}
                                 ></QueryBlock>
@@ -67,7 +67,7 @@ const QueryBlock  = (props) => {
                     } else {
                         return <Stack 
                             direction="row"
-                            key={v4()}
+                            key={index}
                         >
                             {
                                 props.parent != undefined ?
@@ -75,7 +75,7 @@ const QueryBlock  = (props) => {
                                     text={query} 
                                     blockClassName={classNames.lastBlockFirst} 
                                     index={index} 
-                                    key={v4()} 
+                                    key={index} 
                                     requestQueries={props.requestQueries}
                                     setRequestQueries={props.setRequestQueries}
                                 />
@@ -84,7 +84,7 @@ const QueryBlock  = (props) => {
                                     text={query} 
                                     blockClassName={classNames.lastBlockNotFirst} 
                                     index={index} 
-                                    key={v4()} 
+                                    key={index} 
                                     requestQueries={props.requestQueries}
                                     setRequestQueries={props.setRequestQueries}
                                 />

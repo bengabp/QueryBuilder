@@ -25,12 +25,11 @@ export default function SecondPanel(props){
                 direction="column"
                 alignItems="stretch"
             >
-
                 {
                     settings.filters[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((filter, index) => {
                         return <FilterBlock 
                             text={filter.text}
-                            key={v4()}
+                            key={index}
                             hasNextIcon={filter.nextFilterKey !== undefined}
                             onClick={() => {
                                 filter.nextFilterKey !== undefined ?

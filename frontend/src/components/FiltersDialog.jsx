@@ -53,7 +53,7 @@ export default function FiltersDialog(props) {
             {settings.filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-1]].map((breadCrumb, index) => {
                 return <Button
                     variant="text"
-                    key={v4()}
+                    key={index}
                     style={{
                         textTransform:'capitalize',
                         textAlign:'left',

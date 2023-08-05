@@ -32,7 +32,7 @@ export default function FirstPanel(props){
                         settings.filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {
                             return <FilterBlock 
                                 text={filter.text}
-                                key={v4()}
+                                key={index}
                                 hasNextIcon={filter.nextFilterKey !== undefined}
                                 onClick={() => {
                                     filter.nextFilterKey !== undefined ?
@@ -45,7 +45,7 @@ export default function FirstPanel(props){
                         settings.parentFilters.map((parentFilter, index) => {
                             return <FilterBlock
                                 hasNextIcon={true}
-                                key={v4()}
+                                key={index}
                                 onClick={() => {onFilterBlockClicked(parentFilter)}}
                                 text={settings.filterKeyIndices[parentFilter][0]}
                             />

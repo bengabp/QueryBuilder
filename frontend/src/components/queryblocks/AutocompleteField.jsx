@@ -7,7 +7,6 @@ export const api_uri = "http://20.77.89.95:8080"
 
 export default function AutoCompleteSearchField(props) {
   const [suggestions, setSuggestions] = React.useState([]);
-  const [selectedSuggestions, setSelectedSuggestions] = React.useState([]);
   
   const getSuggestions = async (inputValue) => {
     try {
@@ -23,31 +22,13 @@ export default function AutoCompleteSearchField(props) {
     }
   };
 
-  React.useEffect(() => {
-    const jsonString = JSON.stringify({
-        dataKey:props.queryProperties.dataKey,
-        dType:props.queryProperties.dType,
-        text: props.queryProperties.text,
-        parents: props.queryProperties.parents,
-        currentOption: props.queryProperties.option,
-        values:selectedSuggestions
-    })
-    const query = [...props.queryProperties.parents, props.queryProperties.dataKey].join(".") ;
-    props.setRequestQueries((currentVal) => {
-      const currentObjects = {...currentVal};
-      currentObjects[query] = jsonString
-      return currentObjects;
-  });
-  }, [selectedSuggestions])
-
   return (
     <Stack spacing={3} 
       id="valuesAutoCompleteContainer"
       direction="row"
     >
-   
       <Autocomplete
-        multiple
+        multiple={true}
         id="values-autocomplete"
         options={suggestions}
         autoComplete={true}
@@ -63,7 +44,31 @@ export default function AutoCompleteSearchField(props) {
           getSuggestions(newInputValue);
         }}
         onChange={(event, selectedSugs, reason) => {
-          setSelectedSuggestions(selectedSugs);
+          // Update values and queryPropsString
+          if (selectedSugs === null){
+            selectedSugs = [];
+          } else if (typeof selectedSugs === "string"){
+            selectedSugs = [selectedSugs]
+          } else if (typeof selectedSugs === "object"){
+            selectedSugs = [...selectedSugs]
+          }
+          console.log(selectedSugs)
+          props.setValues(selectedSugs);
+          const jsonString = JSON.stringify({
+              dataKey:props.queryProperties.dataKey,
+              dType:props.queryProperties.dType,
+              text: props.queryProperties.text,
+              parents: props.queryProperties.parents,
+              currentOption: props.queryProperties.option,
+              values:selectedSugs
+          })
+          const query = [...props.queryProperties.parents, props.queryProperties.dataKey].join(".") ;
+          props.setRequestQueries((currentVal) => {
+            const currentObjects = {...currentVal};
+            currentObjects[query] = jsonString
+            console.log("Set in autocomplete");
+            return currentObjects;
+          })
         }}
         renderInput={(params) => (
           <TextField

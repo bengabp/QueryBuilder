@@ -56,9 +56,9 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
+
   }, 
   [requestQueries]);
-
   
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
@@ -127,10 +127,8 @@ export default function QueryBuilder(props) {
   }
 
   const search = (event) => {
-    console.log(Object.keys(requestQueries).length)
     if (Object.keys(requestQueries).length > 0){
       setIsSearching(true);
-
     }
     
   }
@@ -149,11 +147,10 @@ export default function QueryBuilder(props) {
           {
             Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
               return (
-                <div className="queryBlock">
+                <div className="queryBlock" key={index}>
                   <QueryBlock 
                     queryObjects={queryObjects[queryObject]}
                     parent={queryObject}
-                    key={v4()}
                     index={index}
                     requestQueries={requestQueries}
                     setRequestQueries={setRequestQueries}
