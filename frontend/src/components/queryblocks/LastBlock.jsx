@@ -48,6 +48,8 @@ export default function LastBlock(props) {
             currentObjects[query] = jsonString
             return currentObjects;
         });
+
+        console.log("Supports completion => ", settings.dataTypesAndOptions[dType].supports_autocomplete == true);
     }, [currentOption])
 
 
@@ -84,6 +86,7 @@ export default function LastBlock(props) {
                 queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
                 setRequestQueries={props.setRequestQueries}
                 setValues={setValues}
+                doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete !== true ? false : true}
             />}
         </Stack>
     );

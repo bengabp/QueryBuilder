@@ -31,14 +31,14 @@ export default function AutoCompleteSearchField(props) {
         multiple={true}
         id="values-autocomplete"
         options={suggestions}
-        autoComplete={true}
-        freeSolo={true}
+        autoComplete={props.doCompletions}
+        freeSolo={!props.doCompletions}
         getOptionDisabled={(option) => props.queryProperties.values.includes(option)}
         getOptionLabel={(option) => option}
         isOptionEqualToValue={(option, value) => option.toLowerCase() == value.toLowerCase()}
-        onFocus={() => {
+        onFocus={props.doCompletions ? () => {
           getSuggestions("")
-        }}
+        } : null}
         fullWidth={false}
         onInputChange={(event, newInputValue) => {
           getSuggestions(newInputValue);
@@ -66,7 +66,6 @@ export default function AutoCompleteSearchField(props) {
           props.setRequestQueries((currentVal) => {
             const currentObjects = {...currentVal};
             currentObjects[query] = jsonString
-            console.log("Set in autocomplete");
             return currentObjects;
           })
         }}
