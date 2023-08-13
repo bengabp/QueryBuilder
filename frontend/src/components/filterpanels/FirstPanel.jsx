@@ -1,8 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import {v4} from 'uuid';
 import FilterBlock from '../filterblocks/FilterBlock';
 import { SettingsContext } from '../../contexts/SettingsContext';
 
@@ -20,7 +18,7 @@ export default function FirstPanel(props){
 
     return (
         <Grid item xs={6}>
-           
+
             <Stack 
                 sx={{
                     height: '300px',

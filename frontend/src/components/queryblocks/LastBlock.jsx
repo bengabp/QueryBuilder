@@ -23,10 +23,10 @@ export default function LastBlock(props) {
     const parentsList = queryObject.parents
     const dType = queryObject.dType
 
-    console.log("Request Queries => ",props.requestQueries);
+    // console.log("Request Queries => ",props.requestQueries);
 
     const [values, setValues] = React.useState([]);
-    const options = settings.dataTypesAndOptions[dType];
+    const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
     /* 
         requestQueries={props.requestQueries}
@@ -57,7 +57,7 @@ export default function LastBlock(props) {
             direction="row"
             style={{
                 display:'flex',
-                gap:'15px'
+                gap:'30px'
             }}
         >
             <Box className={className}>

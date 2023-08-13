@@ -13,7 +13,6 @@ import * as React from 'react';
 import FirstPanel from './filterpanels/FirstPanel';
 import SecondPanel from './filterpanels/SecondPanel';
 import { SettingsContext } from '../contexts/SettingsContext';
-import {v4} from 'uuid';
 
 export default function FiltersDialog(props) {
   const settings = React.useContext(SettingsContext);

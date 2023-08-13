@@ -72,7 +72,7 @@ export default function QueryBuilder(props) {
       dType:filter.dType,
       text: filter.text,
       parents: [...filtersArray],
-      currentOption: settings.dataTypesAndOptions[filter.dType][0],
+      currentOption: settings.dataTypesAndOptions[filter.dType].options[0],
       values:[]
     })
 
