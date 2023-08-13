@@ -34,7 +34,7 @@ const QueryBlock  = (props) => {
                                 sx={{
                                     alignItems:"flex-start",
                                     justifyContent:"flex-start",
-                                    gap:"30px"
+                                    gap:"15px"
                                 }}
                             >
                                 {

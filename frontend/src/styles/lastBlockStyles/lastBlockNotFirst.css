@@ -6,8 +6,8 @@
     content: "";
     background-color: #808080a1;
     height: calc(100% - 38px);
-    width: 4px;
-    left: -17px;
+    width: 3px;
+    left: -8.5px;
     position: absolute;
     top: 18px;
 }

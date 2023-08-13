@@ -57,7 +57,7 @@ export default function LastBlock(props) {
             direction="row"
             style={{
                 display:'flex',
-                gap:'30px'
+                gap:'15px'
             }}
         >
             <Box className={className}>
