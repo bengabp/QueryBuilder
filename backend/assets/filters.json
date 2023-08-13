@@ -3,7 +3,7 @@
         {
             "dataKey": "name",
             "text": "Company Name",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "crunchbase_url",
@@ -18,7 +18,7 @@
         {
             "dataKey": "company_status",
             "text": "Company Status",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "facebook_url",
@@ -38,22 +38,22 @@
         {
             "dataKey": "linkedin_url",
             "text": "Linkedin Url",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "tags",
             "text": "Tags",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "tagline",
             "text": "Tagline",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "technologies",
             "text": "Technologies",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "total_jobs_available",
@@ -63,18 +63,18 @@
         {
             "dataKey": "type",
             "text": "Type",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "tech_stacks",
             "text": "Tech Stack",
-            "dType": "string",
+            "dType": "string_among",
             "nextFilterKey": "tech_stacks"
         },
         {
             "dataKey": "twitter_url",
             "text": "Twitter Url",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "year_became_unicorn",
@@ -89,12 +89,12 @@
         {
             "dataKey": "job_roles",
             "text": "Job Roles",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "hq_locations",
-            "text": "Headquaters",
-            "dType": "string",
+            "text": "Headquarters",
+            "dType": "string_among",
             "nextFilterKey": "hq_details"
         },
         {
@@ -105,7 +105,7 @@
         {
             "dataKey": "growth_stage",
             "text": "Growth Stage",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "is_ai_data",
@@ -125,12 +125,12 @@
         {
             "dataKey": "matching_score",
             "text": "Matching Score",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "sdgs",
             "text": "Sdgs",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "patents_count",
@@ -147,22 +147,22 @@
         {
             "dataKey": "country",
             "text": "Country",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "continent",
             "text": "Continent",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "city",
             "text": "City",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
-            "dataKey": "is_headquaters",
+            "dataKey": "is_headquarters",
             "dType": "boolean",
-            "text": "Is Headquaters"
+            "text": "Is Headquarters"
         },
         {
             "dataKey": "is_founding_location",
@@ -171,7 +171,7 @@
         },
         {
             "dataKey": "state",
-            "dType": "string",
+            "dType": "string_among",
             "text": "State"
         }
     ],
@@ -185,29 +185,29 @@
         {
             "dataKey": "categories",
             "text": "Categories",
-            "dType": "string"
+            "dType": "string_among"
         }
     ],
     "tech_stacks_company": [
         {
             "dataKey": "name",
             "text": "Name",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "path",
             "text": "Path",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "type",
             "text": "Type",
-            "dType": "string"
+            "dType": "string_among"
         }
     ],
     "employees": [
         {
-            "dType": "string",
+            "dType": "string_among",
             "text": "Employee Range",
             "dataKey": "employees"
         },
@@ -218,7 +218,7 @@
         },
         {
             "dataKey": "employee_12_months_growth_percentile",
-            "dType": "string",
+            "dType": "string_among",
             "text": "12 Months Growth Percentile"
         },
         {
@@ -263,7 +263,7 @@
         },
         {
             "dataKey": "employee_6_months_growth_percentile",
-            "dType": "string",
+            "dType": "string_among",
             "text": "6 Months Growth Percentile"
         },
         {
@@ -292,17 +292,17 @@
     "participated_events": [
         {
             "dataKey": "name",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Name"
         },
         {
             "dataKey": "type",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Type"
         },
         {
             "dataKey": "path",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Path"
         },
         {
@@ -340,17 +340,17 @@
         {
             "dataKey": "name",
             "text": "Founders",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "founders_top_university",
             "text": "Founders Top University",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "founders_top_past_companies",
             "text": "Founders Top Past Companies",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "has_strong_founder",
@@ -392,7 +392,7 @@
         },
         {
             "dataKey": "income_streams",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Income Streams"
         }
     ],
@@ -415,12 +415,12 @@
         {
             "dataKey": "round",
             "text": "Funding Round",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "unknown_investors",
             "text": "Unknown Investors",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "valuation_generated_max",
@@ -435,7 +435,7 @@
         {
             "dataKey": "valuation",
             "text": "Valuation",
-            "dType": "string"
+            "dType": "string_among"
         },
         {
             "dataKey": "is_undisclosed",
@@ -444,7 +444,7 @@
         },
         {
             "dataKey": "investors",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Investors",
             "nextFilterKey": "funding_investor_details"
         }
@@ -452,17 +452,17 @@
     "funding_investor_details": [
         {
             "dataKey": "type",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Type"
         },
         {
             "dataKey": "name",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Name"
         },
         {
             "dataKey": "path",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Path"
         },
         {
@@ -491,17 +491,17 @@
     "investor_details": [
         {
             "dataKey": "type",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Type"
         },
         {
             "dataKey": "name",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Name"
         },
         {
             "dataKey": "path",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Path"
         },
         {
@@ -518,17 +518,17 @@
     "investment_details": [
         {
             "dataKey": "type",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Type"
         },
         {
             "dataKey": "name",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Name"
         },
         {
             "dataKey": "path",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Path"
         },
         {
@@ -544,17 +544,17 @@
     ],
     "industries": [
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "industries",
             "text": "Industries"
         },
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "sub_industries",
             "text": "Sub Industries"
         },
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "service_industries",
             "text": "Service Industries"
         }
@@ -572,7 +572,7 @@
         },
         {
             "dataKey": "round",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Round"
         },
         {
@@ -583,44 +583,44 @@
         },
         {
             "dataKey": "unknown_investors",
-            "dType": "date",
+            "dType": "string_among",
             "text": "Unknown Investors"
         },
         {
             "dataKey": "is_undisclosed",
-            "dType": "date",
+            "dType": "boolean",
             "text": "Is Undisclosed"
         },
         {
-            "dataKey": "number",
-            "dType": "date",
+            "dataKey": "valuation",
+            "dType": "number",
             "text": "Valuation"
         },
         {
-            "dataKey": "number",
-            "dType": "date",
+            "dataKey": "valuation_min",
+            "dType": "number",
             "text": "Min Valuation Generated"
         },
         {
-            "dataKey": "number",
-            "dType": "date",
+            "dataKey": "valuation_max",
+            "dType": "number",
             "text": "Max Valuation Generated"
         }
     ],
     "ipo_round_investors": [
         {
             "dataKey": "name",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Name"
         },
         {
             "dataKey": "path",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Path"
         },
         {
             "dataKey": "type",
-            "dType": "string",
+            "dType": "string_among",
             "text": "Type"
         },
         {
@@ -641,7 +641,7 @@
             "text": "Revenues Hidden"
         },
         {
-            "dType": "boole an",
+            "dType": "boolean",
             "dataKey": "ebitda_hidden",
             "text": "Ebida Hidden"
         },
@@ -674,12 +674,12 @@
             "dataKey": "valuations",
             "text": "Valuations",
             "nextFilterKey": "kpi_summary_valuations",
-            "dType": "string"
+            "dType": "string_among"
         }
     ],
     "kpi_summary_values": [
         {
-            "dType": "string",
+            "dType": "number",
             "dataKey": "year",
             "text": "Year"
         },
@@ -694,7 +694,7 @@
             "text": "Revenue"
         },
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "revenue_growth",
             "text": "Revenue Growth"
         },
@@ -777,12 +777,12 @@
         },
         {
             "text": "Source",
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "source"
         },
         {
             "text": "Source Round",
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "source_round"
         },
         {
@@ -818,7 +818,7 @@
             "text": "12 Months Growth delta"
         },
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "similarweb_12_months_growth_percentile",
             "text": "12 Months Growth percentile"
         },
@@ -838,7 +838,7 @@
             "text": "3 Months Growth Delta"
         },
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "similarweb_3_months_growth_percentile",
             "text": "3 Months Growth Percentile"
         },
@@ -858,7 +858,7 @@
             "text": "6 Months Growth Delta"
         },
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "similarweb_6_months_growth_percentile",
             "text": "6 Months Growth Percentile"
         },
@@ -875,7 +875,7 @@
     ],
     "revenues": [
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "revenues",
             "text": "Revenues"
         },
@@ -887,7 +887,7 @@
     ],
     "innovations": [
         {
-            "dType": "string",
+            "dType": "string_among",
             "dataKey": "innovations",
             "text": "Innovations"
         },

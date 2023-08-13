@@ -1,37 +1,62 @@
 {
-    "date": [
-        "after",
-        "between",
-        "equals",
-        "before",
-        "is_blank"
-    ],
-    "string": [
-        "includes_any",
-        "includes_all",
-        "does_not_include",
-        "does_not_include_all",
-        "does_not_equal",
-        "starts_with",
-        "is_blank",
-        "equals"
-    ],
-    "location": [
-        "includes_any",
-        "does_not_include",
-        "is_blank",
-        "includes_all"
-    ],
-    "number": [
-        "between",
-        "does_not_equal",
-        "greater_than_or_equal_to",
-        "equals",
-        "less_than_or_equal_to",
-        "is_blank"
-    ],
-    "boolean": [
-        "true",
-        "false"
-    ]
+    "date": {
+        "options":[
+            "after",
+            "between",
+            "equals",
+            "before",
+            "is_blank"
+        ],
+        "supports_autocomplete": false
+    },
+    "string_among": {
+        "options":[
+            "includes_any",
+            "does_not_include",
+            "is_blank",
+            "does_not_include_all",
+            "includes_all"
+        ],
+        "supports_autocomplete": true
+    },
+    "string": {
+        "options": [
+            "includes_any",
+            "includes_all",
+            "does_not_include",
+            "does_not_include_all",
+            "does_not_equal",
+            "starts_with",
+            "is_blank",
+            "equals"
+        ],
+        "supports_autocomplete": true
+    },
+    "string_long": {
+        "options":[
+            "contains_any",
+            "is_blank",
+            "does_not_contain"
+        ],
+        "supports_autocomplete": false
+    },
+
+    "number": {
+        "options":[
+            "between",
+            "does_not_equal",
+            "greater_than_or_equal_to",
+            "equals",
+            "less_than_or_equal_to",
+            "is_blank"
+        ],
+        "supports_autocomplete":false
+    },
+    "boolean": {
+        "options":[
+            "true",
+            "false"
+        ],
+        "supports_autocomplete":  true
+    }
 }
