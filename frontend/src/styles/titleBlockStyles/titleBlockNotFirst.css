@@ -5,10 +5,10 @@
 
 .titleBlockNotFirst::before{
     content: "";
-    background-color: #808080a1;
+    background-color: #808080cf;
     height: calc(100% + 12px);
-    width: 4px;
-    left: -17px;
+    width: 3px;
+    left: -8.5px;
     position: absolute;
     top: -30px;
 }

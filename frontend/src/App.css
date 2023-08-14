@@ -85,25 +85,25 @@
 }
 
 .blockWithConnectors button::before{
-  content:"";
-  position:absolute;
-  display:block;
-  left:-15px;
-  width:15px;
-  height:4px;
-  background-color:#808080a1;
+  content: "";
+  position: absolute;
+  display: block;
+  left: -7.5px;
+  width: 7.5px;
+  height: 4px;
+  background-color: #808080e0;
 }
 
 
 .blockWithConnectors button::after{
-  content:"";
-  position:absolute;
-  display:block;
-  right:-15px;
-  width:15px;
-  height:4px;
-  background-color:#808080a1;
-  top:18px;
+  content: "";
+  position: absolute;
+  display: block;
+  right: -7.5px;
+  width: 7.5px;
+  height: 4px;
+  background-color: #808080e0;
+  top: 18px;
 }
 
 .addFilterButton button::after{
@@ -124,9 +124,9 @@
   content: "";
   position: absolute;
   height: calc(100% - 38px);
-  background-color: #808080a1;
-  width: 4px;
-  left: -15px;
+  background-color: #808080f0;
+  width: 3px;
+  left: -7.5px;
   top: 19px;
 }
 
@@ -143,25 +143,37 @@
   position:relative;
   text-transform:lowercase;
   font-weight:bold;
+  position:relative;
 }
 
 #open-menu-btn::after{
   content:"";
-  background-color:#808080a1;
   position:absolute;
   display:block;
   right:-15px;
   width:15px;
   height:4px;
-  background-color:#808080a1;
+  background-color:#808080e3;
   top:18px;
 }
+
+#open-menu-btn::before{
+  content: "";
+  position: absolute;
+  display: block;
+  left: -15px;
+  width: 15px;
+  height: 4px;
+  background-color: #808080e3;
+  top: 18px;
+}
+
 
 .queryOptionItem{
   width:180px;
 }
 
-#valuesAutoCompleteContainer{
+.elevatedValueBlock{
   width:max-content;
   border:1px solid rgba(128, 128, 128, 0.274);
   border-radius:5px;
@@ -184,3 +196,28 @@
 }
 
 
+.styledDateField input{
+    height: 0px;
+    margin: 3px;
+    border: none;
+    width:90px;
+}
+
+.styledNumberField input{
+}
+
+.datePickerContainer{
+  padding:2px;
+  transition:0.5s;
+}
+
+.datePickerContainer fieldset{
+  border-radius: 0px;
+  border-top:none;
+  border-left:none;
+  border-right:none;
+}
+
+.datePickerContainer fieldset :hover{
+  border-bottom: 2px solid #0043ff8a;
+}

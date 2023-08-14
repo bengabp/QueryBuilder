@@ -3,7 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
-export const api_uri = "http://localhost:8080"
+export const api_uri = "http://20.77.89.95:8080"
 
 export default function AutoCompleteSearchField(props) {
   const [suggestions, setSuggestions] = React.useState([]);
@@ -26,19 +26,20 @@ export default function AutoCompleteSearchField(props) {
     <Stack spacing={3} 
       id="valuesAutoCompleteContainer"
       direction="row"
+      className={"elevatedValueBlock"}
     >
       <Autocomplete
         multiple={true}
         id="values-autocomplete"
         options={suggestions}
-        autoComplete={true}
-        freeSolo={true}
+        autoComplete={props.doCompletions}
+        freeSolo={!props.doCompletions}
         getOptionDisabled={(option) => props.queryProperties.values.includes(option)}
         getOptionLabel={(option) => option}
         isOptionEqualToValue={(option, value) => option.toLowerCase() == value.toLowerCase()}
-        onFocus={() => {
+        onFocus={props.doCompletions ? () => {
           getSuggestions("")
-        }}
+        } : null}
         fullWidth={false}
         onInputChange={(event, newInputValue) => {
           getSuggestions(newInputValue);
@@ -66,7 +67,6 @@ export default function AutoCompleteSearchField(props) {
           props.setRequestQueries((currentVal) => {
             const currentObjects = {...currentVal};
             currentObjects[query] = jsonString
-            console.log("Set in autocomplete");
             return currentObjects;
           })
         }}

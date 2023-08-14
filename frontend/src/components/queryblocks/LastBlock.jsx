@@ -3,11 +3,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OptionBlock from './OptionBlock';
-import TwoValues from '../valueBlockTypes/TwoValues';
-import SingleValue from '../valueBlockTypes/SingleValue';
 import Stack from "@mui/material/Stack";
 import AutoCompleteSearchField from './AutocompleteField';
 import { SettingsContext } from '../../contexts/SettingsContext';
+
+import SingleNumberValue from '../valueBlockTypes/numberTypes/SingleNumberValue';
+import TwoNumberValues from '../valueBlockTypes/numberTypes/TwoNumberValues';
+import SingleDateValue from '../valueBlockTypes/dateTypes/SingleDateValue';
+import TwoDateValues from '../valueBlockTypes/dateTypes/TwoDateValues';
 
 
 export default function LastBlock(props) {
@@ -23,10 +26,10 @@ export default function LastBlock(props) {
     const parentsList = queryObject.parents
     const dType = queryObject.dType
 
-    console.log("Request Queries => ",props.requestQueries);
+    // console.log("Request Queries => ",props.requestQueries);
 
     const [values, setValues] = React.useState([]);
-    const options = settings.dataTypesAndOptions[dType];
+    const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
     /* 
         requestQueries={props.requestQueries}
@@ -48,6 +51,8 @@ export default function LastBlock(props) {
             currentObjects[query] = jsonString
             return currentObjects;
         });
+
+        console.log("Supports completion => ", settings.dataTypesAndOptions[dType].supports_autocomplete == true);
     }, [currentOption])
 
 
@@ -80,11 +85,57 @@ export default function LastBlock(props) {
                 setCurrentOption={setCurrentOption}
                 options={options}
             ></OptionBlock>
-            {<AutoCompleteSearchField
+            <DynamicValueBlock
                 queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
                 setRequestQueries={props.setRequestQueries}
                 setValues={setValues}
-            />}
+                doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete !== true ? false : true}
+                settings={settings}
+                dType={dType}
+                currentOption={currentOption}
+            />
         </Stack>
     );
+}
+
+
+function DynamicValueBlock(props){
+    console.log("CURRENT OPTION => ", props.currentOption, "DTYPE => ", props.dType)
+    if (props.dType === "date"){
+        if (props.currentOption === "between"){
+            // Return <TwoDateValues>
+            return (
+                <TwoDateValues>
+                </TwoDateValues>
+            );
+        } else {
+            // Return <SingleDateValue>
+            return (
+                <SingleDateValue>
+                </SingleDateValue>
+            );
+        }
+    } else if (props.dType === "number"){
+        if (props.currentOption === "between"){
+            // Return <TwoNumberValues>
+            return (
+                <TwoNumberValues>
+                </TwoNumberValues>
+            );
+        } else {
+            // Return <SingleNumberValue>
+            return (
+                <SingleNumberValue>
+                </SingleNumberValue>
+            );
+        }
+
+    } else {
+        return (<AutoCompleteSearchField
+            queryProperties={props.queryProperties}
+            setRequestQueries={props.setRequestQueries}
+            setValues={props.setValues}
+            doCompletions={props.doCompletions}
+        />)
+    }
 }

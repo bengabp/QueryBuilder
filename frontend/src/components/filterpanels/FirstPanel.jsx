@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import {v4} from 'uuid';
 import FilterBlock from '../filterblocks/FilterBlock';
 import { SettingsContext } from '../../contexts/SettingsContext';
 
@@ -19,6 +18,7 @@ export default function FirstPanel(props){
 
     return (
         <Grid item xs={6}>
+
             <Stack 
                 sx={{
                     height: '300px',
@@ -27,9 +27,11 @@ export default function FirstPanel(props){
                 direction="column"
                 alignItems="stretch"
             >
+                {console.log(props.filterKeysHistory)}
                 {
                     props.filterKeysHistory.length > 1 ?
-                        settings.filterKeyIndices[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {
+                        settings.filters[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {
+                            // console.log("PROP => ", filter.text, filter)
                             return <FilterBlock 
                                 text={filter.text}
                                 key={index}

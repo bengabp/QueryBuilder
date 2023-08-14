@@ -133,15 +133,15 @@ field_mappings = {
 		"dType": "string",
 		"dKey": "tech_stack.categories.name"
 	},
-	"basic_info.tech_stacks_company.name": {
+	"basic_info.tech_stacks.tech_stacks_company.name": {
 		"dType": "string",
 		"dKey": "tech_stack.company.name"
 	},
-	"basic_info.tech_stacks_company.path": {
+	"basic_info.tech_stacks.tech_stacks_company.path": {
 		"dType": "string",
 		"dKey": "tech_stack.company.path"
 	},
-	"basic_info.tech_stacks_company.type": {
+	"basic_info.tech_stacks.tech_stacks_company.type": {
 		"dType": "string",
 		"dKey": "tech_stack.company.type"
 	},
@@ -214,19 +214,19 @@ field_mappings = {
 		"dType": "string",
 		"dKey": "participated_events.items.type"
 	},
-	"events.participated_events.path": {
+	"events.events.participated_events.path": {
 		"dType": "string",
 		"dKey": "participated_events.items.path"
 	},
-	"events.participated_events.twitter_url": {
+	"events.events.participated_events.twitter_url": {
 		"dType": "string",
 		"dKey": "participated_events.items.twitter_url"
 	},
-	"events.participated_events.event_date_start": {
+	"events.events.participated_events.event_date_start": {
 		"dType": "date",
 		"dKey": "participated_events.items.event_date_start"
 	},
-	"events.participated_events.event_date_end": {
+	"events.events.participated_events.event_date_end": {
 		"dType": "date",
 		"dKey": "participated_events.items.event_date_end"
 	},
