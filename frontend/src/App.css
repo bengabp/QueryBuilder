@@ -196,15 +196,14 @@
 }
 
 
-.datePicker{
-  
-}
-
-.datePicker input{
+.styledDateField input{
     height: 0px;
     margin: 3px;
     border: none;
     width:90px;
+}
+
+.styledNumberField input{
 }
 
 .datePickerContainer{

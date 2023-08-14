@@ -7,15 +7,18 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 
 export default function SingleNumberValue(props){
     return (
-        <Box className="elevatedValueBlock">
+        <Stack
+            spacing={2}
+            direction="row"
+            alignItems="center"
+            className="elevatedValueBlock datePickerContainer"
+        >
             <TextField
                 required
                 type="number"
-                variant="filled"
                 label="Enter a number (eg. 80)"
-            >
-
-            </TextField>
-        </Box>
+                className="styledNumberField"
+            />
+        </Stack>
     );
 }

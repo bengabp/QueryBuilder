@@ -18,13 +18,13 @@ export default function TwoDateValues(props){
         >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
-                    className="datePicker"
+                    className="styledDateField"
                     onChange={(val) => {console.log("Date => ", val)}}                />
             </LocalizationProvider>
             <Typography>and</Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
-                    className="datePicker"
+                    className="styledDateField"
                     onChange={(val) => {console.log("Date => ", val)}}                />
             </LocalizationProvider>
         </Stack>
