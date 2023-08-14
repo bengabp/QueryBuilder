@@ -26,6 +26,7 @@ export default function AutoCompleteSearchField(props) {
     <Stack spacing={3} 
       id="valuesAutoCompleteContainer"
       direction="row"
+      className={"elevatedValueBlock"}
     >
       <Autocomplete
         multiple={true}
