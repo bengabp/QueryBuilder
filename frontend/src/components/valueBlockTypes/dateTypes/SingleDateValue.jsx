@@ -1,21 +1,24 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { SettingsContext } from "../../../contexts/SettingsContext";
+import TextField from '@mui/material/TextField';
 
 
 export default function SingleDateValue(props){
     return (
-        <Box className="elevatedValueBlock">
-            <TextField
-                required
-                type="text"
-                variant="filled"
-                label="Enter a date (eg. 5/6/2023)"
-            >
-
-            </TextField>
-        </Box>
+        <Stack
+            direction="row"
+            className="elevatedValueBlock datePickerContainer"
+        >
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker 
+                    className="datePicker"
+                    onChange={(val) => {console.log("Date => ", val)}}                />
+            </LocalizationProvider>
+        </Stack>
     );
 }

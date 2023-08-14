@@ -8,9 +8,9 @@ import AutoCompleteSearchField from './AutocompleteField';
 import { SettingsContext } from '../../contexts/SettingsContext';
 
 import SingleNumberValue from '../valueBlockTypes/numberTypes/SingleNumberValue';
-import TwoNumberValues from '.../valueBlockTypes/numberTypes/TwoNumberValues';
-import SingleDateValue from '.../valueBlockTypes/dateTypes/SingleDateValue';
-import TwoDateValues from '.../valueBlockTypes/dateTypes/TwoDateValues';
+import TwoNumberValues from '../valueBlockTypes/numberTypes/TwoNumberValues';
+import SingleDateValue from '../valueBlockTypes/dateTypes/SingleDateValue';
+import TwoDateValues from '../valueBlockTypes/dateTypes/TwoDateValues';
 
 
 export default function LastBlock(props) {
@@ -104,22 +104,38 @@ function DynamicValueBlock(props){
     if (props.dType === "date"){
         if (props.currentOption === "between"){
             // Return <TwoDateValues>
+            return (
+                <TwoDateValues>
+                </TwoDateValues>
+            );
         } else {
             // Return <SingleDateValue>
+            return (
+                <SingleDateValue>
+                </SingleDateValue>
+            );
         }
     } else if (props.dType === "number"){
         if (props.currentOption === "between"){
             // Return <TwoNumberValues>
+            return (
+                <TwoNumberValues>
+                </TwoNumberValues>
+            );
         } else {
             // Return <SingleNumberValue>
+            return (
+                <SingleNumberValue>
+                </SingleNumberValue>
+            );
         }
 
     } else {
-        return <AutoCompleteSearchField
+        return (<AutoCompleteSearchField
             queryProperties={props.queryProperties}
             setRequestQueries={props.setRequestQueries}
             setValues={props.setValues}
             doCompletions={props.doCompletions}
-        />
+        />)
     }
 }

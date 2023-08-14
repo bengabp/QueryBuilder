@@ -196,3 +196,29 @@
 }
 
 
+.datePicker{
+  
+}
+
+.datePicker input{
+    height: 0px;
+    margin: 3px;
+    border: none;
+    width:90px;
+}
+
+.datePickerContainer{
+  padding:2px;
+  transition:0.5s;
+}
+
+.datePickerContainer fieldset{
+  border-radius: 0px;
+  border-top:none;
+  border-left:none;
+  border-right:none;
+}
+
+.datePickerContainer fieldset :hover{
+  border-bottom: 2px solid #0043ff8a;
+}
