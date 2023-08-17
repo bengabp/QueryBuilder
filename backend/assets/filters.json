@@ -142,7 +142,7 @@
         {
             "dataKey": "address",
             "text": "Address",
-            "dType": "location"
+            "dType": "string_among"
         },
         {
             "dataKey": "country",

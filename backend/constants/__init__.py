@@ -101,7 +101,7 @@ field_mappings = {
 		"dKey": "patents_count"
 	},
 	"basic_info.hq_details.address": {
-		"dType": "location",
+		"dType": "string_among",
 		"dKey": "hq_locations.address"
 	},
 	"basic_info.hq_details.country": {
@@ -116,7 +116,7 @@ field_mappings = {
 		"dType": "string",
 		"dKey": "hq_locations.city.name"
 	},
-	"basic_info.hq_details.is_headquaters": {
+	"basic_info.hq_details.is_headquarters": {
 		"dType": "boolean",
 		"dKey": "hq_locations.is_headquarters"
 	},

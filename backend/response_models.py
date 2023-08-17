@@ -5,6 +5,8 @@ from constants import field_mappings
 import json
 import os
 
+table_headings = ["name","hq_locations.address", "participated_events.total", "founders.name"]
+
 
 class CompletionsResponse(BaseModel):
 	completions: List = Field(description = "List of completions ..", default = [])
@@ -42,6 +44,7 @@ class SettingsResponse(BaseModel):
 	companies: Union[Dict, CompaniesSearchResult] = Field(default = {})
 	field_mappings: Dict = Field(alias="fieldMappings", default = field_mappings)
 	options: Dict = Field(alias="dataTypesAndOptions",default = options)
+	table_headings: List = Field(alias="tableHeadings", default = table_headings)
 	parent_filters: List = Field(alias="parentFilters", default = [
 		"basic_info",
 		"employees",

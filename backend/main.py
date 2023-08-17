@@ -150,12 +150,8 @@ def get_settings(request: Request, include_companies:bool = Query(alias="include
 
 	if include_companies:
 		# Get first 5 companies:
-		search_result = [company for company in db.companies.find({})[:5]]
-		companies = []
-		for company in search_result:
-			company.pop("_id", None)
-			companies.append(company)
-
+		search_result = [company for company in db.companies.find({}, {"_id":0})[:5]]
+		companies = [company for company in search_result]
 		total_results = db.companies.count_documents({})
 		response.companies = CompaniesSearchResult(
 			results = companies,
