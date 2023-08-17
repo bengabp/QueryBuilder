@@ -141,7 +141,7 @@ export default function QueryBuilder(props) {
     >
       <Stack
         id="queryBuilderContainer"
-        
+        sx={{}}
       >
         <Stack className="queryBuilder" spacing={1} marginBottom={"10px"}>
           {
@@ -170,39 +170,36 @@ export default function QueryBuilder(props) {
           </Box>
         </Stack>
       </Stack>
-      <Grid
-        direction="column"
-        container
-        sx={{
-          height:'60%',
-          borderTop:'1px solid #808080a1',
-          
-        }}
-      >
-        <Stack direction="column">
-          <Box sx={{width:'100%'}}>
-            { isSearching && <LinearProgress />}
+      <Stack direction="column" sx={{
+          position:'fixed',
+          bottom: '0px',
+          height:'50%',
+          display:'flex',
+          flexDirection: 'column',
+          width:'100%'
+        }}>
+        <Box sx={{width:'100%'}}>
+          { isSearching && <LinearProgress />}
+        </Box>
+        <Box
+          display="flex"
+          justifyContent={"space-between"}
+          padding={"8px 20px"}
+          borderBottom={"1px solid #808080a1"}
+        >
+          <Box display={'flex'} alignItems={"center"} gap={"20px"}>
+            <Button variant="contained"
+              onClick={search}
+              disabled={isSearching}
+            >SEARCH</Button>
+            <Typography variant="span">{`${searchResults.index}-${searchResults.index + searchResults.resultsPerPage} of ${searchResults.totalResults} results`}</Typography>
           </Box>
-          <Box
-            display="flex"
-            justifyContent={"space-between"}
-            padding={"8px 20px"}
-            borderBottom={"1px solid #808080a1"}
-          >
-            <Box display={'flex'} alignItems={"center"} gap={"20px"}>
-              <Button variant="contained"
-                onClick={search}
-                disabled={isSearching}
-              >SEARCH</Button>
-              <Typography variant="span">{`${searchResults.index}-${searchResults.index + searchResults.resultsPerPage} of ${searchResults.totalResults} results`}</Typography>
-            </Box>
-            <Button variant="contained">Export Companies</Button>
-          </Box>
-          <SearchResultsTable>
+          <Button variant="contained">Export Companies</Button>
+        </Box>
+        <SearchResultsTable>
 
-          </SearchResultsTable>
-        </Stack>
-      </Grid>
+        </SearchResultsTable>
+      </Stack>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}
         filtersDialogState={filtersDialogState}

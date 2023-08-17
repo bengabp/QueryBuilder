@@ -100,7 +100,7 @@ export default function LastBlock(props) {
 
 
 function DynamicValueBlock(props){
-    if (props.dType === "date"){
+    if (props.dType === "date" && props.currentOption !== "is_blank"){
         if (props.currentOption === "between"){
             // Return <TwoDateValues>
             return (
@@ -120,7 +120,7 @@ function DynamicValueBlock(props){
                 </SingleDateValue>
             );
         }
-    } else if (props.dType === "number"){
+    } else if (props.dType === "number" && props.currentOption !== "is_blank"){
         if (props.currentOption === "between"){
             // Return <TwoNumberValues>
             return (
@@ -142,11 +142,24 @@ function DynamicValueBlock(props){
         }
 
     } else {
+        // let multiSelect = true;
+        // let doCompletions = props.doCompletions;
+        // let options = ["true", "false"]
+
+        // if (props.currentOption === "is_blank"){
+        //     multiSelect = false
+        // }
+        // if (props.dType === "boolean"){
+        //     multiSelect = false
+        // }
         return (<AutoCompleteSearchField
             queryProperties={props.queryProperties}
             setValues={props.setValues}
             dType={props.dType}
-            doCompletions={props.doCompletions}
+            // doCompletions={doCompletions}
+            // doMultiSelect={multiSelect}
+            values={props.values}
+            currentOption={props.currentOption}
         />)
     }
 }
