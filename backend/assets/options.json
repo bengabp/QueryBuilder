@@ -54,9 +54,11 @@
     },
     "boolean": {
         "options":[
-            "true",
-            "false"
+            "is_blank",
+            "equals",
+            "does_not_equal"
         ],
-        "supports_autocomplete":  true
+        "supports_autocomplete":  true,
+        "values":["true", "false"]
     }
 }

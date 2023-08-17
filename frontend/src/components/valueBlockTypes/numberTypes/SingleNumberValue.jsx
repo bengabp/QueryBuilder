@@ -16,8 +16,20 @@ export default function SingleNumberValue(props){
             <TextField
                 required
                 type="number"
-                label="Enter a number (eg. 80)"
+                placeholder="Number (eg. 80)"
                 className="styledNumberField"
+                size="small"
+                onChange={(event) => {
+                    let val = parseInt(event.target.value)
+                    if (isNaN(val)){
+                        val = 0
+                    }
+                    props.setValues((current) => {
+                        const prev = [...current]
+                        prev[0] = val
+                        return prev
+                    });
+                }}
             />
         </Stack>
     );

@@ -2,11 +2,13 @@ import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import { SettingsContext } from '../../contexts/SettingsContext';
 
-export const api_uri = "http://20.77.89.95:8080"
+export const api_uri = "http://localhost:8000"
 
 export default function AutoCompleteSearchField(props) {
   const [suggestions, setSuggestions] = React.useState([]);
+  const settings = React.useContext(SettingsContext);
   
   const getSuggestions = async (inputValue) => {
     try {
@@ -31,7 +33,7 @@ export default function AutoCompleteSearchField(props) {
       <Autocomplete
         multiple={true}
         id="values-autocomplete"
-        options={suggestions}
+        options={props.dType == "boolean" ? settings.dataTypesAndOptions[props.dType].values : suggestions}
         autoComplete={props.doCompletions}
         freeSolo={!props.doCompletions}
         getOptionDisabled={(option) => props.queryProperties.values.includes(option)}
@@ -53,22 +55,21 @@ export default function AutoCompleteSearchField(props) {
           } else if (typeof selectedSugs === "object"){
             selectedSugs = [...selectedSugs]
           }
-          console.log(selectedSugs)
           props.setValues(selectedSugs);
-          const jsonString = JSON.stringify({
-              dataKey:props.queryProperties.dataKey,
-              dType:props.queryProperties.dType,
-              text: props.queryProperties.text,
-              parents: props.queryProperties.parents,
-              currentOption: props.queryProperties.option,
-              values:selectedSugs
-          })
-          const query = [...props.queryProperties.parents, props.queryProperties.dataKey].join(".") ;
-          props.setRequestQueries((currentVal) => {
-            const currentObjects = {...currentVal};
-            currentObjects[query] = jsonString
-            return currentObjects;
-          })
+          // const jsonString = JSON.stringify({
+          //     dataKey:props.queryProperties.dataKey,
+          //     dType:props.queryProperties.dType,
+          //     text: props.queryProperties.text,
+          //     parents: props.queryProperties.parents,
+          //     currentOption: props.queryProperties.option,
+          //     values:selectedSugs
+          // })
+          // const query = [...props.queryProperties.parents, props.queryProperties.dataKey].join(".") ;
+          // props.setRequestQueries((currentVal) => {
+          //   const currentObjects = {...currentVal};
+          //   currentObjects[query] = jsonString
+          //   return currentObjects;
+          // })
         }}
         renderInput={(params) => (
           <TextField

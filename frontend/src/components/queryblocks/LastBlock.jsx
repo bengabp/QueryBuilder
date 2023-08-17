@@ -53,7 +53,7 @@ export default function LastBlock(props) {
         });
 
         console.log("Supports completion => ", settings.dataTypesAndOptions[dType].supports_autocomplete == true);
-    }, [currentOption])
+    }, [currentOption, values])
 
 
     
@@ -87,7 +87,7 @@ export default function LastBlock(props) {
             ></OptionBlock>
             <DynamicValueBlock
                 queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
-                setRequestQueries={props.setRequestQueries}
+                values={values}
                 setValues={setValues}
                 doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete !== true ? false : true}
                 settings={settings}
@@ -100,18 +100,23 @@ export default function LastBlock(props) {
 
 
 function DynamicValueBlock(props){
-    console.log("CURRENT OPTION => ", props.currentOption, "DTYPE => ", props.dType)
     if (props.dType === "date"){
         if (props.currentOption === "between"){
             // Return <TwoDateValues>
             return (
-                <TwoDateValues>
+                <TwoDateValues
+                    setValues={props.setValues}
+                    values={props.values}
+                >
                 </TwoDateValues>
             );
         } else {
             // Return <SingleDateValue>
             return (
-                <SingleDateValue>
+                <SingleDateValue
+                    setValues={props.setValues}
+                    values={props.values}
+                >
                 </SingleDateValue>
             );
         }
@@ -119,13 +124,19 @@ function DynamicValueBlock(props){
         if (props.currentOption === "between"){
             // Return <TwoNumberValues>
             return (
-                <TwoNumberValues>
+                <TwoNumberValues
+                    setValues={props.setValues}
+                    values={props.values}
+                >
                 </TwoNumberValues>
             );
         } else {
             // Return <SingleNumberValue>
             return (
-                <SingleNumberValue>
+                <SingleNumberValue
+                    setValues={props.setValues}
+                    values={props.values}
+                >
                 </SingleNumberValue>
             );
         }
@@ -133,8 +144,8 @@ function DynamicValueBlock(props){
     } else {
         return (<AutoCompleteSearchField
             queryProperties={props.queryProperties}
-            setRequestQueries={props.setRequestQueries}
             setValues={props.setValues}
+            dType={props.dType}
             doCompletions={props.doCompletions}
         />)
     }

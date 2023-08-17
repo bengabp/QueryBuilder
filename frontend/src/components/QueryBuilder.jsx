@@ -56,7 +56,7 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
-
+    console.log(requestQueries);
   }, 
   [requestQueries]);
   

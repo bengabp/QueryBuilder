@@ -177,7 +177,8 @@
   width:max-content;
   border:1px solid rgba(128, 128, 128, 0.274);
   border-radius:5px;
-  padding-top:3px;
+  padding-top:2px;
+  height:35.5px;
   padding-right:5px;
   margin-right:20px;
 }
@@ -203,8 +204,6 @@
     width:90px;
 }
 
-.styledNumberField input{
-}
 
 .datePickerContainer{
   padding:2px;
