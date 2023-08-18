@@ -51,7 +51,7 @@ export default function SearchResultsTable() {
   const settings = React.useContext(SettingsContext);
   return (
       <DataGrid
-        rows={rows}
+        rows={settings.companies.results}
         columns={columns}
         initialState={{
           pagination: {

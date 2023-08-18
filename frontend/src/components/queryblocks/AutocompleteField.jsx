@@ -7,7 +7,7 @@ import { SettingsContext } from '../../contexts/SettingsContext';
 export const api_uri = "http://localhost:8000"
 
 export default function AutoCompleteSearchField(props) {
-  const optionsSingle = ["is_blank", "equals"];
+  const optionsSingle = ["is_blank", "equals", "does_not_equal"];
   const [suggestions, setSuggestions] = React.useState([]);
   const settings = React.useContext(SettingsContext);
   const [isMulti, setIsMulti] = React.useState(!optionsSingle.includes(props.currentOption) || props.dType === "boolean");
@@ -54,7 +54,7 @@ export default function AutoCompleteSearchField(props) {
         onFocus={() => {
           getSuggestions("")
         }}
-        value={props.values.length <= 0 ? [""]: isMulti ? props.values: props.values[0]}
+        value={props.values.length <= 0 ? []: isMulti ? props.values: props.values[0]}
         fullWidth={false}
         onInputChange={(event, newInputValue) => {
           getSuggestions(newInputValue);
