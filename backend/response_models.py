@@ -5,7 +5,7 @@ from constants import field_mappings
 import json
 import os
 
-table_headings = ["name","hq_locations.address", "participated_events.total", "founders.name"]
+table_headings = ["name", "hq_locations.address", "participated_events.total", "founders.name"]
 
 
 class CompletionsResponse(BaseModel):
