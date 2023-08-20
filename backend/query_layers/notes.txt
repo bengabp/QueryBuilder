@@ -1,7 +1,12 @@
 matching_score - Needs to be converted to number because its in 0% to 100%
-score your sata in a mongodb database
+ - matching_score cannot be converted to integer because there isnt any way to denote its range of values
+
+
 convert employee_range to max and min employees
 
 convert- arrtibutes- to date => [ipo_round, kpi_summary.valuations, kpi_summary.values]
                                 launch_month, launch_year,
                                 fundings.items.month, fundings.items.year
+
+
+-> add new field "date" in ipo_round -> ipo_round.date
