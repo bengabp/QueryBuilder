@@ -192,12 +192,12 @@ export default function QueryBuilder(props) {
               onClick={search}
               disabled={isSearching}
             >SEARCH</Button>
-            <Typography variant="span">{`${searchResults.index}-${searchResults.index + searchResults.resultsPerPage} of ${searchResults.totalResults} results`}</Typography>
+            <Typography variant="span">{`${searchResults.index}-${searchResults.index + (searchResults.resultsPerPage - 1)} of ${searchResults.totalResults} results`}</Typography>
           </Box>
           <Button variant="contained">Export Companies</Button>
         </Box>
         <SearchResultsTable>
-
+ 
         </SearchResultsTable>
       </Stack>
       <FiltersDialog
