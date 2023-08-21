@@ -52,7 +52,6 @@ export default function LastBlock(props) {
             return currentObjects;
         });
 
-        console.log("Supports completion => ", settings.dataTypesAndOptions[dType].supports_autocomplete == true);
     }, [currentOption, values])
 
 

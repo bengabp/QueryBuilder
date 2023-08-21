@@ -22,9 +22,7 @@ export default function AutoCompleteSearchField(props) {
 
       const response = await fetch(`${api_uri}/completions?q=${inputValue}&field_path=${query}`);
       const data = await response.json();
-      console.log("Api call params => ", data, inputValue);
       const suggestionsSet = new Set(data.completions);
-      console.log("Suggestions ==> ", suggestionsSet)
       setSuggestions([...suggestionsSet]);
     } catch (error) {
       console.error('Error fetching options:', error);

@@ -11,7 +11,7 @@ import QueryBlock from './QueryBlock';
 import SearchResultsTable from './SearchResultsTable';
 import LinearProgress from '@mui/material/LinearProgress';
 import { SettingsContext } from '../contexts/SettingsContext';
-import {v4} from 'uuid';
+import { api_uri } from './queryblocks/AutocompleteField';
 
 
 export default function QueryBuilder(props) {
@@ -56,7 +56,6 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
-    console.log(requestQueries);
   }, 
   [requestQueries]);
   
@@ -126,11 +125,37 @@ export default function QueryBuilder(props) {
     })
   }
 
-  const search = (event) => {
+
+  async function search (event) {
     if (Object.keys(requestQueries).length > 0){
       setIsSearching(true);
+      try {
+        // Fetch the settings from the backend API
+          let myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          let rawData = Object.keys(requestQueries).map(
+            (filterKey, index) => JSON.parse(requestQueries[filterKey])
+          )
+          var raw = JSON.stringify({
+            filters: rawData
+          });
+          
+          await fetch(`${api_uri}/search`, {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          })
+            .then(response => response.text())
+            .then(result => {
+              console.log(result);
+            })
+      } catch (err) {
+          console.log(err)
+      } finally {
+        setIsSearching(false)
+      }
     }
-    
   }
 
   return (
@@ -196,9 +221,7 @@ export default function QueryBuilder(props) {
           </Box>
           <Button variant="contained">Export Companies</Button>
         </Box>
-        <SearchResultsTable>
- 
-        </SearchResultsTable>
+        <SearchResultsTable />
       </Stack>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}

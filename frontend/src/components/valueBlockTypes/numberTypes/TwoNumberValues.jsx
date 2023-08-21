@@ -45,7 +45,6 @@ export default function TwoNumberValues(props){
                         val = 0
                     }
                     const firstVals = []
-                    console.log("Values: ",props.values)
                     if (props.values.length <= 1){
                         firstVals.push(2)
                     }

@@ -28,6 +28,7 @@ app.add_middleware(
 	description = "Get completions for search fields",
 	responses = {
 		status.HTTP_200_OK: {
+			
 			"model": CompletionsResponse
 		}
 	}
