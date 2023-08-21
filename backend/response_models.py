@@ -28,9 +28,9 @@ class SearchRequest(BaseModel):
 
 class CompaniesSearchResult(BaseModel):
 	results: List[Dict] = Field(description = "List of companies matching filters/search criteria")
-	total_results: int = Field(description = "Total number of matches", alias="totalResults")
+	total_results: int = Field(description = "Total number of matches", serialization_alias="totalResults")
 	index: int = Field(descripition = "Current page index", default = 1)
-	results_per_page: int = Field(description="Results per page", alias = "resultsPerPage", default = PAGE_SIZE)
+	results_per_page: int = Field(description="Results per page", serialization_alias = "resultsPerPage", default = PAGE_SIZE)
 
 
 with open(os.path.join(BASE_DIR, "assets/filters.json")) as filter_json:

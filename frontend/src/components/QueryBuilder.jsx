@@ -25,27 +25,10 @@ export default function QueryBuilder(props) {
   const [searchResults, setSearchResults] = React.useState(settings.companies);
 
 
-  /* 
-  searchResults = {
-    totalResults:456,
-    index: 1,
-    resultsPerPage: 5,
-    results: [
-
-    ]
-  }
-  */
   React.useEffect(() => {
     props.setIsLoading(false);
   },[])
 
-  React.useEffect(() => {
-    if (isSearching === true) {
-      setTimeout(() => {
-        setIsSearching(false);
-      }, 2000);
-    }
-  }, [isSearching])
 
   React.useEffect(()=>{
     let dict = {};
@@ -146,14 +129,15 @@ export default function QueryBuilder(props) {
             body: raw,
             redirect: 'follow'
           })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(result => {
-              console.log(result);
+              setIsSearching(false);
+              setSearchResults(result)
             })
       } catch (err) {
           console.log(err)
       } finally {
-        setIsSearching(false)
+        
       }
     }
   }
@@ -217,11 +201,13 @@ export default function QueryBuilder(props) {
               onClick={search}
               disabled={isSearching}
             >SEARCH</Button>
-            <Typography variant="span">{`${searchResults.index}-${searchResults.index + (searchResults.resultsPerPage - 1)} of ${searchResults.totalResults} results`}</Typography>
+            <Typography variant="span">{`${searchResults.totalResults} results`}</Typography>
           </Box>
           <Button variant="contained">Export Companies</Button>
         </Box>
-        <SearchResultsTable />
+        <SearchResultsTable 
+          companies={searchResults.results}
+        />
       </Stack>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}

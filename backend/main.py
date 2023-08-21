@@ -4,6 +4,8 @@ from fastapi import FastAPI, Query, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 import time
+
+from builder import pipeline_builder
 from constants import field_mappings
 from db import db
 from response_models import CompletionsResponse, CompaniesSearchResult, SearchRequest, SettingsResponse, PAGE_SIZE
@@ -68,83 +70,66 @@ def companies_search(request: Request, search_filters: SearchRequest):
 	pipeline = []
 	for search_filter in search_filters.filters:
 		query = ".".join([*search_filter.parents, search_filter.data_key])
-		query = field_mappings[query]["dKey"]
+		collection_field = field_mappings[query]["dKey"]
 		
-		stage = {}
+		if search_filter.d_type not in ["number", "string_long", "string_among"]:
+			print("dType support has not been added ! => ", search_filter.d_type)
+			continue
 		
-		if search_filter.d_type == "string":
-			if search_filter.current_option == "includes_any":
-				stage = {"$match": {query: {"$in": search_filter.values}}}
-			elif search_filter.current_option == "includes_all":
-				stage = {"$match": {query: {"$all": search_filter.values}}}
-			elif search_filter.current_option == "does_not_include":
-				stage = {"$match": {query: {"$not": {"$in": search_filter.values}}}}
-			elif search_filter.current_option == "does_not_include_all":
-				stage = {"$match": {query: {"$not": {"$all": search_filter.values}}}}
-			elif search_filter.current_option == "does_not_equal":
-				stage = {"$match": {query: {"$ne": search_filter.values[0]}}}
-			elif search_filter.current_option == "starts_with":
-				stage = {"$match": {query: {"$regex": f"^{search_filter.values[0]}", "$options": "i"}}}
-			elif search_filter.current_option == "is_blank":
-				if search_filter.values[0] in [False, "false"]:
-					stage = {"$match": {"$or": [
-						{query: {"$exists": True}},
-						{query: {"$ne": ""}},
-						{query: {"$ne": None}},
-						{query: {"$ne": []}}
-					]}}
-				else:
-					stage = {"$match": {"$or": [
-						{query: {"$exists": False}},
-						{query: {"$eq": ""}},
-						{query: {"$eq": None}},
-						{query: {"$eq": []}}
-					]}}
-			elif search_filter.current_option == "equals":
-				stage = {"$match": {query: search_filter.values[0]}}
+		try:
+			stage_function_data = pipeline_builder[search_filter.current_option][search_filter.d_type]
+			stage = stage_function_data["get_pipeline"](collection_field, search_filter.values)
+			pipeline.append(stage)
+		except IndexError:
+			continue
+	
+	if pipeline:
+		pipeline.extend([
+			{"$project":{"_id":0}},
+			{"$addFields": {"total_results": {"$sum": 1}}},
+			{"$limit": 500}
+		])
+		print("Searching ...")
+		search_results = db.companies.aggregate(pipeline)
+		print("Got results ..")
+	else:
+		search_results = []
+	companies = []
+	
+	for index, company in enumerate(search_results):
+		print("Company Name => ", company.get("name"))
+		hq_locations: List[Dict] = company.get("hq_locations", [])
 		
-		elif search_filter.d_type == "number":
-			if search_filter.current_option == "between":
-				stage = {"$match": {query: {"$gte": search_filter.values[0], "$lte": search_filter.values[1]}}}
-			elif search_filter.current_option == "does_not_equal":
-				stage = {"$match": {query: {"$ne": search_filter.values[0]}}}
-			elif search_filter.current_option == "greater_than_or_equal_to":
-				stage = {"$match": {query: {"$gte": search_filter.values[0]}}}
-			elif search_filter.current_option == "equals":
-				stage = {"$match": {query: search_filter.values[0]}}
-			elif search_filter.current_option == "less_than_or_equal_to":
-				stage = {"$match": {query: {"$lte": search_filter.values[1]}}}
-			elif search_filter.current_option == "is_blank":
-				if search_filter.values[0] in [False, "false"]:
-					stage = {"$match": {"$or": [
-						{query: {"$exists": True}},
-						{query: {"$ne": ""}},
-						{query: {"$ne": None}},
-						{query: {"$ne": []}}
-					]}}
-				else:
-					stage = {"$match": {"$or": [
-						{query: {"$exists": False}},
-						{query: {"$eq": ""}},
-						{query: {"$eq": None}},
-						{query: {"$eq": []}}
-					]}}
-		elif search_filter.d_type == "date":
-			pass
-		
+		if hq_locations:
+			address = ", ".join([loc.get("address") for loc in hq_locations])
 		else:
-			print("unsupported data type !")
+			address = "Not available"
+			
+		images = company.get("images")
+		if len(images) > 0:
+			thumb_nail = images.get("74x74")
+		else:
+			thumb_nail = ""
 		
-		pipeline.append(stage)
-	
-	results = db.companies.aggregate(pipeline)
-	matches = []
-	for record in results[:1000]:
-		record.pop("_id", None)
-		matches.append(record)
-	
-	total_matches = len(matches)
-	return CompaniesSearchResult(matches = matches, total_matches = total_matches)
+		data = {
+			"id": company.get("uuid", company.get("_id")),
+			"name": company.get("name"),
+			"address": address,
+			"employeesRange": company.get("employees", "Not available"),
+			"companyStatus": company.get("company_status", "Not available"),
+			"growthStage": company.get("growth_stage"),
+			"thumbnailUrl": thumb_nail,
+			"launchYear": company.get("launch_year"),
+			"totalPatents": company.get("patents_count"),
+			"type": company.get("type"),
+			"totalJobs": company.get("total_jobs_available"),
+			"tagline": company.get("tagline")
+			
+		}
+		companies.append(data)
+	print("returned !!")
+	response = CompaniesSearchResult(results = companies, total_results = len(companies))
+	return response
 
 
 @app.get("/settings")
@@ -188,7 +173,7 @@ def get_settings(request: Request, include_companies: bool = Query(alias = "incl
 		total_results = db.companies.count_documents({})
 		response.companies = CompaniesSearchResult(
 			results = companies,
-			totalResults = total_results
+			total_results = total_results
 		)
 	
 	return response
