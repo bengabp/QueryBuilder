@@ -4,7 +4,7 @@ from fastapi import FastAPI, Query, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 import time
-
+from pymongo import errors as pymongo_errors
 from builder import pipeline_builder
 from constants import field_mappings
 from db import db
@@ -82,18 +82,21 @@ def companies_search(request: Request, search_filters: SearchRequest):
 			pipeline.append(stage)
 		except IndexError:
 			continue
-	
+			
+	search_results = []
 	if pipeline:
 		pipeline.extend([
-			{"$project":{"_id":0}},
+			{"$project": {"_id": 0}},
 			{"$addFields": {"total_results": {"$sum": 1}}},
 			{"$limit": 500}
 		])
 		print("Searching ...")
-		search_results = db.companies.aggregate(pipeline)
-		print("Got results ..")
-	else:
-		search_results = []
+		try:
+			search_results = db.companies.aggregate(pipeline)
+			print("Got results ..")
+		except pymongo_errors.OperationFailure:
+			print("There is an error in your pipeline")
+		
 	companies = []
 	
 	for index, company in enumerate(search_results):

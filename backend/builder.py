@@ -1,13 +1,15 @@
 from bson import Regex
 
-is_blank_stage = lambda field, values: {
-	"$match": {field: {"$and": [
-		{field: {"$ne": []}},
-		{field: {"$ne": {}}},
-		{field: {"$ne": ""}},
-		{field: {"$ne": None}}
-	]}}
-}
+
+def is_blank_stage(field, values):
+	operator = "$nin"
+	if len(values) > 0:
+		if values[0] == "true":
+			operator = "$in"
+	return {
+		"$match": {field: {operator: [[], None, "", {}]}}
+	}
+
 
 does_not_include_string_stage = lambda field, values: {
 	"$match": {field: {"$not": {"$in": values}}}
