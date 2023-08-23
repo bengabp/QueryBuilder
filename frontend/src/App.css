@@ -220,3 +220,11 @@
 .datePickerContainer fieldset :hover{
   border-bottom: 2px solid #0043ff8a;
 }
+
+.removeFilterButton{
+  background-color: #80808024;
+  height: 25px;
+  width: 25px;
+  align-self: center;
+  box-shadow: 0px 0px 2px 0px #0000008c;
+}

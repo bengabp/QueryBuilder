@@ -32,6 +32,8 @@ export default function QueryBuilder(props) {
 
   React.useEffect(()=>{
     let dict = {};
+    console.log("QueryObjects::", queryObjects);
+    console.log("RequestQueries => ",requestQueries)
     Object.keys(requestQueries).forEach((item, index) => {
       let list = item.split(".");
       list[list.length-1] = requestQueries[item]
@@ -142,6 +144,15 @@ export default function QueryBuilder(props) {
     }
   }
 
+  const onFilterRemove = (query) => {
+      
+      setRequestQueries((prev)=>{
+        let current = {...prev}
+        delete current[query]
+        return current
+    })
+  }
+
   return (
     <Grid
       direction="column"
@@ -163,6 +174,7 @@ export default function QueryBuilder(props) {
                     index={index}
                     requestQueries={requestQueries}
                     setRequestQueries={setRequestQueries}
+                    onFilterRemove={onFilterRemove}
                   />
                 </div>)
             })

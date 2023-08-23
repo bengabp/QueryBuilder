@@ -76,6 +76,7 @@ const QueryBlock  = (props) => {
                                     blockClassName={classNames.lastBlockFirst} 
                                     index={index} 
                                     key={index} 
+                                    onFilterRemove={props.onFilterRemove}
                                     requestQueries={props.requestQueries}
                                     setRequestQueries={props.setRequestQueries}
                                 />
@@ -85,6 +86,7 @@ const QueryBlock  = (props) => {
                                     blockClassName={classNames.lastBlockNotFirst} 
                                     index={index} 
                                     key={index} 
+                                    onFilterRemove={props.onFilterRemove}
                                     requestQueries={props.requestQueries}
                                     setRequestQueries={props.setRequestQueries}
                                 />

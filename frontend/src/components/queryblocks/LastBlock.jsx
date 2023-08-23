@@ -6,11 +6,13 @@ import OptionBlock from './OptionBlock';
 import Stack from "@mui/material/Stack";
 import AutoCompleteSearchField from './AutocompleteField';
 import { SettingsContext } from '../../contexts/SettingsContext';
-
+import CloseIcon from '@mui/icons-material/Close';
 import SingleNumberValue from '../valueBlockTypes/numberTypes/SingleNumberValue';
 import TwoNumberValues from '../valueBlockTypes/numberTypes/TwoNumberValues';
 import SingleDateValue from '../valueBlockTypes/dateTypes/SingleDateValue';
 import TwoDateValues from '../valueBlockTypes/dateTypes/TwoDateValues';
+import IconButton from '@mui/material/IconButton';
+
 
 
 export default function LastBlock(props) {
@@ -56,7 +58,7 @@ export default function LastBlock(props) {
 
 
     
-    return (
+    return props.requestQueries == undefined ? (<div>Nothing</div>) : (
         <Stack 
             direction="row"
             style={{
@@ -84,7 +86,7 @@ export default function LastBlock(props) {
                 setCurrentOption={setCurrentOption}
                 options={options}
             ></OptionBlock>
-            <DynamicValueBlock
+            {Object.keys(props.requestQueries).length > 0 && <DynamicValueBlock
                 queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
                 values={values}
                 setValues={setValues}
@@ -92,7 +94,20 @@ export default function LastBlock(props) {
                 settings={settings}
                 dType={dType}
                 currentOption={currentOption}
-            />
+            />}
+            <IconButton 
+                className="removeFilterButton"
+                size='20px'
+                onClick={(event) => {
+                    const query = [...parentsList, dataKey].join(".") ;
+                    props.onFilterRemove(query)
+                }}
+            >
+                <CloseIcon
+                    sx={{color: "grey"}}
+                    aria-label="remove filter"
+                ></CloseIcon>
+            </IconButton>
         </Stack>
     );
 }
