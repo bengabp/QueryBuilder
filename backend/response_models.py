@@ -5,6 +5,9 @@ from constants import field_mappings
 import json
 import os
 
+table_headings = ["name", "hq_locations.address", "participated_events.total", "founders.name"]
+PAGE_SIZE = 500
+
 
 class CompletionsResponse(BaseModel):
 	completions: List = Field(description = "List of completions ..", default = [])
@@ -25,13 +28,13 @@ class SearchRequest(BaseModel):
 
 class CompaniesSearchResult(BaseModel):
 	results: List[Dict] = Field(description = "List of companies matching filters/search criteria")
-	total_results: int = Field(description = "Total number of matches", alias="totalResults")
-	index: int= Field(descripition = "Current page index", default = 1)
-	results_per_page:int = Field(description="Results per page", alias = "resultsPerPage", default = 5)
+	total_results: int = Field(description = "Total number of matches", serialization_alias="totalResults")
+	index: int = Field(descripition = "Current page index", default = 1)
+	results_per_page: int = Field(description="Results per page", serialization_alias = "resultsPerPage", default = PAGE_SIZE)
 
 
 with open(os.path.join(BASE_DIR, "assets/filters.json")) as filter_json:
-	filters  = json.load(filter_json)
+	filters = json.load(filter_json)
 
 with open(os.path.join(BASE_DIR, "assets/options.json")) as option_json:
 	options = json.load(option_json)
@@ -42,6 +45,7 @@ class SettingsResponse(BaseModel):
 	companies: Union[Dict, CompaniesSearchResult] = Field(default = {})
 	field_mappings: Dict = Field(alias="fieldMappings", default = field_mappings)
 	options: Dict = Field(alias="dataTypesAndOptions",default = options)
+	table_headings: List = Field(alias="tableHeadings", default = table_headings)
 	parent_filters: List = Field(alias="parentFilters", default = [
 		"basic_info",
 		"employees",

@@ -11,7 +11,7 @@ import QueryBlock from './QueryBlock';
 import SearchResultsTable from './SearchResultsTable';
 import LinearProgress from '@mui/material/LinearProgress';
 import { SettingsContext } from '../contexts/SettingsContext';
-import {v4} from 'uuid';
+import { api_uri } from './queryblocks/AutocompleteField';
 
 
 export default function QueryBuilder(props) {
@@ -25,30 +25,14 @@ export default function QueryBuilder(props) {
   const [searchResults, setSearchResults] = React.useState(settings.companies);
 
 
-  /* 
-  searchResults = {
-    totalResults:456,
-    index: 1,
-    resultsPerPage: 5,
-    results: [
-
-    ]
-  }
-  */
   React.useEffect(() => {
     props.setIsLoading(false);
   },[])
 
-  React.useEffect(() => {
-    if (isSearching === true) {
-      setTimeout(() => {
-        setIsSearching(false);
-      }, 2000);
-    }
-  }, [isSearching])
 
   React.useEffect(()=>{
     let dict = {};
+    
     Object.keys(requestQueries).forEach((item, index) => {
       let list = item.split(".");
       list[list.length-1] = requestQueries[item]
@@ -56,7 +40,7 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
-
+    console.log("requestQueries => ",requestQueries);
   }, 
   [requestQueries]);
   
@@ -126,11 +110,47 @@ export default function QueryBuilder(props) {
     })
   }
 
-  const search = (event) => {
+
+  async function search (event) {
     if (Object.keys(requestQueries).length > 0){
       setIsSearching(true);
+      try {
+        // Fetch the settings from the backend API
+          let myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          let rawData = Object.keys(requestQueries).map(
+            (filterKey, index) => JSON.parse(requestQueries[filterKey])
+          )
+          var raw = JSON.stringify({
+            filters: rawData
+          });
+          
+          await fetch(`${api_uri}/search`, {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          })
+            .then(response => response.json())
+            .then(result => {
+              setIsSearching(false);
+              setSearchResults(result)
+            })
+      } catch (err) {
+          console.log(err)
+      } finally {
+        
+      }
     }
-    
+  }
+
+  const onFilterRemove = (query) => {
+      
+      setRequestQueries((prev)=>{
+        let current = {...prev}
+        delete current[query]
+        return current
+    })
   }
 
   return (
@@ -141,7 +161,7 @@ export default function QueryBuilder(props) {
     >
       <Stack
         id="queryBuilderContainer"
-        
+        sx={{}}
       >
         <Stack className="queryBuilder" spacing={1} marginBottom={"10px"}>
           {
@@ -154,6 +174,7 @@ export default function QueryBuilder(props) {
                     index={index}
                     requestQueries={requestQueries}
                     setRequestQueries={setRequestQueries}
+                    onFilterRemove={onFilterRemove}
                   />
                 </div>)
             })
@@ -170,39 +191,36 @@ export default function QueryBuilder(props) {
           </Box>
         </Stack>
       </Stack>
-      <Grid
-        direction="column"
-        container
-        sx={{
-          height:'60%',
-          borderTop:'1px solid #808080a1',
-          
-        }}
-      >
-        <Stack direction="column">
-          <Box sx={{width:'100%'}}>
-            { isSearching && <LinearProgress />}
+      <Stack direction="column" sx={{
+          position:'fixed',
+          bottom: '0px',
+          height:'50%',
+          display:'flex',
+          flexDirection: 'column',
+          width:'100%'
+        }}>
+        <Box sx={{width:'100%'}}>
+          { isSearching && <LinearProgress />}
+        </Box>
+        <Box
+          display="flex"
+          justifyContent={"space-between"}
+          padding={"8px 20px"}
+          borderBottom={"1px solid #808080a1"}
+        >
+          <Box display={'flex'} alignItems={"center"} gap={"20px"}>
+            <Button variant="contained"
+              onClick={search}
+              disabled={isSearching}
+            >SEARCH</Button>
+            <Typography variant="span">{`${searchResults.totalResults} results`}</Typography>
           </Box>
-          <Box
-            display="flex"
-            justifyContent={"space-between"}
-            padding={"8px 20px"}
-            borderBottom={"1px solid #808080a1"}
-          >
-            <Box display={'flex'} alignItems={"center"} gap={"20px"}>
-              <Button variant="contained"
-                onClick={search}
-                disabled={isSearching}
-              >SEARCH</Button>
-              <Typography variant="span">{`${searchResults.index}-${searchResults.index + searchResults.resultsPerPage} of ${searchResults.totalResults} results`}</Typography>
-            </Box>
-            <Button variant="contained">Export Companies</Button>
-          </Box>
-          <SearchResultsTable>
-
-          </SearchResultsTable>
-        </Stack>
-      </Grid>
+          <Button variant="contained">Export Companies</Button>
+        </Box>
+        <SearchResultsTable 
+          companies={searchResults.results}
+        />
+      </Stack>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}
         filtersDialogState={filtersDialogState}

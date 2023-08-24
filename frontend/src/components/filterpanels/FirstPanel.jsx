@@ -27,7 +27,6 @@ export default function FirstPanel(props){
                 direction="column"
                 alignItems="stretch"
             >
-                {console.log(props.filterKeysHistory)}
                 {
                     props.filterKeysHistory.length > 1 ?
                         settings.filters[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {

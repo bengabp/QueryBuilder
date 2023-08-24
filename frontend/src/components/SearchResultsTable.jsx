@@ -2,65 +2,95 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { SettingsContext } from '../contexts/SettingsContext';
+import { Avatar } from '@mui/material';
 
 
-const columns = [
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 250,
-    editable: true,
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-
-export default function SearchResultsTable() {
+export default function SearchResultsTable(props) {
   const settings = React.useContext(SettingsContext);
+  const columns = [
+    {
+      field: 'name',
+      headerName: 'Company Name',
+      width: 150,
+      renderCell: (params) => {
+        const { row } = params;
+        return (
+          <div style={{ display: 'flex', alignItems: 'center', padding: "5px" }}>
+            <Avatar 
+              alt={row.name} 
+              src={row.thumbnailUrl} 
+              style={{
+                height: "32px",
+                width: "32px"
+              }}
+            />
+            <span style={{ marginLeft: 8 }}>{row.name}</span>
+          </div>
+        );
+      },
+    },
+    {
+      field: "employeesRange",
+      headerName: "Employees",
+      width: 100,
+      editable: false
+    },
+    {
+      field: "companyStatus",
+      headerName: "Status",
+      width: 100,
+      editable: false
+    },
+    {
+      field: "launchYear",
+      headerName: "Launch Year",
+      width: 100,
+      editable: false
+    },
+    {
+      field: "totalPatents",
+      headerName: "Patents",
+      width: 100,
+      editable: false
+    },
+    {
+      field: "type",
+      headerName: "type",
+      width: 80,
+      editable: false
+    },
+    {
+      field: "totalJobs",
+      headerName: "Jobs",
+      width: 70,
+      editable: false
+    },
+    {
+      field: "tagline",
+      headerName: "Tag Line",
+      width: 400,
+      editable: false
+    },
+    {
+      field: "address",
+      headerName: "Headquarters",
+      width: 500,
+      editable: true
+    }
+  ];
+
   return (
       <DataGrid
-        rows={rows}
+        rows={props.companies == undefined ? []: props.companies}
         columns={columns}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              // pageSize: 5,
             },
           },
         }}
-        pageSizeOptions={[5]}
+        // pageSizeOptions={[5]}
         checkboxSelection
         disableRowSelectionOnClick
       />

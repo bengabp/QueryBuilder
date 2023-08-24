@@ -8,7 +8,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 export default function TwoNumberValues(props){
     return (
         <Stack
-            spacing={2}
+            spacing={1}
             direction="row"
             alignItems="center"
             className="elevatedValueBlock datePickerContainer"
@@ -16,15 +16,44 @@ export default function TwoNumberValues(props){
             <TextField
                 required
                 type="number"
-                label="Enter a number (eg. 80)"
+                placeholder="Number (eg. 8)"
                 className="styledNumberField"
+                size="small"
+                value={props.values[0]}
+                onChange={(event) => {
+                    let val = parseInt(event.target.value)
+                    if (isNaN(val)){
+                        val = 0
+                    }
+                    props.setValues((current) => {
+                        const prev = [...current]
+                        prev[0] = val
+                        return prev
+                    });
+                }}
             />
             <Typography>and</Typography>
             <TextField
                 required
                 type="number"
-                label="Enter a number (eg. 80)"
+                placeholder="Number (eg. )"
                 className="styledNumberField"
+                size="small"
+                onChange={(event) => {
+                    let val = parseInt(event.target.value)
+                    if (isNaN(val)){
+                        val = 0
+                    }
+                    const firstVals = []
+                    if (props.values.length <= 1){
+                        firstVals.push(2)
+                    }
+                    props.setValues((current) => {
+                        const prev = [...firstVals,...current]
+                        prev[1] = val
+                        return prev
+                    });
+                }}
             />
         </Stack>
     );
