@@ -10,6 +10,25 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 export default function TwoDateValues(props){
+    const parseDate = (date) => {
+        let year = 1800;
+        let month = 11;
+        let day = 30;
+
+        if (date !== null){
+            if (!isNaN(date.$y)){
+                year = date.$y;
+            }
+            if (!isNaN(date.$M)){
+                month = date.$M;
+            }
+            if (!isNaN(date.$D)){
+                day = date.$D
+            }
+        }
+
+        return `${year}-${month+1}-${day}`;
+    }
     return (
         <Stack
             direction="row"
@@ -19,13 +38,27 @@ export default function TwoDateValues(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
-                    onChange={(val) => {console.log("Date => ", val)}}                />
+                    onChange={(val) => {
+                        let vals = props.values;
+
+                        vals[0] = parseDate(val)
+                        props.setValues([...vals])
+                    }}
+                />
             </LocalizationProvider>
             <Typography>and</Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
-                    onChange={(val) => {console.log("Date => ", val)}}                />
+                    onChange={(val) => {
+                        let vals = props.values;
+                        if (vals.length <= 0){
+                            vals = ["1890-12-30"]
+                        }
+                        vals[1] = parseDate(val)
+                        props.setValues([...vals])
+                    }}
+                />
             </LocalizationProvider>
         </Stack>
     );

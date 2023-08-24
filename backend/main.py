@@ -75,6 +75,7 @@ def companies_search(request: Request, search_filters: SearchRequest):
             "string_long",
             "string_among",
             "boolean",
+            "date",
         ]:
             print("dType support has not been added ! => ", search_filter.d_type)
             continue

@@ -18,7 +18,7 @@ import IconButton from '@mui/material/IconButton';
 export default function LastBlock(props) {
     let className = `blockWithConnectors ${props.blockClassName}`;
     const settings = React.useContext(SettingsContext);
-    if (props.index == 0){
+    if (props.index === 0){
         className += ` noUpLine`
     }
 
@@ -57,8 +57,9 @@ export default function LastBlock(props) {
         console.log("Values :: ", values)
     }, [currentOption, values])
 
+
     
-    return props.requestQueries == undefined ? (<div>Nothing</div>) : (
+    return props.requestQueries === undefined ? (<div>Nothing</div>) : (
         <Stack 
             direction="row"
             style={{
@@ -90,7 +91,7 @@ export default function LastBlock(props) {
                 queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
                 values={values}
                 setValues={setValues}
-                doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete !== true ? false : true}
+                doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete === true}
                 settings={settings}
                 dType={dType}
                 currentOption={currentOption}
@@ -113,7 +114,7 @@ export default function LastBlock(props) {
 }
 
 
-function DynamicValueBlock(props){
+function DynamicValueBlock(props) {
     if (props.dType === "date" && props.currentOption !== "is_blank"){
         if (props.currentOption === "between"){
             // Return <TwoDateValues>
@@ -146,8 +147,7 @@ function DynamicValueBlock(props){
             );
         } else {
             // Return <SingleNumberValue>
-            return (
-                <SingleNumberValue
+            return (<SingleNumberValue
                     setValues={props.setValues}
                     values={props.values}
                 >

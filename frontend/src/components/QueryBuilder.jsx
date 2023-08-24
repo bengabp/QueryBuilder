@@ -40,7 +40,7 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
-    console.log("QueryObjects => ",queryObjects);
+    console.log("requestQueries => ",requestQueries);
   }, 
   [requestQueries]);
   
