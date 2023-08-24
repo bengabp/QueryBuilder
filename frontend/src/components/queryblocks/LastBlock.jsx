@@ -54,8 +54,8 @@ export default function LastBlock(props) {
             return currentObjects;
         });
 
+        console.log("Values :: ", values)
     }, [currentOption, values])
-
 
     
     return props.requestQueries == undefined ? (<div>Nothing</div>) : (

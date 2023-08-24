@@ -17,7 +17,11 @@ export default function SingleDateValue(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
-                    onChange={(val) => {console.log("Date => ", val)}}                />
+                    onChange={(val) => {
+                        let vals = props.values;
+                        vals[0] = `${val.$y}-${val.$M}-${val.$D+1}`
+                        props.setValues(vals)
+                    }}  />
             </LocalizationProvider>
         </Stack>
     );

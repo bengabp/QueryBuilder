@@ -34,7 +34,7 @@ class CompaniesSearchResult(BaseModel):
 
 
 with open(os.path.join(BASE_DIR, "assets/filters.json")) as filter_json:
-	filters  = json.load(filter_json)
+	filters = json.load(filter_json)
 
 with open(os.path.join(BASE_DIR, "assets/options.json")) as option_json:
 	options = json.load(option_json)

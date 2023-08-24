@@ -72,7 +72,7 @@ def companies_search(request: Request, search_filters: SearchRequest):
 		query = ".".join([*search_filter.parents, search_filter.data_key])
 		collection_field = field_mappings[query]["dKey"]
 		
-		if search_filter.d_type not in ["number", "string_long", "string_among"]:
+		if search_filter.d_type not in ["number", "string_long", "string_among", "boolean"]:
 			print("dType support has not been added ! => ", search_filter.d_type)
 			continue
 		

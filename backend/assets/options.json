@@ -22,13 +22,10 @@
     "string": {
         "options": [
             "includes_any",
-            "includes_all",
             "does_not_include",
-            "does_not_include_all",
-            "does_not_equal",
-            "starts_with",
             "is_blank",
-            "equals"
+            "does_not_include_all",
+            "includes_all"
         ],
         "supports_autocomplete": true
     },

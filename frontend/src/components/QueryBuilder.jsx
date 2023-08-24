@@ -32,8 +32,7 @@ export default function QueryBuilder(props) {
 
   React.useEffect(()=>{
     let dict = {};
-    console.log("QueryObjects::", queryObjects);
-    console.log("RequestQueries => ",requestQueries)
+    
     Object.keys(requestQueries).forEach((item, index) => {
       let list = item.split(".");
       list[list.length-1] = requestQueries[item]

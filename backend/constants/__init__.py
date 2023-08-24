@@ -1,7 +1,7 @@
 field_mappings = {
 	"basic_info.name": {
-		"dType": "string",
-		"dKey": "name",
+		"dType": "string_among",
+		"dKey": "string_among",
 		
 	},
 	"basic_info.crunchbase_url": {
@@ -13,7 +13,7 @@ field_mappings = {
 		"dKey": "create_date"
 	},
 	"basic_info.company_status": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "company_status"
 	},
 	"basic_info.facebook_url": {
@@ -29,19 +29,19 @@ field_mappings = {
 		"dKey": "launch_year"
 	},
 	"basic_info.linkedin_url": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "linkedin_url"
 	},
 	"basic_info.tags": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "tags.name"
 	},
 	"basic_info.tagline": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "tagline"
 	},
 	"basic_info.technologies": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "technologies.name"
 	},
 	"basic_info.total_jobs_available": {
@@ -49,11 +49,11 @@ field_mappings = {
 		"dKey": "total_jobs_available"
 	},
 	"basic_info.type": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "type"
 	},
 	"basic_info.twitter_url": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "twitter_url"
 	},
 	"basic_info.year_became_unicorn": {
@@ -65,7 +65,7 @@ field_mappings = {
 		"dKey": "year_became_future_unicorn"
 	},
 	"basic_info.job_roles": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "job_roles"
 	},
 	"basic_info.startup_ranking_rating": {
@@ -73,7 +73,7 @@ field_mappings = {
 		"dKey": "startup_ranking_rating"
 	},
 	"basic_info.growth_stage": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "growth_stage"
 	},
 	"basic_info.is_ai_data": {
@@ -89,11 +89,11 @@ field_mappings = {
 		"dKey": "is_from_traderegister"
 	},
 	"basic_info.matching_score": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "matching_score"
 	},
 	"basic_info.sdgs": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "sdgs.name"
 	},
 	"basic_info.patents_count": {
@@ -105,15 +105,15 @@ field_mappings = {
 		"dKey": "hq_locations.address"
 	},
 	"basic_info.hq_details.country": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "hq_locations.country.name"
 	},
 	"basic_info.hq_details.continent": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "hq_locations.continent.name"
 	},
 	"basic_info.hq_details.city": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "hq_locations.city.name"
 	},
 	"basic_info.hq_details.is_headquarters": {
@@ -125,28 +125,28 @@ field_mappings = {
 		"dKey": "hq_locations.is_founding_location"
 	},
 	"basic_info.hq_details.state": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "hq_locations.state.name"
 	},
 	
 	"basic_info.tech_stacks.categories": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "tech_stack.categories.name"
 	},
 	"basic_info.tech_stacks.tech_stacks_company.name": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "tech_stack.company.name"
 	},
 	"basic_info.tech_stacks.tech_stacks_company.path": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "tech_stack.company.path"
 	},
 	"basic_info.tech_stacks.tech_stacks_company.type": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "tech_stack.company.type"
 	},
 	"employees.employees": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "employees"
 	},
 	"employees.employees_latest": {
@@ -154,7 +154,7 @@ field_mappings = {
 		"dKey": "employees_latest"
 	},
 	"employees.employee_12_months_growth_percentile": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "employee_12_months_growth_percentile"
 	},
 	"employees.employee_12_months_growth_delta": {
@@ -190,7 +190,7 @@ field_mappings = {
 		"dKey": "employee_6_months_growth_delta"
 	},
 	"employees.employee_6_months_growth_percentile": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "employee_6_months_growth_percentile"
 	},
 	"employees.employee_6_months_growth_relative": {
@@ -207,15 +207,15 @@ field_mappings = {
 		"dKey": "participated_events.total"
 	},
 	"events.participated_events.name": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "participated_events.items.name"
 	},
 	"events.participated_events.type": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "participated_events.items.type"
 	},
 	"events.events.participated_events.path": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "participated_events.items.path"
 	},
 	"events.events.participated_events.twitter_url": {
@@ -243,15 +243,15 @@ field_mappings = {
 		"dKey": "founders_score_cumulated"
 	},
 	"founders.name": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "founders.name"
 	},
 	"founders.founders_top_university": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "founders_top_university"
 	},
 	"founders.founders_top_past_companies": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "founders_top_past_companies"
 	},
 	"founders.has_strong_founder": {
@@ -280,28 +280,31 @@ field_mappings = {
 		"dKey": "total_funding_enhanced.amount"
 	},
 	"income_funding.income_streams": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "income_streams.name"
 	},
 	"income_funding.funding_details.total": {
 		"dType": "number",
 		"dKey": "fundings.total"
 	},
-	"income_funding.funding_details.date": {
-		"dType": "date",
-		"dKey": "fundings.items.date"
+	"income_funding.funding_details.month": {
+		"dType": "number",
+		"dKey": "fundings.items.month"
+	},
+	"income_funding.funding_details.year":{
+		"dType": "number",
+		"dKey": "fundings.items.year"
 	},
 	"income_funding.funding_details.amount": {
 		"dType": "number",
-		"dKey": ""
-				" "
+		"dKey": "fundings.items.amount"
 	},
 	"income_funding.funding_details.round": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "fundings.items.round"
 	},
 	"income_funding.funding_details.unknown_investors": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "fundings.items.unknown_investors"
 	},
 	"income_funding.funding_details.valuation_generated_max": {
@@ -313,7 +316,7 @@ field_mappings = {
 		"dKey": "fundings.items.valuation_generated_min"
 	},
 	"income_funding.funding_details.valuation": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "fundings.items.valuation"
 	},
 	"income_funding.funding_details.is_undisclosed": {
@@ -321,19 +324,19 @@ field_mappings = {
 		"dKey": "fundings.items.is_undisclosed"
 	},
 
-	"income_funding.funding_details.funding_investors.investor_details.type": {
-		"dType": "string",
+	"income_funding.funding_details.funding_investor_details.type": {
+		"dType": "string_among",
 		"dKey": "fundings.items.investors.type"
 	},
-	"income_funding.funding_details.funding_investors.investor_details.name": {
-		"dType": "string",
+	"income_funding.funding_details.funding_investor_details.name": {
+		"dType": "string_among",
 		"dKey": "fundings.items.investors.name"
 	},
-	"income_funding.funding_details.funding_investors.investor_details.path": {
-		"dType": "string",
+	"income_funding.funding_details.funding_investor_details.path": {
+		"dType": "string_among",
 		"dKey": "fundings.items.investors.path"
 	},
-	"income_funding.funding_details.funding_investors.investor_details.lead": {
+	"income_funding.funding_details.funding_investor_details.lead": {
 		"dType": "boolean",
 		"dKey": "fundings.items.investors.lead"
 	},
@@ -342,15 +345,15 @@ field_mappings = {
 		"dKey": "investors.total"
 	},
 	"investors.investor_details.type": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "investors.items.type"
 	},
 	"investors.investor_details.name": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "investors.items.name"
 	},
 	"investors.investor_details.path": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "investors.items.path"
 	},
 	"investors.investor_details.lead": {
@@ -362,15 +365,15 @@ field_mappings = {
 		"dKey": "investors.items.exited"
 	},
 	"investors.investment_details.type": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "investments.items.type"
 	},
 	"investors.investment_details.name": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "investments.items.name"
 	},
 	"investors.investment_details.path": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "investments.items.path"
 	},
 	"investors.investment_details.lead": {
@@ -382,15 +385,15 @@ field_mappings = {
 		"dKey": "investments.items.exited"
 	},
 	"industries.industries": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "industries.name"
 	},
 	"industries.sub_industries": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "sub_industries.name"
 	},
 	"industries.service_industries": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "service_industries.name"
 	},
 	"ipo_round.date": {
@@ -402,7 +405,7 @@ field_mappings = {
 		"dKey": "ipo_round.amount"
 	},
 	"ipo_round.round": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "ipo_round.round"
 	},
 	"ipo_round.is_undisclosed": {
@@ -414,15 +417,15 @@ field_mappings = {
 		"dKey": "ipo_round.date"
 	},
 	"ipo_round.ipo_round_investors.name": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "ip_round.investors.name"
 	},
 	"ipo_round.ipo_round_investors.path": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "ip_round.investors.path"
 	},
 	"ipo_round.ipo_round_investors.type": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "ip_round.investors.type"
 	},
 	"ipo_round.ipo_round_investors.lead": {
@@ -458,7 +461,7 @@ field_mappings = {
 		"dKey": "kpi_summary.profit_hidden"
 	},
 	"kpi_summary.kpi_summary_values.year": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "kpi_summary.values.year"
 	},
 	"kpi_summary.kpi_summary_values.valuation": {
@@ -470,7 +473,7 @@ field_mappings = {
 		"dKey": "kpi_summary.values.revenue"
 	},
 	"kpi_summary.kpi_summary_values.revenue_growth": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "kpi_summary.values.revenue_growth"
 	},
 	"kpi_summary.kpi_summary_values.revenue_source": {
@@ -535,11 +538,11 @@ field_mappings = {
 		"dKey": "kpi_summary.valuations.date"
 	},
 	"kpi_summary.kpi_summary_valuations.source": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "kpi_summary.valuations.source"
 	},
 	"kpi_summary.kpi_summary_valuations.source_round": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "kpi_summary.valuations.source_round"
 	},
 	"kpi_summary.kpi_summary_valuations.valuation": {
@@ -567,7 +570,7 @@ field_mappings = {
 		"dKey": "similarweb_12_months_growth_delta"
 	},
 	"similar_companies.similarweb_12_months_growth_percentile": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "similarweb_12_months_growth_percentile"
 	},
 	"similar_companies.similarweb_12_months_growth_relative": {
@@ -583,7 +586,7 @@ field_mappings = {
 		"dKey": "similarweb_3_months_growth_delta"
 	},
 	"similar_companies.similarweb_3_months_growth_percentile": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "similarweb_3_months_growth_percentile"
 	},
 	"similar_companies.similarweb_3_months_growth_relative": {
@@ -599,7 +602,7 @@ field_mappings = {
 		"dKey": "similarweb_6_months_growth_delta"
 	},
 	"similar_companies.similarweb_6_months_growth_percentile": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "similarweb_6_months_growth_percentile"
 	},
 	"similar_companies.similarweb_6_months_growth_relative": {
@@ -611,7 +614,7 @@ field_mappings = {
 		"dKey": "similarweb_6_months_growth_unique"
 	},
 	"revenues.revenues": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "revenues.name"
 	},
 	"revenues.latest_revenue_enhanced": {
@@ -619,7 +622,7 @@ field_mappings = {
 		"dKey": "latest_revenue_enhanced"
 	},
 	"innovations.innovations": {
-		"dType": "string",
+		"dType": "string_among",
 		"dKey": "innovations"
 	},
 	"innovations.innovations_count": {

@@ -19,6 +19,9 @@ contains_any_string_stage = lambda field, values: {
 	"$match": {field: {"$in": values}}
 }
 
+# def equals_boolean_stage(field, values):
+# 	f = False
+
 pipeline_builder = {
 	'does_not_include_all': {
 		"string_among": {
@@ -35,10 +38,15 @@ pipeline_builder = {
 		}
 	},
 	'does_not_equal': {
-		"string_among": {""},
+		# "string_among": {""},
 		"number": {
 			"get_pipeline": lambda field, values: {
 				"$match": {field: {"$ne": values[0]}}
+			}
+		},
+		"boolean": {
+			"get_pipeline": lambda field, values: {
+				"$match": {field: {"$ne": True if values[0] == "true" else False}}
 			}
 		}
 	},
@@ -80,6 +88,11 @@ pipeline_builder = {
 		"number": {
 			"get_pipeline": lambda field, values: {
 				"$match": {field: values[0]}
+			}
+		},
+		"boolean": {
+			"get_pipeline": lambda field, values: {
+				"$match": {field: True if values[0] == "true" else False}
 			}
 		}
 	},

@@ -403,9 +403,14 @@
             "dType": "number"
         },
         {
-            "dataKey": "date",
-            "text": "Date",
-            "dType": "date"
+            "dataKey": "month",
+            "text": "Month",
+            "dType": "number"
+        },
+        {
+            "dataKey": "year",
+            "text": "Year",
+            "dType": "number"
         },
         {
             "dataKey": "amount",
