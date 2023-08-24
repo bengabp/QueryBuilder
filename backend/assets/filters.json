@@ -6,11 +6,6 @@
             "dType": "string_among"
         },
         {
-            "dataKey": "crunchbase_url",
-            "text": "Crunchbase Url",
-            "dType": "string"
-        },
-        {
             "dataKey": "create_date",
             "text": "Create Date",
             "dType": "date"
@@ -19,11 +14,6 @@
             "dataKey": "company_status",
             "text": "Company Status",
             "dType": "string_among"
-        },
-        {
-            "dataKey": "facebook_url",
-            "text": "Facebook Url",
-            "dType": "string"
         },
         {
             "dataKey": "launch_month",
@@ -306,11 +296,6 @@
             "text": "Path"
         },
         {
-            "dataKey": "twitter_url",
-            "dType": "string",
-            "text": "Twitter Url"
-        },
-        {
             "dataKey": "event_date_start",
             "dType": "date",
             "text": "Start Date"
@@ -319,16 +304,6 @@
             "dataKey": "event_date_end",
             "dType": "date",
             "text": "End Date"
-        },
-        {
-            "dataKey": "angellist_url",
-            "dType": "string",
-            "text": "Angellist Url"
-        },
-        {
-            "dataKey": "linkedin_url",
-            "dType": "string",
-            "text": "Linkedin Url"
         }
     ],
     "founders": [

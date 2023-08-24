@@ -27,7 +27,7 @@
             "does_not_include_all",
             "includes_all"
         ],
-        "supports_autocomplete": true
+        "supports_autocomplete": false
     },
     "string_long": {
         "options":[
