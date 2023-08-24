@@ -36,6 +36,7 @@ app.add_middleware(
 	}
 )
 def get_completions(request: Request,
+<<<<<<< HEAD
 					q = Query(
 						default = "",
 						description = "String to search for, leaving this field empty will return some random results..",
@@ -47,6 +48,19 @@ def get_completions(request: Request,
 						example = "fundings.items.amount"
 					)
 					):
+=======
+		q=Query(
+			default="",
+			description="String to search for, leaving this field empty will return some random results..",
+		),
+		field_path=Query(
+			default="name",
+			description="The path to the field to get completions for",
+			min_length=3,
+			example="fundings.items.amount"
+		)
+		):
+>>>>>>> cf04b67 (Setup project in pycharm professional)
 	""" Get completions for search query using mongodb aggregate queries/pipelines """
 	corresponding_field = field_mappings[field_path]["dKey"]
 	completions = get_search_suggestions(corresponding_field, q, limit = 20)
@@ -133,6 +147,7 @@ def companies_search(request: Request, search_filters: SearchRequest):
 	print("returned !!")
 	response = CompaniesSearchResult(results = companies, total_results = len(companies))
 	return response
+
 
 
 @app.get("/settings")
