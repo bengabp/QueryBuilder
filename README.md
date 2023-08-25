@@ -6,7 +6,7 @@ Powerful project to search through a custom dataset like crunchbase
 The frontend has been built with react and material ui
 Before running the frontend make sure you have Node.js and npm installed on your pc.
 Make sure to change the api_uri in `/frontend/src/components/queryblocks/AutocompleteField.jsx`
-You can start the React frontend by running 
+You can start the React frontend by running this command inside the` fron`tend/ directory
 ```commandline
 npm install
 npm start
@@ -25,7 +25,7 @@ installed on your pc. Then install the packages using this command
 pip install -r requirements.txt
 ```
 
-Start the api server
+Start the api server. This command must be run inside the `backend/` directory
 ```commandline
 uvicorn --host 0.0.0.0 --port 8080
 ```
