@@ -1,10 +1,11 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import FiltersDialog from './FiltersDialog';
 import AddFilterButton from './AddFilterButton';
 import QueryBlock from './QueryBlock';
@@ -14,21 +15,70 @@ import { SettingsContext } from '../contexts/SettingsContext';
 import { api_uri } from './queryblocks/AutocompleteField';
 
 
+
 export default function QueryBuilder(props) {
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
   const [queryObjects, setQueryObjects] = React.useState({});
   const [requestQueries, setRequestQueries] = React.useState({});
   const [isSearching, setIsSearching] = React.useState(false);
+  const [isExporting, setIsExporting] = React.useState(false);
   
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
+
+  const [exportBtnMenuAnchorEl, setExportBtnMenuAnchorEl] = React.useState(null);
+  const exportBtnMenuOpen = Boolean(exportBtnMenuAnchorEl);
+
+  const handleExportBtnMenuItemClick = (event) => {
+
+    setExportBtnMenuAnchorEl(event.currentTarget)
+  }
+  const handleExportBtnMenuClose = (event) => {
+    const fileType = event.currentTarget.id;
+    if (["json", "csv"].includes(fileType)){
+      sendExportRequest(fileType);
+    }
+    setExportBtnMenuAnchorEl(null);
+  }
 
 
   React.useEffect(() => {
     props.setIsLoading(false);
   },[])
 
+  const sendExportRequest = (fileType) => {
+    setIsExporting(true);
+
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    fetch(`${api_uri}/export`, {
+        body: JSON.stringify({
+          targetResults: searchResults.results,
+          fileType: fileType
+        }),
+        redirect: "follow",
+        headers: myHeaders,
+        method: "POST"
+      },
+    )
+    .then((response) => response.blob())
+    .then((blob) => {
+      setIsExporting(false);
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', "results."+fileType);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    })
+    .catch((error) => {
+      console.error('Error downloading file: ', error);
+      setIsExporting(false)
+    });
+  }
 
   React.useEffect(()=>{
     let dict = {};
@@ -215,7 +265,39 @@ export default function QueryBuilder(props) {
             >SEARCH</Button>
             <Typography variant="span">{`${searchResults.totalResults} results`}</Typography>
           </Box>
-          <Button variant="contained">Export Companies</Button>
+          <Box
+            sx={{
+              display:"flex",
+              flexDirection:"column",
+              gap:"0px",
+              alignItems:"center",
+              justifyContent:"center"
+            }}
+          >
+              <Button
+                disabled={true ? isExporting: false}
+                id={"export-btn"}
+                borderRadius={"0px"}
+                aria-controls={exportBtnMenuOpen ? 'export-btn-menu' : undefined}
+                aria-haspopup={"true"}
+                aria-expanded={exportBtnMenuOpen ? 'true' : undefined}
+                onClick={handleExportBtnMenuItemClick}
+              >
+                {isExporting ? "Exporting..." : "Export Results"}
+            </Button>
+            {isExporting && <LinearProgress sx={{width:"120px", height:"3px"}} />}
+          </Box>
+
+          <Menu
+              id="export-btn-menu"
+              anchorEl={exportBtnMenuAnchorEl}
+              open={exportBtnMenuOpen}
+              onClose={handleExportBtnMenuClose}
+              MenuListProps={{'aria-labelledby': 'export-btn'}}
+          >
+            <MenuItem onClick={handleExportBtnMenuClose} id="json">Export to json</MenuItem>
+            <MenuItem onClick={handleExportBtnMenuClose} id="csv">Export to csv</MenuItem>
+          </Menu>
         </Box>
         <SearchResultsTable 
           companies={searchResults.results}

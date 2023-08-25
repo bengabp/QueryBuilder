@@ -1,8 +1,8 @@
 from typing import Dict, List
 
-from fastapi import FastAPI, Query, status, Request
+from fastapi import FastAPI, Query, status, Request, Response, Body
 from fastapi.middleware.cors import CORSMiddleware
-
+import pandas
 import time
 from pymongo import errors as pymongo_errors
 from builder import pipeline_builder
@@ -11,10 +11,10 @@ from db import db
 from response_models import (
     CompletionsResponse,
     CompaniesSearchResult,
-    SearchRequest,
     SettingsResponse,
     PAGE_SIZE,
 )
+from backend.request_schemas import SearchRequest, ExportResultsRequest
 from utils.completions import get_search_suggestions
 
 app = FastAPI()
@@ -95,7 +95,7 @@ def companies_search(request: Request, search_filters: SearchRequest):
     if pipeline:
         pipeline.extend(
             [
-                {"$project": {"_id": 0}},
+                # {"$project": {"_id": 0}},
                 {"$addFields": {"total_results": {"$sum": 1}}},
                 {"$limit": 500},
             ]
@@ -191,4 +191,37 @@ def get_settings(
             results=companies, total_results=total_results
         )
 
+    return response
+
+
+@app.post(
+    "/export",
+    tags=["Export Results"],
+    summary="Export results",
+    description="Export results to file , either `json` or `csv`",
+    status_code=status.HTTP_200_OK,
+)
+async def handle_file_export(
+    request: Request, response: Response, export_request: ExportResultsRequest
+):
+    companies = export_request.target_results
+    file_type = export_request.file_type
+
+    if file_type not in ["json", "csv"]:
+
+        return
+
+    dataframe = pandas.DataFrame(companies)
+
+    if file_type == "json":
+        content = dataframe.to_json(orient="records")
+        media_type = "application/json"
+    else:
+        content = dataframe.to_csv(index=False)
+        media_type = "text/csv"
+
+    response = Response(content=content, media_type=media_type)
+    response.headers[
+        "Content-Disposition"
+    ] = f'attachment;filename="results.{file_type}"'
     return response
