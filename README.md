@@ -39,3 +39,6 @@ queries than just normal find and find_one commands.
 ## ProTip: 
 - When you run the api server go to /redoc to view the api documentation
 - You can use the `migrate_companies_data` method in the `DBConnection` class in backend/db.py to migrate your data
+
+Run the frontend using `npm start`
+
