@@ -1,6 +1,7 @@
 # QueryBuilder
 Powerful project to search through a custom dataset like crunchbase
 
+
 ## Frontend
 The frontend has been built with react and material ui
 Before running the frontend make sure you have Node.js and npm installed on your pc.
@@ -42,3 +43,33 @@ queries than just normal find and find_one commands.
 
 Run the frontend using `npm start`
 
+
+Run the frontend using `npm start`
+
+## Frontend
+The frontend has been built with react and material ui
+Before running the frontend make sure you have nodejs and npm installed on your pc.
+Make sure to change the api_uri in `/frontend/src/components/queryblocks/AutocompleteField.jsx`
+You can start the react frontend by running 
+```commandline
+npm install
+npm start
+```
+
+Aditionally you could build the project
+```commandline
+npm build
+```
+
+## Backend
+The backend has been written in fastapi
+To run the backend server you need to make sure you have python3.9 
+installed on your pc. Then install the packages using this command
+```commandline
+pip install -r requirements.txt
+```
+
+Start the api server
+```commandline
+uvicorn --host 0.0.0.0 --port 8080
+```
