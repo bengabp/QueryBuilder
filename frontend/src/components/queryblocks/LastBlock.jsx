@@ -28,8 +28,6 @@ export default function LastBlock(props) {
     const parentsList = queryObject.parents
     const dType = queryObject.dType
 
-    // console.log("Request Queries => ",props.requestQueries);
-
     const [values, setValues] = React.useState([]);
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
@@ -54,7 +52,6 @@ export default function LastBlock(props) {
             return currentObjects;
         });
 
-        console.log("Values :: ", values)
     }, [currentOption, values])
 
 

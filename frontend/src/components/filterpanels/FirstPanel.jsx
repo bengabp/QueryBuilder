@@ -30,7 +30,6 @@ export default function FirstPanel(props){
                 {
                     props.filterKeysHistory.length > 1 ?
                         settings.filters[props.filterKeysHistory[props.filterKeysHistory.length-2]].map((filter, index) => {
-                            // console.log("PROP => ", filter.text, filter)
                             return <FilterBlock 
                                 text={filter.text}
                                 key={index}

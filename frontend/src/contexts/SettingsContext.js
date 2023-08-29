@@ -9,7 +9,6 @@ const SettingsProvider = ({ children }) => {
     
 
     async function fetchSettings(){
-        console.log("Fetching data !")
           try {
             // Fetch the settings from the backend API
             const data = await (
@@ -25,7 +24,6 @@ const SettingsProvider = ({ children }) => {
       fetchSettings()
     }, []);
 
-    console.log("Settings => ",settings)
     return (
         <SettingsContext.Provider value={settings}>
             {settings && children}
