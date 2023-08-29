@@ -100,17 +100,15 @@ def companies_search(request: Request, search_filters: SearchRequest):
                 {"$limit": 500},
             ]
         )
-        print("Searching ...")
         try:
             search_results = db.companies.aggregate(pipeline)
-            print("Got results ..")
         except pymongo_errors.OperationFailure:
             print("There is an error in your pipeline")
 
     companies = []
 
     for index, company in enumerate(search_results):
-        print("Company Name => ", company.get("name"))
+#         print("Company Name => ", company.get("name"))
         hq_locations: List[Dict] = company.get("hq_locations", [])
 
         if hq_locations:
@@ -139,7 +137,6 @@ def companies_search(request: Request, search_filters: SearchRequest):
             "tagline": company.get("tagline"),
         }
         companies.append(data)
-    print("returned !!")
     response = CompaniesSearchResult(results=companies, total_results=len(companies))
     return response
 
