@@ -87,7 +87,7 @@ export default function LastBlock(props) {
                 setCurrentOption={setCurrentOption}
                 options={options}
             ></OptionBlock>
-            {Object.keys(props.requestQueries).length > 0 && <DynamicValueBlock
+            {Object.keys(props.requestQueries).length > 0 && props.requestQueries[[...parentsList, dataKey].join(".")] && <DynamicValueBlock
                 queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
                 values={values}
                 setValues={setValues}

@@ -1,6 +1,6 @@
 from typing import List, Dict
 from pydantic import BaseModel, Field
-from backend.response_models import Filter
+from response_models import Filter
 
 
 class SearchRequest(BaseModel):
