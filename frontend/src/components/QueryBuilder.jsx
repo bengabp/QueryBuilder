@@ -182,13 +182,12 @@ export default function QueryBuilder(props) {
           })
             .then(response => response.json())
             .then(result => {
-              setIsSearching(false);
               setSearchResults(result)
             })
       } catch (err) {
           console.log(err)
       } finally {
-        
+        setIsSearching(false);
       }
     }
   }

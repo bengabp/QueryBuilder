@@ -20,86 +20,85 @@ const classNames = {
 const QueryBlock  = (props) => {
     return(
         <Stack direction="column" spacing={1}
-            sx={{
-                margin:'0'
-            }}
-            className="nestedQueryBlock"
+               sx={{
+                   margin:'0'
+               }}
+               className="nestedQueryBlock"
         >
             {
                 Object.keys(props.queryObjects).map((query, index) => {
                     if (typeof props.queryObjects[query] === "object" && props.queryObjects[query] !== null){
-                        return <Stack 
-                                direction="row"
-                                key={index}
-                                sx={{
-                                    alignItems:"flex-start",
-                                    justifyContent:"flex-start",
-                                    gap:"15px"
-                                }}
-                            >
-                                {
-                                    props.parent != undefined ? 
-                                    <TitleBlock 
-                                        text={query} 
-                                        blockClassName={classNames.titleBlockFirst} 
+                        return <Stack
+                            direction="row"
+                            key={index}
+                            sx={{
+                                alignItems:"flex-start",
+                                justifyContent:"flex-start",
+                                gap:"15px"
+                            }}
+                        >
+                            {
+                                props.parent != undefined ?
+                                    <TitleBlock
+                                        text={query}
+                                        blockClassName={classNames.titleBlockFirst}
                                         key={index+classNames.titleBlockFirst}
                                         requestQueries={props.requestQueries}
                                         setRequestQueries={props.setRequestQueries}
                                     />
-                                    : 
-                                    <TitleBlock 
-                                        text={query} 
-                                        blockClassName={classNames.titleBlockNotFirst} 
-                                        index={ index } 
+                                    :
+                                    <TitleBlock
+                                        text={query}
+                                        blockClassName={classNames.titleBlockNotFirst}
+                                        index={ index }
                                         key={index+classNames.titleBlockNotFirst}
                                         requestQueries={props.requestQueries}
-                                        setRequestQueries={props.setRequestQueries} 
+                                        setRequestQueries={props.setRequestQueries}
                                     />
-                                }
-                                
-                                <QueryBlock
-                                    queryObjects={props.queryObjects[query]}
-                                    key={index+1}
-                                    requestQueries={props.requestQueries}
-                                    onFilterRemove={props.onFilterRemove}
-                                    setRequestQueries={props.setRequestQueries}
-                                    onFilterRemove={props.onFilterRemove}
-                                ></QueryBlock>
+                            }
+
+                            <QueryBlock
+                                queryObjects={props.queryObjects[query]}
+                                key={index+1}
+                                requestQueries={props.requestQueries}
+                                onFilterRemove={props.onFilterRemove}
+                                setRequestQueries={props.setRequestQueries}
+                            ></QueryBlock>
                         </Stack>
                     } else {
-                        return (
-                            <Stack direction="row" key={index}>
-                                {Object.values(props.requestQueries).includes(query) ? (
-                                    props.parent !== undefined ? (
-                                        <LastBlock
-                                            text={query}
-                                            blockClassName={classNames.lastBlockFirst}
-                                            index={index}
-                                            key={index}
-                                            onFilterRemove={props.onFilterRemove}
-                                            requestQueries={props.requestQueries}
-                                            setRequestQueries={props.setRequestQueries}
-                                        />
-                                    ) : (
-                                        <LastBlock
-                                            text={query}
-                                            blockClassName={classNames.lastBlockNotFirst}
-                                            index={index}
-                                            key={index}
-                                            onFilterRemove={props.onFilterRemove}
-                                            requestQueries={props.requestQueries}
-                                            setRequestQueries={props.setRequestQueries}
-                                        />
-                                    )
-                                ) : null}
-                            </Stack>
-                        )
+                        return <Stack
+                            direction="row"
+                            key={index}
+                        >
+                            {
+                                props.parent != undefined ?
+                                    <LastBlock
+                                        text={query}
+                                        blockClassName={classNames.lastBlockFirst}
+                                        index={index}
+                                        key={index}
+                                        onFilterRemove={props.onFilterRemove}
+                                        requestQueries={props.requestQueries}
+                                        setRequestQueries={props.setRequestQueries}
+                                    />
+                                    :
+                                    <LastBlock
+                                        text={query}
+                                        blockClassName={classNames.lastBlockNotFirst}
+                                        index={index}
+                                        key={index}
+                                        onFilterRemove={props.onFilterRemove}
+                                        requestQueries={props.requestQueries}
+                                        setRequestQueries={props.setRequestQueries}
+                                    />
+                            }
+                        </Stack>
                     }
+
                 })
             }
-
         </Stack>
-    );   
+    );
 }
 
 export default QueryBlock
