@@ -14,7 +14,7 @@ from response_models import (
     SettingsResponse,
     PAGE_SIZE,
 )
-from backend.request_schemas import SearchRequest, ExportResultsRequest
+from request_schemas import SearchRequest, ExportResultsRequest
 from utils.completions import get_search_suggestions
 
 app = FastAPI()
