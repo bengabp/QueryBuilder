@@ -44,7 +44,7 @@ const QueryBlock  = (props) => {
                                         blockClassName={classNames.titleBlockFirst} 
                                         key={index+classNames.titleBlockFirst}
                                         requestQueries={props.requestQueries}
-                                    setRequestQueries={props.setRequestQueries}
+                                        setRequestQueries={props.setRequestQueries}
                                     />
                                     : 
                                     <TitleBlock 
@@ -61,6 +61,7 @@ const QueryBlock  = (props) => {
                                     queryObjects={props.queryObjects[query]}
                                     key={index+1}
                                     requestQueries={props.requestQueries}
+                                    onFilterRemove={props.onFilterRemove}
                                     setRequestQueries={props.setRequestQueries}
                                     onFilterRemove={props.onFilterRemove}
                                 ></QueryBlock>
