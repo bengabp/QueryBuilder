@@ -277,8 +277,6 @@ export default function QueryBuilder(props) {
               <Button
                 disabled={true ? isExporting: false}
                 id={"export-btn"}
-                // borderRadius={"0px"}
-
                 aria-controls={exportBtnMenuOpen ? 'export-btn-menu' : undefined}
                 aria-haspopup={"true"}
                 aria-expanded={exportBtnMenuOpen ? 'true' : undefined}

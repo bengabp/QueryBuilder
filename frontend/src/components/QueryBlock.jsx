@@ -63,40 +63,41 @@ const QueryBlock  = (props) => {
                                     requestQueries={props.requestQueries}
                                     onFilterRemove={props.onFilterRemove}
                                     setRequestQueries={props.setRequestQueries}
+                                    onFilterRemove={props.onFilterRemove}
                                 ></QueryBlock>
                         </Stack>
                     } else {
-                        return <Stack 
-                            direction="row"
-                            key={index}
-                        >
-                            {
-                                props.parent != undefined ?
-                                <LastBlock 
-                                    text={query} 
-                                    blockClassName={classNames.lastBlockFirst} 
-                                    index={index} 
-                                    key={index} 
-                                    onFilterRemove={props.onFilterRemove}
-                                    requestQueries={props.requestQueries}
-                                    setRequestQueries={props.setRequestQueries}
-                                />
-                                : 
-                                <LastBlock 
-                                    text={query} 
-                                    blockClassName={classNames.lastBlockNotFirst} 
-                                    index={index} 
-                                    key={index} 
-                                    onFilterRemove={props.onFilterRemove}
-                                    requestQueries={props.requestQueries}
-                                    setRequestQueries={props.setRequestQueries}
-                                />
-                            }
-                        </Stack>
+                        return (
+                            <Stack direction="row" key={index}>
+                                {Object.values(props.requestQueries).includes(query) ? (
+                                    props.parent !== undefined ? (
+                                        <LastBlock
+                                            text={query}
+                                            blockClassName={classNames.lastBlockFirst}
+                                            index={index}
+                                            key={index}
+                                            onFilterRemove={props.onFilterRemove}
+                                            requestQueries={props.requestQueries}
+                                            setRequestQueries={props.setRequestQueries}
+                                        />
+                                    ) : (
+                                        <LastBlock
+                                            text={query}
+                                            blockClassName={classNames.lastBlockNotFirst}
+                                            index={index}
+                                            key={index}
+                                            onFilterRemove={props.onFilterRemove}
+                                            requestQueries={props.requestQueries}
+                                            setRequestQueries={props.setRequestQueries}
+                                        />
+                                    )
+                                ) : null}
+                            </Stack>
+                        )
                     }
-
                 })
             }
+
         </Stack>
     );   
 }
