@@ -27,7 +27,7 @@ export default function QueryBuilder(props) {
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
 
-  const [exportBtnMenuAnchorEl, setExportBtnMenuAnchorEl] = React.useState(null);
+  const [exportBtnMenuAnchorEl, setExportBtnMenuAnchorEl] = React.useState("");
   const exportBtnMenuOpen = Boolean(exportBtnMenuAnchorEl);
 
   const handleExportBtnMenuItemClick = (event) => {
@@ -39,7 +39,7 @@ export default function QueryBuilder(props) {
     if (["json", "csv"].includes(fileType)){
       sendExportRequest(fileType);
     }
-    setExportBtnMenuAnchorEl(null);
+    setExportBtnMenuAnchorEl("");
   }
 
 
@@ -90,6 +90,7 @@ export default function QueryBuilder(props) {
       dict = mergeDicts(dict, listDict);
     })
     setQueryObjects(dict);
+    console.log("request Queries :", requestQueries);
   }, 
   [requestQueries]);
   

@@ -2,7 +2,7 @@ import React from 'react';
 import {MenuItem, Menu, Button} from '@mui/material';
 
 export default function OptionBlock (props) {
-    const [menuState, setMenuState] = React.useState(null);
+    const [menuState, setMenuState] = React.useState("");
 
     const toggleMenuState = (event) => {
         setMenuState(event.currentTarget);
@@ -14,7 +14,7 @@ export default function OptionBlock (props) {
     }
     
     const closeMenu = () => {
-        setMenuState(null);
+        setMenuState("");
     }
 
     const refineOptionText = (textWithUnderscores) =>{
