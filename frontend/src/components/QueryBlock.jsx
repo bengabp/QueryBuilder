@@ -61,6 +61,7 @@ const QueryBlock  = (props) => {
                                 text={query}
                                 blockClassName={props.parent !== undefined ? classNames.lastBlockFirst:classNames.lastBlockNotFirst}
                                 index={index}
+                                properties={props.queries[query]}
                                 key={index}
                                 queryCurrentOptions={props.queryCurrentOptions}
                                 queryValues={props.queryValues}
