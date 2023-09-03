@@ -20,7 +20,6 @@ import mergeObjectWithNestedArray from "./utils";
 export default function QueryBuilder(props) {
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
-  const [queryObjects, setQueryObjects] = React.useState({});
   const [requestQueries, setRequestQueries] = React.useState({});
   const [isSearching, setIsSearching] = React.useState(false);
   const [isExporting, setIsExporting] = React.useState(false);
@@ -161,13 +160,25 @@ export default function QueryBuilder(props) {
     }
   }
 
-  const onFilterRemove = (query) => {
-      
-      setRequestQueries((prev)=>{
-        let current = {...prev}
-        delete current[query]
-        return current
-    })
+  const onFilterRemove = (strKey) => {
+      console.log("Deleting query: ", strKey)
+      setQueries((current) => {
+        let prev = {...current}
+        deleteNestedKey(prev, strKey)
+        return prev;
+      });
+  }
+  function deleteNestedKey(obj, path){
+    const keys = path.split('.');
+    const currentKey = keys[0];
+
+    if (currentKey in obj) {
+      if (keys.length === 1) {
+        delete obj[currentKey];
+      } else {
+        deleteNestedKey(obj[currentKey], keys.slice(1).join('.'));
+      }
+    }
   }
 
   return (
@@ -191,6 +202,7 @@ export default function QueryBuilder(props) {
                         index={index}
                         queryCurrentOptions={queryCurrentOptions}
                         queryValues={queryValues}
+                        onFilterRemove={onFilterRemove}
                         setQueryCurrentOptions={setQueryCurrentOptions}
                         setQueryValues={setQueryValues}
                     />
@@ -203,7 +215,7 @@ export default function QueryBuilder(props) {
               toggleFiltersDialog={toggleFiltersDialog}
               isSearching={isSearching}
               className={
-                Object.keys(queryObjects).length > 0 &&
+                Object.keys(queries).length > 0 &&
                 "blockWithConnectors addFilterButton"
               }
             />

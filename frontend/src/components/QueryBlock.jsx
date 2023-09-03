@@ -35,6 +35,7 @@ const QueryBlock  = (props) => {
                         >
                             <TitleBlock
                                 text={query}
+                                index={index}
                                 blockClassName={props.parent !== undefined ? classNames.titleBlockFirst : classNames.titleBlockNotFirst}
                                 key={props.parent !== undefined ? index+classNames.titleBlockFirst : index+classNames.titleBlockNotFirst}
                                 queryCurrentOptions={props.queryCurrentOptions}
@@ -50,6 +51,7 @@ const QueryBlock  = (props) => {
                                 queryValues={props.queryValues}
                                 setQueryCurrentOptions={props.setQueryCurrentOptions}
                                 setQueryValues={props.setQueryValues}
+                                onFilterRemove={props.onFilterRemove}
                             ></QueryBlock>
                         </Stack>
                     } else {
@@ -67,6 +69,7 @@ const QueryBlock  = (props) => {
                                 queryValues={props.queryValues}
                                 setQueryCurrentOptions={props.setQueryCurrentOptions}
                                 setQueryValues={props.setQueryValues}
+                                onFilterRemove={props.onFilterRemove}
                             />
                         </Stack>
                     }
