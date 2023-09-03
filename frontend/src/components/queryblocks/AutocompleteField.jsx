@@ -26,7 +26,7 @@ export default function AutoCompleteSearchField(props) {
     }
   };
 
-  React.useEffect(() => {
+React.useEffect(() => {
     setIsMulti(!optionsSingle.includes(props.currentOption))
 
   },[props.currentOption])
@@ -44,7 +44,7 @@ export default function AutoCompleteSearchField(props) {
         options={suggestions}
         autoComplete={true}
         freeSolo={true}
-        value={isMulti == true ? props.values : props.values[0]}
+        value={isMulti === true ? props.values : props.values[0]}
         getOptionDisabled={(option) => props.values.includes(option)}
         getOptionLabel={(option) => {return typeof option === "string" && option.length > 0 ? option : ""}}
         isOptionEqualToValue={(option, value) => typeof option === 'string' && typeof value === 'string' ? option.toLowerCase() === value.toLowerCase() : false}

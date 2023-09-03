@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OptionBlock from './OptionBlock';
 import Stack from "@mui/material/Stack";
@@ -35,12 +34,20 @@ export default function LastBlock(props) {
 
     React.useEffect(() => {
         // Update current option for queryline
-        console.log(props.queryCurrentOptions[strKey], currentOption)
+        props.setQueryCurrentOptions((current) => {
+            const prev = {...current};
+            prev[strKey] = currentOption
+            return prev;
+        })
     },[currentOption])
 
     React.useEffect(() => {
         // Update current values for queryline
-        console.log(props.queryValues[strKey], values)
+        props.setQueryValues((current) => {
+            const prev = {...current};
+            prev[strKey] = values;
+            return prev;
+        })
     },[values])
     
     return (
@@ -89,7 +96,7 @@ export default function LastBlock(props) {
                 className="removeFilterButton"
                 size='20px'
                 onClick={(event) => {
-                    console.log("Deleting query")
+                    props.onFilterRemove(strKey)
                 }}
             >
                 <CloseIcon
