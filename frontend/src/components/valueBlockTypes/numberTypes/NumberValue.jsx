@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 export default function NumberValue(props){
     // props.isFirst is a property that specifies weather it's the first otherwise second
     const textValue = props.isFirst ? props.values[0] : props.values[1];
-
+    console.log("Number value => ", textValue)
     return (
         <TextField
             required
