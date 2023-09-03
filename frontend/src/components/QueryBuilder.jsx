@@ -13,6 +13,7 @@ import SearchResultsTable from './SearchResultsTable';
 import LinearProgress from '@mui/material/LinearProgress';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { api_uri } from './queryblocks/AutocompleteField';
+import mergeObjectWithNestedArray from "./utils";
 
 
 
@@ -23,6 +24,10 @@ export default function QueryBuilder(props) {
   const [requestQueries, setRequestQueries] = React.useState({});
   const [isSearching, setIsSearching] = React.useState(false);
   const [isExporting, setIsExporting] = React.useState(false);
+
+  const [queryValues, setQueryValues] = React.useState({});
+  const [queryCurrentOptions, setQueryCurrentOptions] = React.useState({})
+  const [queries, setQueries] = React.useState({}) // Tree of queries
   
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
@@ -30,10 +35,7 @@ export default function QueryBuilder(props) {
   const [exportBtnMenuAnchorEl, setExportBtnMenuAnchorEl] = React.useState("");
   const exportBtnMenuOpen = Boolean(exportBtnMenuAnchorEl);
 
-  const handleExportBtnMenuItemClick = (event) => {
-
-    setExportBtnMenuAnchorEl(event.currentTarget)
-  }
+  const handleExportBtnMenuItemClick = (event) => setExportBtnMenuAnchorEl(event.currentTarget)
   const handleExportBtnMenuClose = (event) => {
     const fileType = event.currentTarget.id;
     if (["json", "csv"].includes(fileType)){
@@ -80,19 +82,9 @@ export default function QueryBuilder(props) {
     });
   }
 
-  React.useEffect(()=>{
-    let dict = {};
-    
-    Object.keys(requestQueries).forEach((item, index) => {
-      let list = item.split(".");
-      list[list.length-1] = requestQueries[item]
-      const listDict = convertStringToDict(list);
-      dict = mergeDicts(dict, listDict);
-    })
-    setQueryObjects(dict);
-    console.log("request Queries :", requestQueries);
-  }, 
-  [requestQueries]);
+  React.useEffect(() => {
+    console.log("QueryTree: ", queries)
+  }, [queries])
   
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
@@ -101,52 +93,28 @@ export default function QueryBuilder(props) {
     }
     toggleFiltersDialog(false);  // Close filters dialog   
     // Convert last querykey details to json string so it can be parsed and converted back to a js object
-    const jsonString = JSON.stringify({
+    const jsonData = {
       dataKey:filter.dataKey,
       dType:filter.dType,
       text: filter.text,
       parents: [...filtersArray],
-      currentOption: settings.dataTypesAndOptions[filter.dType].options[0],
-      values:[]
+    }
+    const jsonString = JSON.stringify(jsonData)
+    const strKey = [...filtersArray, filter.dataKey].join(".")
+    const queryTree = mergeObjectWithNestedArray(queries, strKey.split("."), jsonString)
+    setQueries(queryTree)
+    setQueryCurrentOptions((current) => {
+      const prev = {...current};
+      prev[strKey] = settings.dataTypesAndOptions[filter.dType].options[0]
+      return prev;
     })
-
-    const longQueryString = [...filtersArray, filter.dataKey].join(".")
-    setRequestQueries((current) => {
-      const currentQueries = {...current}
-      currentQueries[longQueryString] = jsonString
-      return currentQueries;
-    });
-    
+    setQueryValues((current) => {
+      const prev = {...current};
+      prev[strKey] = [];
+      return prev;
+    })
   }
 
-  function mergeDicts(dict1, dict2) {
-    const mergedDict = { ...dict1 }; // Create a shallow copy of dict1
-    for (const [key, value] of Object.entries(dict2)) {
-      if (key in mergedDict && typeof mergedDict[key] === 'object' && typeof value === 'object') {
-        // Recursively merge nested objects
-        mergedDict[key] = mergeDicts(mergedDict[key], value);
-      } else {
-        mergedDict[key] = value;
-      }
-    }
-    return mergedDict;
-  }
-
-
-  function convertStringToDict(keysValues) {
-    const result = {};
-    let currentDict = result;
-    for (let i = 0; i < keysValues.length; i++) {
-      const key = keysValues[i];
-      if (i === keysValues.length - 1) {
-        currentDict[key] = key;
-      } else {
-        currentDict[key] = {};
-        currentDict = currentDict[key];
-      }
-    }
-    return result;
-  }
 
   const onNavBlockClicked = () => {
     setFilterKeysHistory((current) => {
@@ -214,18 +182,20 @@ export default function QueryBuilder(props) {
       >
         <Stack className="queryBuilder" spacing={1} marginBottom={"10px"}>
           {
-            Object.keys(queryObjects).map((queryObject, index) => {// Last element is the query key 
+            Object.keys(queries).map((queryChild, index) => { // Last element is the query key
               return (
-                <div className="queryBlock" key={index}>
-                  <QueryBlock 
-                    queryObjects={queryObjects[queryObject]}
-                    parent={queryObject}
-                    index={index}
-                    requestQueries={requestQueries}
-                    setRequestQueries={setRequestQueries}
-                    onFilterRemove={onFilterRemove}
-                  />
-                </div>)
+                  <div className="queryBlock" key={index}>
+                    <QueryBlock
+                        queries={queries[queryChild]}
+                        parent={queryChild}
+                        index={index}
+                        queryCurrentOptions={queryCurrentOptions}
+                        queryValues={queryValues}
+                        setQueryCurrentOptions={setQueryCurrentOptions}
+                        setQueryValues={setQueryValues}
+                    />
+                  </div>
+              )
             })
           }
           <Box sx={{margin:'0', padding:'0'}}>

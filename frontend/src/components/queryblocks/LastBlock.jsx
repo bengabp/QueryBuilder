@@ -22,7 +22,13 @@ export default function LastBlock(props) {
         className += ` noUpLine`
     }
 
-    const queryObject = JSON.parse(props.text);
+    // const queryObject = JSON.parse(props.text);
+    const queryObject = {
+        text:"Org",
+        dataKey:"organization",
+        parentsList:["theorg","namo"],
+        dType:"string_among"
+    }
     const text = queryObject.text;
     const dataKey = queryObject.dataKey;
     const parentsList = queryObject.parents
@@ -31,28 +37,24 @@ export default function LastBlock(props) {
     const [values, setValues] = React.useState([]);
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
-    /* 
-        requestQueries={props.requestQueries}
-        etRequestQueries={props.setRequestQueries}
 
-    */
-    React.useEffect(() => {
-        const query = [...parentsList, dataKey].join(".") ;
-        const jsonString = JSON.stringify({
-            dataKey:dataKey,
-            dType:dType,
-            text: text,
-            parents: parentsList,
-            currentOption: currentOption,
-            values:values
-        })
-        props.setRequestQueries((currentVal) => {
-            const currentObjects = {...currentVal};
-            currentObjects[query] = jsonString
-            return currentObjects;
-        });
-
-    }, [currentOption, values])
+    // React.useEffect(() => {
+    //     const query = [...parentsList, dataKey].join(".") ;
+    //     const jsonString = JSON.stringify({
+    //         dataKey:dataKey,
+    //         dType:dType,
+    //         text: text,
+    //         parents: parentsList,
+    //         currentOption: currentOption,
+    //         values:values
+    //     })
+    //     props.setRequestQueries((currentVal) => {
+    //         const currentObjects = {...currentVal};
+    //         currentObjects[query] = jsonString
+    //         return currentObjects;
+    //     });
+    //
+    // }, [currentOption, values])
 
 
     
@@ -84,28 +86,28 @@ export default function LastBlock(props) {
                 setCurrentOption={setCurrentOption}
                 options={options}
             ></OptionBlock>
-            {Object.keys(props.requestQueries).length > 0 && Object.values(props.requestQueries).includes(props.requestQueries[[...parentsList, dataKey].join(".")]) && <DynamicValueBlock
-                queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}
-                values={values}
-                setValues={setValues}
-                doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete === true}
-                settings={settings}
-                dType={dType}
-                currentOption={currentOption}
-            />}
-            <IconButton 
-                className="removeFilterButton"
-                size='20px'
-                onClick={(event) => {
-                    const query = [...parentsList, dataKey].join(".") ;
-                    props.onFilterRemove(query)
-                }}
-            >
-                <CloseIcon
-                    sx={{color: "grey"}}
-                    aria-label="remove filter"
-                ></CloseIcon>
-            </IconButton>
+            {/*{Object.keys(props.requestQueries).length > 0 && Object.values(props.requestQueries).includes(props.requestQueries[[...parentsList, dataKey].join(".")]) && <DynamicValueBlock*/}
+            {/*    queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}*/}
+            {/*    values={values}*/}
+            {/*    setValues={setValues}*/}
+            {/*    doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete === true}*/}
+            {/*    settings={settings}*/}
+            {/*    dType={dType}*/}
+            {/*    currentOption={currentOption}*/}
+            {/*/>}*/}
+            {/*<IconButton */}
+            {/*    className="removeFilterButton"*/}
+            {/*    size='20px'*/}
+            {/*    onClick={(event) => {*/}
+            {/*        const query = [...parentsList, dataKey].join(".") ;*/}
+            {/*        props.onFilterRemove(query)*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    <CloseIcon*/}
+            {/*        sx={{color: "grey"}}*/}
+            {/*        aria-label="remove filter"*/}
+            {/*    ></CloseIcon>*/}
+            {/*</IconButton>*/}
         </Stack>
     );
 }

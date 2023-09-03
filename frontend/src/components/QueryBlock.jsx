@@ -1,9 +1,5 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-
-import {v4} from 'uuid';
 import TitleBlock from './queryblocks/TitleBlock';
 import LastBlock from './queryblocks/LastBlock';
 
@@ -26,8 +22,8 @@ const QueryBlock  = (props) => {
                className="nestedQueryBlock"
         >
             {
-                Object.keys(props.queryObjects).map((query, index) => {
-                    if (typeof props.queryObjects[query] === "object" && props.queryObjects[query] !== null){
+                Object.keys(props.queries).map((query, index) => {
+                    if (typeof props.queries[query] === "object" && props.queries[query] !== null){
                         return <Stack
                             direction="row"
                             key={index}
@@ -41,16 +37,19 @@ const QueryBlock  = (props) => {
                                 text={query}
                                 blockClassName={props.parent !== undefined ? classNames.titleBlockFirst : classNames.titleBlockNotFirst}
                                 key={props.parent !== undefined ? index+classNames.titleBlockFirst : index+classNames.titleBlockNotFirst}
-                                requestQueries={props.requestQueries}
-                                setRequestQueries={props.setRequestQueries}
+                                queryCurrentOptions={props.queryCurrentOptions}
+                                queryValues={props.queryValues}
+                                setQueryCurrentOptions={props.setQueryCurrentOptions}
+                                setQueryValues={props.setQueryValues}
                             />
 
                             <QueryBlock
-                                queryObjects={props.queryObjects[query]}
+                                queries={props.queries[query]}
                                 key={index+1}
-                                requestQueries={props.requestQueries}
-                                onFilterRemove={props.onFilterRemove}
-                                setRequestQueries={props.setRequestQueries}
+                                queryCurrentOptions={props.queryCurrentOptions}
+                                queryValues={props.queryValues}
+                                setQueryCurrentOptions={props.setQueryCurrentOptions}
+                                setQueryValues={props.setQueryValues}
                             ></QueryBlock>
                         </Stack>
                     } else {
@@ -63,9 +62,10 @@ const QueryBlock  = (props) => {
                                 blockClassName={props.parent !== undefined ? classNames.lastBlockFirst:classNames.lastBlockNotFirst}
                                 index={index}
                                 key={index}
-                                onFilterRemove={props.onFilterRemove}
-                                requestQueries={props.requestQueries}
-                                setRequestQueries={props.setRequestQueries}
+                                queryCurrentOptions={props.queryCurrentOptions}
+                                queryValues={props.queryValues}
+                                setQueryCurrentOptions={props.setQueryCurrentOptions}
+                                setQueryValues={props.setQueryValues}
                             />
                         </Stack>
                     }
