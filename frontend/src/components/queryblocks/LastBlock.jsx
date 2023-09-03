@@ -22,43 +22,28 @@ export default function LastBlock(props) {
         className += ` noUpLine`
     }
 
-    // const queryObject = JSON.parse(props.text);
-    const queryObject = {
-        text:"Org",
-        dataKey:"organization",
-        parentsList:["theorg","namo"],
-        dType:"string_among"
-    }
-    const text = queryObject.text;
-    const dataKey = queryObject.dataKey;
-    const parentsList = queryObject.parents
-    const dType = queryObject.dType
+    const properties = JSON.parse(props.properties);
+    const text = properties.text;
+    const dataKey = properties.dataKey;
+    const parentsList = properties.parents
+    const dType = properties.dType
+    const strKey = [...parentsList, dataKey].join(".")
 
-    const [values, setValues] = React.useState([]);
+    const [values, setValues] = React.useState(props.queryValues[strKey]);
     const options = settings.dataTypesAndOptions[dType].options;
-    const [currentOption, setCurrentOption] = React.useState(options[0]);
+    const [currentOption, setCurrentOption] = React.useState(props.queryCurrentOptions[strKey]);
 
-    // React.useEffect(() => {
-    //     const query = [...parentsList, dataKey].join(".") ;
-    //     const jsonString = JSON.stringify({
-    //         dataKey:dataKey,
-    //         dType:dType,
-    //         text: text,
-    //         parents: parentsList,
-    //         currentOption: currentOption,
-    //         values:values
-    //     })
-    //     props.setRequestQueries((currentVal) => {
-    //         const currentObjects = {...currentVal};
-    //         currentObjects[query] = jsonString
-    //         return currentObjects;
-    //     });
-    //
-    // }, [currentOption, values])
+    React.useEffect(() => {
+        // Update current option for queryline
+        console.log(props.queryCurrentOptions[strKey], currentOption)
+    },[currentOption])
 
-
+    React.useEffect(() => {
+        // Update current values for queryline
+        console.log(props.queryValues[strKey], values)
+    },[values])
     
-    return props.requestQueries === undefined ? (<div>Nothing</div>) : (
+    return (
         <Stack 
             direction="row"
             style={{
@@ -86,28 +71,32 @@ export default function LastBlock(props) {
                 setCurrentOption={setCurrentOption}
                 options={options}
             ></OptionBlock>
-            {/*{Object.keys(props.requestQueries).length > 0 && Object.values(props.requestQueries).includes(props.requestQueries[[...parentsList, dataKey].join(".")]) && <DynamicValueBlock*/}
-            {/*    queryProperties={JSON.parse(props.requestQueries[[...parentsList, dataKey].join(".")])}*/}
-            {/*    values={values}*/}
-            {/*    setValues={setValues}*/}
-            {/*    doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete === true}*/}
-            {/*    settings={settings}*/}
-            {/*    dType={dType}*/}
-            {/*    currentOption={currentOption}*/}
-            {/*/>}*/}
-            {/*<IconButton */}
-            {/*    className="removeFilterButton"*/}
-            {/*    size='20px'*/}
-            {/*    onClick={(event) => {*/}
-            {/*        const query = [...parentsList, dataKey].join(".") ;*/}
-            {/*        props.onFilterRemove(query)*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    <CloseIcon*/}
-            {/*        sx={{color: "grey"}}*/}
-            {/*        aria-label="remove filter"*/}
-            {/*    ></CloseIcon>*/}
-            {/*</IconButton>*/}
+            {<DynamicValueBlock
+                properties={properties}
+                values={values}
+                setValues={setValues}
+                doCompletions={settings.dataTypesAndOptions[dType].supports_autocomplete === true}
+                settings={settings}
+                dType={dType}
+                strKey={strKey}
+                queryCurrentOptions={props.queryCurrentOptions}
+                queryValues={props.queryValues}
+                setQueryCurrentOptions={props.setQueryCurrentOptions}
+                setQueryValues={props.setQueryValues}
+                currentOption={currentOption}
+            />}
+            <IconButton
+                className="removeFilterButton"
+                size='20px'
+                onClick={(event) => {
+                    console.log("Deleting query")
+                }}
+            >
+                <CloseIcon
+                    sx={{color: "grey"}}
+                    aria-label="remove filter"
+                ></CloseIcon>
+            </IconButton>
         </Stack>
     );
 }
@@ -121,6 +110,11 @@ function DynamicValueBlock(props) {
                 <TwoDateValues
                     setValues={props.setValues}
                     values={props.values}
+                    queryCurrentOptions={props.queryCurrentOptions}
+                    queryValues={props.queryValues}
+                    setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    setQueryValues={props.setQueryValues}
+                    strKey={props.strKey}
                 >
                 </TwoDateValues>
             );
@@ -130,6 +124,11 @@ function DynamicValueBlock(props) {
                 <SingleDateValue
                     setValues={props.setValues}
                     values={props.values}
+                    queryCurrentOptions={props.queryCurrentOptions}
+                    queryValues={props.queryValues}
+                    setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    setQueryValues={props.setQueryValues}
+                    strKey={props.strKey}
                 >
                 </SingleDateValue>
             );
@@ -141,6 +140,11 @@ function DynamicValueBlock(props) {
                 <TwoNumberValues
                     setValues={props.setValues}
                     values={props.values}
+                    queryCurrentOptions={props.queryCurrentOptions}
+                    queryValues={props.queryValues}
+                    setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    setQueryValues={props.setQueryValues}
+                    strKey={props.strKey}
                 >
                 </TwoNumberValues>
             );
@@ -149,30 +153,29 @@ function DynamicValueBlock(props) {
             return (<SingleNumberValue
                     setValues={props.setValues}
                     values={props.values}
+                    queryCurrentOptions={props.queryCurrentOptions}
+                    queryValues={props.queryValues}
+                    setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    setQueryValues={props.setQueryValues}
+                    strKey={props.strKey}
                 >
                 </SingleNumberValue>
             );
         }
 
     } else {
-        // let multiSelect = true;
-        // let doCompletions = props.doCompletions;
-        // let options = ["true", "false"]
 
-        // if (props.currentOption === "is_blank"){
-        //     multiSelect = false
-        // }
-        // if (props.dType === "boolean"){
-        //     multiSelect = false
-        // }
         return (<AutoCompleteSearchField
-            queryProperties={props.queryProperties}
+            properties={props.properties}
+            strKey={props.strKey}
             setValues={props.setValues}
             dType={props.dType}
-            // doCompletions={doCompletions}
-            // doMultiSelect={multiSelect}
             values={props.values}
             currentOption={props.currentOption}
+            queryCurrentOptions={props.queryCurrentOptions}
+            queryValues={props.queryValues}
+            setQueryCurrentOptions={props.setQueryCurrentOptions}
+            setQueryValues={props.setQueryValues}
         />)
     }
 }

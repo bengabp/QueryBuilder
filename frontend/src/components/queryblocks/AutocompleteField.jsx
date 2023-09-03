@@ -17,9 +17,7 @@ export default function AutoCompleteSearchField(props) {
     }
     try {
       // Replace 'your-api-endpoint' with the actual API endpoint
-      const query = [...props.queryProperties.parents, props.queryProperties.dataKey].join(".") ;
-
-      const response = await fetch(`${api_uri}/completions?q=${inputValue}&field_path=${query}`);
+      const response = await fetch(`${api_uri}/completions?q=${inputValue}&field_path=${props.strKey}`);
       const data = await response.json();
       const suggestionsSet = new Set(data.completions);
       setSuggestions([...suggestionsSet]);
@@ -47,7 +45,7 @@ export default function AutoCompleteSearchField(props) {
         autoComplete={true}
         freeSolo={true}
         value={isMulti == true ? props.values : props.values[0]}
-        getOptionDisabled={(option) => props.queryProperties.values.includes(option)}
+        getOptionDisabled={(option) => props.values.includes(option)}
         getOptionLabel={(option) => {return typeof option === "string" && option.length > 0 ? option : ""}}
         isOptionEqualToValue={(option, value) => typeof option === 'string' && typeof value === 'string' ? option.toLowerCase() === value.toLowerCase() : false}
         onFocus={() => {
