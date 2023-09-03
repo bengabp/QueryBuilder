@@ -33,6 +33,7 @@ export default function AutoCompleteSearchField(props) {
 
   },[props.currentOption])
 
+  console.log("Values for autocomplete :,",props.values)
   return (
     <Stack spacing={3} 
       id="valuesAutoCompleteContainer"
@@ -45,13 +46,14 @@ export default function AutoCompleteSearchField(props) {
         options={suggestions}
         autoComplete={true}
         freeSolo={true}
+        value={isMulti == true ? props.values : props.values[0]}
         getOptionDisabled={(option) => props.queryProperties.values.includes(option)}
         getOptionLabel={(option) => {return typeof option === "string" && option.length > 0 ? option : ""}}
         isOptionEqualToValue={(option, value) => typeof option === 'string' && typeof value === 'string' ? option.toLowerCase() === value.toLowerCase() : false}
         onFocus={() => {
           getSuggestions("")
         }}
-        value={props.values.length <= 0 ? []: isMulti ? props.values: props.values[0]}
+        // value={props.values.length <= 0 ? []: isMulti ? props.values: props.values[0]}
         fullWidth={false}
         onInputChange={(event, newInputValue) => {
           getSuggestions(newInputValue);

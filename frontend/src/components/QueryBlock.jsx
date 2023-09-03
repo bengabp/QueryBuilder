@@ -37,25 +37,13 @@ const QueryBlock  = (props) => {
                                 gap:"15px"
                             }}
                         >
-                            {
-                                props.parent != undefined ?
-                                    <TitleBlock
-                                        text={query}
-                                        blockClassName={classNames.titleBlockFirst}
-                                        key={index+classNames.titleBlockFirst}
-                                        requestQueries={props.requestQueries}
-                                        setRequestQueries={props.setRequestQueries}
-                                    />
-                                    :
-                                    <TitleBlock
-                                        text={query}
-                                        blockClassName={classNames.titleBlockNotFirst}
-                                        index={ index }
-                                        key={index+classNames.titleBlockNotFirst}
-                                        requestQueries={props.requestQueries}
-                                        setRequestQueries={props.setRequestQueries}
-                                    />
-                            }
+                            <TitleBlock
+                                text={query}
+                                blockClassName={props.parent !== undefined ? classNames.titleBlockFirst : classNames.titleBlockNotFirst}
+                                key={props.parent !== undefined ? index+classNames.titleBlockFirst : index+classNames.titleBlockNotFirst}
+                                requestQueries={props.requestQueries}
+                                setRequestQueries={props.setRequestQueries}
+                            />
 
                             <QueryBlock
                                 queryObjects={props.queryObjects[query]}
@@ -70,28 +58,15 @@ const QueryBlock  = (props) => {
                             direction="row"
                             key={index}
                         >
-                            {
-                                props.parent != undefined ?
-                                    <LastBlock
-                                        text={query}
-                                        blockClassName={classNames.lastBlockFirst}
-                                        index={index}
-                                        key={index}
-                                        onFilterRemove={props.onFilterRemove}
-                                        requestQueries={props.requestQueries}
-                                        setRequestQueries={props.setRequestQueries}
-                                    />
-                                    :
-                                    <LastBlock
-                                        text={query}
-                                        blockClassName={classNames.lastBlockNotFirst}
-                                        index={index}
-                                        key={index}
-                                        onFilterRemove={props.onFilterRemove}
-                                        requestQueries={props.requestQueries}
-                                        setRequestQueries={props.setRequestQueries}
-                                    />
-                            }
+                            <LastBlock
+                                text={query}
+                                blockClassName={props.parent !== undefined ? classNames.lastBlockFirst:classNames.lastBlockNotFirst}
+                                index={index}
+                                key={index}
+                                onFilterRemove={props.onFilterRemove}
+                                requestQueries={props.requestQueries}
+                                setRequestQueries={props.setRequestQueries}
+                            />
                         </Stack>
                     }
 
