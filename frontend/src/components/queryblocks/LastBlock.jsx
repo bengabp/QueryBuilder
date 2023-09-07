@@ -28,27 +28,27 @@ export default function LastBlock(props) {
     const dType = properties.dType
     const strKey = [...parentsList, dataKey].join(".")
 
-    const [values, setValues] = React.useState(props.queryValues[strKey]);
+    const [values, setValues] = React.useState(["default"]);
     const options = settings.dataTypesAndOptions[dType].options;
-    const [currentOption, setCurrentOption] = React.useState(props.queryCurrentOptions[strKey]);
+    const [currentOption, setCurrentOption] = React.useState(options[0]);
 
-    React.useEffect(() => {
-        // Update current option for queryline
-        props.setQueryCurrentOptions((current) => {
-            const prev = {...current};
-            prev[strKey] = currentOption
-            return prev;
-        })
-    },[currentOption])
+    // React.useEffect(() => {
+    //     // Update current option for queryline
+    //     props.setQueryCurrentOptions((current) => {
+    //         const prev = {...current};
+    //         prev[strKey] = currentOption
+    //         return prev;
+    //     })
+    // },[currentOption])
 
-    React.useEffect(() => {
-        // Update current values for queryline
-        props.setQueryValues((current) => {
-            const prev = {...current};
-            prev[strKey] = values;
-            return prev;
-        })
-    },[values])
+    // React.useEffect(() => {
+    //     // Update current values for queryline
+    //     props.setQueryValues((current) => {
+    //         const prev = {...current};
+    //         prev[strKey] = values;
+    //         return prev;
+    //     })
+    // },[values])
     
     return (
         <Stack 
@@ -86,10 +86,10 @@ export default function LastBlock(props) {
                 settings={settings}
                 dType={dType}
                 strKey={strKey}
-                queryCurrentOptions={props.queryCurrentOptions}
-                queryValues={props.queryValues}
-                setQueryCurrentOptions={props.setQueryCurrentOptions}
-                setQueryValues={props.setQueryValues}
+                // queryCurrentOptions={props.queryCurrentOptions}
+                // queryValues={props.queryValues}
+                // setQueryCurrentOptions={props.setQueryCurrentOptions}
+                // setQueryValues={props.setQueryValues}
                 currentOption={currentOption}
             />}
             <IconButton
@@ -117,11 +117,11 @@ function DynamicValueBlock(props) {
                 <TwoDateValues
                     setValues={props.setValues}
                     values={props.values}
-                    queryCurrentOptions={props.queryCurrentOptions}
-                    queryValues={props.queryValues}
-                    setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    setQueryValues={props.setQueryValues}
-                    strKey={props.strKey}
+                    // queryCurrentOptions={props.queryCurrentOptions}
+                    // queryValues={props.queryValues}
+                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    // setQueryValues={props.setQueryValues}
+                    // strKey={props.strKey}
                 >
                 </TwoDateValues>
             );
@@ -131,11 +131,11 @@ function DynamicValueBlock(props) {
                 <SingleDateValue
                     setValues={props.setValues}
                     values={props.values}
-                    queryCurrentOptions={props.queryCurrentOptions}
-                    queryValues={props.queryValues}
-                    setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    setQueryValues={props.setQueryValues}
-                    strKey={props.strKey}
+                    // queryCurrentOptions={props.queryCurrentOptions}
+                    // queryValues={props.queryValues}
+                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    // setQueryValues={props.setQueryValues}
+                    // strKey={props.strKey}
                 >
                 </SingleDateValue>
             );
@@ -147,11 +147,11 @@ function DynamicValueBlock(props) {
                 <TwoNumberValues
                     setValues={props.setValues}
                     values={props.values}
-                    queryCurrentOptions={props.queryCurrentOptions}
-                    queryValues={props.queryValues}
-                    setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    setQueryValues={props.setQueryValues}
-                    strKey={props.strKey}
+                    // queryCurrentOptions={props.queryCurrentOptions}
+                    // queryValues={props.queryValues}
+                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    // setQueryValues={props.setQueryValues}
+                    // strKey={props.strKey}
                 >
                 </TwoNumberValues>
             );
@@ -160,11 +160,11 @@ function DynamicValueBlock(props) {
             return (<SingleNumberValue
                     setValues={props.setValues}
                     values={props.values}
-                    queryCurrentOptions={props.queryCurrentOptions}
-                    queryValues={props.queryValues}
-                    setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    setQueryValues={props.setQueryValues}
-                    strKey={props.strKey}
+                    // queryCurrentOptions={props.queryCurrentOptions}
+                    // queryValues={props.queryValues}
+                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
+                    // setQueryValues={props.setQueryValues}
+                    // strKey={props.strKey}
                 >
                 </SingleNumberValue>
             );
@@ -178,11 +178,11 @@ function DynamicValueBlock(props) {
             setValues={props.setValues}
             dType={props.dType}
             values={props.values}
-            currentOption={props.currentOption}
-            queryCurrentOptions={props.queryCurrentOptions}
-            queryValues={props.queryValues}
-            setQueryCurrentOptions={props.setQueryCurrentOptions}
-            setQueryValues={props.setQueryValues}
+            // currentOption={props.currentOption}
+            // queryCurrentOptions={props.queryCurrentOptions}
+            // queryValues={props.queryValues}
+            // setQueryCurrentOptions={props.setQueryCurrentOptions}
+            // setQueryValues={props.setQueryValues}
         />)
     }
 }
