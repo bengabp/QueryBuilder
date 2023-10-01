@@ -114,7 +114,6 @@ export default function QueryBuilder(props) {
     })
   }
 
-
   const onNavBlockClicked = () => {
     setFilterKeysHistory((current) => {
       if (current.length > 1){

@@ -3,7 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { SettingsContext } from '../../contexts/SettingsContext';
-export const api_uri = "http://20.77.89.95:8080"
+export const api_uri = "http://127.0.0.1:8000"
 
 export default function AutoCompleteSearchField(props) {
   const optionsSingle = ["is_blank", "equals", "does_not_equal"];

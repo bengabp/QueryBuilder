@@ -11,7 +11,7 @@ table_headings = [
     "participated_events.total",
     "founders.name",
 ]
-PAGE_SIZE = 500
+PAGE_SIZE = 10
 
 
 class CompletionsResponse(BaseModel):
@@ -25,6 +25,19 @@ class Filter(BaseModel):
     current_option: str = Field(alias="currentOption")
     values: List = Field(alias="values")
     d_type: str = Field(alias="dType")
+
+
+
+'''
+filters = [
+    {
+        parents:["basic_info"],
+        dataKey:"name",
+        text:"Company Name",
+        currentOption:"
+    }
+]
+'''
 
 
 class CompaniesSearchResult(BaseModel):
