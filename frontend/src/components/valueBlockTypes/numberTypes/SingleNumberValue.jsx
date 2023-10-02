@@ -13,7 +13,7 @@ export default function SingleNumberValue(props){
             alignItems="center"
             className="elevatedValueBlock datePickerContainer"
         >
-            <NumberValue isFirst={true} values={props.values} setValues={props.setValues} />
+            <NumberValue isFirst={true} values={props.values} setValues={props.setValues} strKey={props.strKey}/>
         </Stack>
     );
 }

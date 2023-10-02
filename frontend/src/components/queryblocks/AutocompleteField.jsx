@@ -3,11 +3,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { SettingsContext } from '../../contexts/SettingsContext';
+import { Chip } from '@mui/material';
 export const api_uri = "http://127.0.0.1:8000"
 
 export default function AutoCompleteSearchField(props) {
   const optionsSingle = ["is_blank", "equals", "does_not_equal"];
   const [suggestions, setSuggestions] = React.useState([]);
+  // const [value, setValue] = React.useState([{
+  //   id: "",
+  //   values: ["default"]
+  // }])
+  // console.log("value", value)
   const settings = React.useContext(SettingsContext);
   const [isMulti, setIsMulti] = React.useState(!optionsSingle.includes(props.currentOption) || props.dType === "boolean");
   const getSuggestions = async (inputValue) => {
@@ -26,12 +32,13 @@ export default function AutoCompleteSearchField(props) {
     }
   };
 
-React.useEffect(() => {
-    setIsMulti(!optionsSingle.includes(props.currentOption))
+  // console.log(`selected${props.strKey}`, props.values?.filter(item => item.id === props.strKey)[0]?.selectedSugs)
 
-  },[props.currentOption])
+// React.useEffect(() => {
+//     setIsMulti(!optionsSingle.includes(props.currentOption))
 
-  console.log("Values for autocomplete :,",props.values)
+//   },[props.currentOption])
+
   return (
     <Stack spacing={3} 
       id="valuesAutoCompleteContainer"
@@ -39,13 +46,15 @@ React.useEffect(() => {
       className={"elevatedValueBlock"}
     >
       <Autocomplete
+        key={props.strKey}
         multiple={isMulti}
         id="values-autocomplete"
         options={suggestions}
         autoComplete={true}
-        freeSolo={true}
-        value={isMulti === true ? props.values : props.values[0]}
-        getOptionDisabled={(option) => props.values.includes(option)}
+        freeSolo
+        defaultValue={["default"]}
+        value={(isMulti === true && props.values !== undefined) && props.values[props.strKey]}
+        getOptionDisabled={(option) => props.values !== undefined && props.values[props.strKey]?.includes(option)}
         getOptionLabel={(option) => {return typeof option === "string" && option.length > 0 ? option : ""}}
         isOptionEqualToValue={(option, value) => typeof option === 'string' && typeof value === 'string' ? option.toLowerCase() === value.toLowerCase() : false}
         onFocus={() => {
@@ -53,9 +62,9 @@ React.useEffect(() => {
         }}
         // value={props.values.length <= 0 ? []: isMulti ? props.values: props.values[0]}
         fullWidth={false}
-        onInputChange={(event, newInputValue) => {
-          getSuggestions(newInputValue);
-        }}
+        // onInputChange={(event, newInputValue) => {
+        //   getSuggestions(newInputValue);
+        // }}
         // value={suggestions}
         onChange={(event, selectedSugs, reason) => {
           // Update values and queryPropsString
@@ -66,7 +75,12 @@ React.useEffect(() => {
           } else if (typeof selectedSugs === "object"){
             selectedSugs = [...selectedSugs]
           }
-          props.setValues(selectedSugs);
+          
+          props.setValues(prev => {
+            const current = {...prev}
+            current[props.strKey] = selectedSugs
+            return current
+          });
         }}
         renderInput={(params) => (
           <TextField
@@ -74,6 +88,15 @@ React.useEffect(() => {
             variant="standard"
             placeholder="Value"
           />
+        )}
+        renderTags={(value, getTagProps) => (
+          value.map((option, index) => (
+            <Chip
+              variant='filled'
+              label={option}
+              {...getTagProps(index)}
+            />
+          ))
         )}
         sx={{
             height:'10px',

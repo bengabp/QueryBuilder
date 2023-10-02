@@ -7,6 +7,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from "dayjs";
 
 
 export default function TwoDateValues(props){
@@ -38,11 +39,13 @@ export default function TwoDateValues(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
+                    value={props.values && props.values[props.strKey] && dayjs(props.values[props.strKey][0])}
                     onChange={(val) => {
-                        let vals = props.values;
-
-                        vals[0] = parseDate(val)
-                        props.setValues([...vals])
+                        props.setValues(prev => {
+                            const current = {...prev}
+                            current[props.strKey] = [parseDate(val)]
+                            return current
+                          })
                     }}
                 />
             </LocalizationProvider>
@@ -50,13 +53,18 @@ export default function TwoDateValues(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
+                    value={props.values && props.values[props.strKey] && dayjs(props.values[props.strKey][1])}
                     onChange={(val) => {
-                        let vals = props.values;
-                        if (vals.length <= 0){
-                            vals = ["1890-12-30"]
-                        }
-                        vals[1] = parseDate(val)
-                        props.setValues([...vals])
+                        // let vals = props.values;
+                        // if (vals.length <= 0){
+                        //     vals = ["1890-12-30"]
+                        // }
+                        // vals[1] = parseDate(val)
+                        props.setValues(prev => {
+                            const current = {...prev}
+                            current[props.strKey].push(parseDate(val))
+                            return current
+                          })
                     }}
                 />
             </LocalizationProvider>

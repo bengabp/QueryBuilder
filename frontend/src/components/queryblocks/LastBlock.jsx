@@ -11,6 +11,7 @@ import TwoNumberValues from '../valueBlockTypes/numberTypes/TwoNumberValues';
 import SingleDateValue from '../valueBlockTypes/dateTypes/SingleDateValue';
 import TwoDateValues from '../valueBlockTypes/dateTypes/TwoDateValues';
 import IconButton from '@mui/material/IconButton';
+import { ValueContext } from '../../contexts/ValueContext';
 
 
 
@@ -28,7 +29,20 @@ export default function LastBlock(props) {
     const dType = properties.dType
     const strKey = [...parentsList, dataKey].join(".")
 
-    const [values, setValues] = React.useState(["default"]);
+    // const [values, setValues] = React.useState(["default"]);
+    const {values, setValues} = React.useContext(ValueContext)
+    // React.useEffect(() => {
+    //   setValues(prev => {
+    //     const current = {...prev}
+    //     current[strKey] = ["default"]
+    //     return current
+    //   })
+    // }, [strKey])
+
+    console.log("values", values)
+    
+    const [mainValue, setMainValue] = React.useState()
+    
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
 
@@ -41,14 +55,14 @@ export default function LastBlock(props) {
     //     })
     // },[currentOption])
 
-    // React.useEffect(() => {
-    //     // Update current values for queryline
-    //     props.setQueryValues((current) => {
-    //         const prev = {...current};
-    //         prev[strKey] = values;
-    //         return prev;
-    //     })
-    // },[values])
+    React.useEffect(() => {
+        // Update current values for queryline
+        props.setQueryValues((current) => {
+            const prev = {...current};
+            prev[strKey] = values;
+            return prev;
+        })
+    },[values])
     
     return (
         <Stack 
@@ -86,10 +100,10 @@ export default function LastBlock(props) {
                 settings={settings}
                 dType={dType}
                 strKey={strKey}
-                // queryCurrentOptions={props.queryCurrentOptions}
-                // queryValues={props.queryValues}
-                // setQueryCurrentOptions={props.setQueryCurrentOptions}
-                // setQueryValues={props.setQueryValues}
+                queryCurrentOptions={props.queryCurrentOptions}
+                queryValues={props.queryValues}
+                setQueryCurrentOptions={props.setQueryCurrentOptions}
+                setQueryValues={props.setQueryValues}
                 currentOption={currentOption}
             />}
             <IconButton
@@ -97,6 +111,11 @@ export default function LastBlock(props) {
                 size='20px'
                 onClick={(event) => {
                     props.onFilterRemove(strKey)
+                    setValues(prev => {
+                        let current = {...prev}
+                        delete current[strKey]
+                        return current
+                    })
                 }}
             >
                 <CloseIcon
@@ -121,7 +140,7 @@ function DynamicValueBlock(props) {
                     // queryValues={props.queryValues}
                     // setQueryCurrentOptions={props.setQueryCurrentOptions}
                     // setQueryValues={props.setQueryValues}
-                    // strKey={props.strKey}
+                    strKey={props.strKey}
                 >
                 </TwoDateValues>
             );
@@ -135,7 +154,7 @@ function DynamicValueBlock(props) {
                     // queryValues={props.queryValues}
                     // setQueryCurrentOptions={props.setQueryCurrentOptions}
                     // setQueryValues={props.setQueryValues}
-                    // strKey={props.strKey}
+                    strKey={props.strKey}
                 >
                 </SingleDateValue>
             );
@@ -151,7 +170,7 @@ function DynamicValueBlock(props) {
                     // queryValues={props.queryValues}
                     // setQueryCurrentOptions={props.setQueryCurrentOptions}
                     // setQueryValues={props.setQueryValues}
-                    // strKey={props.strKey}
+                    strKey={props.strKey}
                 >
                 </TwoNumberValues>
             );
@@ -164,7 +183,7 @@ function DynamicValueBlock(props) {
                     // queryValues={props.queryValues}
                     // setQueryCurrentOptions={props.setQueryCurrentOptions}
                     // setQueryValues={props.setQueryValues}
-                    // strKey={props.strKey}
+                    strKey={props.strKey}
                 >
                 </SingleNumberValue>
             );
@@ -178,11 +197,11 @@ function DynamicValueBlock(props) {
             setValues={props.setValues}
             dType={props.dType}
             values={props.values}
-            // currentOption={props.currentOption}
+            currentOption={props.currentOption}
             // queryCurrentOptions={props.queryCurrentOptions}
-            // queryValues={props.queryValues}
+            queryValues={props.queryValues}
             // setQueryCurrentOptions={props.setQueryCurrentOptions}
-            // setQueryValues={props.setQueryValues}
+            setQueryValues={props.setQueryValues}
         />)
     }
 }
