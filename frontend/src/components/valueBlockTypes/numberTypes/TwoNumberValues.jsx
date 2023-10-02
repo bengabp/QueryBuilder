@@ -12,9 +12,9 @@ export default function TwoNumberValues(props){
             alignItems="center"
             className="elevatedValueBlock datePickerContainer"
         >
-            <NumberValue isFirst={true} values={props.values} setValues={props.setValues} />
+            <NumberValue isFirst={true} values={props.values} setValues={props.setValues} strKey={props.strKey}/>
             <Typography>and</Typography>
-            <NumberValue isFirst={false} values={props.values} setValues={props.setValues} />
+            <NumberValue isFirst={false} values={props.values} setValues={props.setValues} strKey={props.strKey}/>
         </Stack>
     );
 }

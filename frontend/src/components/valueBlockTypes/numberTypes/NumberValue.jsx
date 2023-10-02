@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 
 export default function NumberValue(props){
     // props.isFirst is a property that specifies weather it's the first otherwise second
-    const textValue = props.isFirst ? props.values[0] : props.values[1];
+    const textValue = props.isFirst ? props.values[props.strKey][0] : props.values[props.strKey][1];
     console.log("Number value => ", textValue)
     return (
         <TextField
@@ -16,19 +16,19 @@ export default function NumberValue(props){
             onChange={(event) => {
                 let val = parseInt(event.target.value)
                 if (!isNaN(val)){
-                    props.setValues((current) => {
-                        const prev = [...current]
-                        prev[props.isFirst ? 0 : 1] = val
-                        return prev
+                    props.setValues(prev => {
+                        let current = {...prev}
+                        current[props.strKey][props.isFirst ? 0 : 1] = val
+                        return current
                     })
                 } else {
-                    if (props.values[!props.isFirst ? 0 : 1] == undefined){
+                    if (props.values[props.strKey][!props.isFirst ? 0 : 1] == undefined){
                         props.setValues([])
                     } else {
-                        props.setValues((current) => {
-                            const prev = [...current]
-                            prev[props.isFirst ? 0 : 1] = null
-                            return prev
+                        props.setValues((prev) => {
+                            let current = {...prev}
+                        current[props.strKey][props.isFirst ? 0 : 1] = null
+                        return current
                         })
                     }
                 }

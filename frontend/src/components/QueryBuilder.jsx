@@ -24,7 +24,7 @@ export default function QueryBuilder(props) {
   const [isSearching, setIsSearching] = React.useState(false);
   const [isExporting, setIsExporting] = React.useState(false);
 
-  const [queryValues, setQueryValues] = React.useState({});
+  const [queryValues, setQueryValues] = React.useState([]);
   const [queryCurrentOptions, setQueryCurrentOptions] = React.useState({})
   const [queries, setQueries] = React.useState({}) // Tree of queries
   
@@ -81,9 +81,9 @@ export default function QueryBuilder(props) {
     });
   }
 
-  React.useEffect(() => {
-    console.log("QueryTree: ", queries)
-  }, [queries])
+  // React.useEffect(() => {
+  //   console.log("QueryTree: ", queries)
+  // }, [queries])
   
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
@@ -160,11 +160,10 @@ export default function QueryBuilder(props) {
   }
 
   const onFilterRemove = (strKey) => {
-      console.log("Deleting query: ", strKey)
       setQueries((current) => {
         let prev = {...current}
-        deleteNestedKey(prev, strKey)
-        return prev;
+        return deleteNestedKey(prev, strKey)
+        // return prev
       });
   }
   function deleteNestedKey(obj, path){
@@ -178,6 +177,7 @@ export default function QueryBuilder(props) {
         deleteNestedKey(obj[currentKey], keys.slice(1).join('.'));
       }
     }
+    return obj
   }
 
   return (
