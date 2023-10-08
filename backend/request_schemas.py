@@ -2,9 +2,13 @@ from typing import List, Dict
 from pydantic import BaseModel, Field
 from response_models import Filter
 
+class SearchFilter(BaseModel):
+    query: str = Field(...)
+    current_option: str = Field(alias="currentOption")
+    values: List = Field(alias="values")
 
 class SearchRequest(BaseModel):
-    filters: List[Filter]
+    filters: List[SearchFilter]
 
 
 class ExportResultsRequest(BaseModel):

@@ -67,23 +67,23 @@ def companies_search(request: Request, search_filters: SearchRequest):
     """Start building pipeline"""
     pipeline = []
     for search_filter in search_filters.filters:
-        query = ".".join([*search_filter.parents, search_filter.data_key])
+        query = search_filter.query
         collection_field = field_mappings[query]["dKey"]
+        dtype = field_mappings[query]["dType"]
 
-        if search_filter.d_type not in [
-            "number",
-            "string_long",
-            "string_among",
-            "boolean",
-            "date",
-        ]:
-            print("dType support has not been added ! => ", search_filter.d_type)
-            continue
+
+        # if dtype not in [
+        #     "number",
+        #     "string_long",
+        #     "string_among",
+        #     "boolean",
+        #     "date",
+        # ]:
+        #     print("dType support has not been added ! => ", search_filter.d_type)
+        #     continue
 
         try:
-            stage_function_data = pipeline_builder[search_filter.current_option][
-                search_filter.d_type
-            ]
+            stage_function_data = pipeline_builder[search_filter.current_option][dtype]
             stage = stage_function_data["get_pipeline"](
                 collection_field, search_filter.values
             )

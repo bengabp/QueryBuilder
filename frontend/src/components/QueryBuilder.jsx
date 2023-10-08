@@ -21,7 +21,6 @@ import {ValueContext} from "../contexts/ValueContext";
 export default function QueryBuilder(props) {
   const [filtersDialogState, toggleFiltersDialog] = React.useState(false);
   const [filterKeysHistory, setFilterKeysHistory] = React.useState(["basic_info"]);
-  const [requestQueries, setRequestQueries] = React.useState({});
   const [isSearching, setIsSearching] = React.useState(false);
   const [isExporting, setIsExporting] = React.useState(false);
 
@@ -84,10 +83,6 @@ export default function QueryBuilder(props) {
       setIsExporting(false)
     });
   }
-
-  // React.useEffect(() => {
-  //   console.log("QueryTree: ", queries)
-  // }, [queries])
   
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
@@ -133,36 +128,71 @@ export default function QueryBuilder(props) {
 
   async function search (event) {
     console.log("search", queryValues, queryCurrentOptions)
-
-    if (Object.keys(requestQueries).length > 0){
-      setIsSearching(true);
-      try {
-        // Fetch the settings from the backend API
-          let myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          let rawData = Object.keys(requestQueries).map(
-            (filterKey, index) => JSON.parse(requestQueries[filterKey])
-          )
-          var raw = JSON.stringify({
-            filters: rawData
-          });
-          
+    if (Object.keys(queryValues).length > 0){
+      // setIsSearching(true)
+      let queries = [];
+      Object.keys(queryValues).forEach((key) => {
+        const values = queryValues[key]
+        const currentOption = queryCurrentOptions[key]
+        queries.push({
+          query:key, 
+          values: values, 
+          currentOption: currentOption
+        })
+      })
+      if (queries.length > 0){
+        setIsSearching(true);
+        try {
+          let headers = new Headers();
+          headers.append("Content-Type", "application/json");
+          const filters = JSON.stringify({filters: queries})
           await fetch(`${api_uri}/search`, {
             method: 'POST',
-            headers: myHeaders,
-            body: raw,
+            headers: headers,
+            body: filters,
             redirect: 'follow'
-          })
-            .then(response => response.json())
+          }).then(response => response.json())
             .then(result => {
               setSearchResults(result)
             })
-      } catch (err) {
-          console.log(err)
-      } finally {
-        setIsSearching(false);
+        } catch (err) {
+          console.error(err)
+        } finally {
+          setIsSearching(false);
+        }
       }
+
+
     }
+    // if (Object.keys(requestQueries).length > 0){
+    //   setIsSearching(true);
+    //   try {
+    //     // Fetch the settings from the backend API
+    //       let myHeaders = new Headers();
+    //       myHeaders.append("Content-Type", "application/json");
+    //       let rawData = Object.keys(requestQueries).map(
+    //         (filterKey, index) => JSON.parse(requestQueries[filterKey])
+    //       )
+    //       var raw = JSON.stringify({
+    //         filters: rawData
+    //       });
+          
+    //       await fetch(`${api_uri}/search`, {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: raw,
+    //         redirect: 'follow'
+    //       })
+    //         .then(response => response.json())
+    //         .then(result => {
+    //           setSearchResults(result)
+    //         })
+    //   } catch (err) {
+    //       console.log(err)
+    //   } finally {
+    //     setIsSearching(false);
+    //   }
+    // }
   }
 
   const onFilterRemove = (strKey) => {
@@ -175,17 +205,6 @@ export default function QueryBuilder(props) {
   }
   function deleteNestedKey(obj, path){
     const keys = path.split('.');
-    // const currentKey = keys[];
-
-    // if (currentKey in obj) {
-    //   if (keys.length === 1) {
-    //     delete obj[currentKey];
-    //   } else {
-    //     deleteNestedKey(obj[currentKey], keys.slice(1).join('.'));
-    //   }
-    // }
-    // console.log("obj", Object.keys(obj[keys[0]][keys[1]][keys[2]]).length)
-
     if (window.UndefinedVariable) {
       Object.assign(window.UndefinedVariable, {})
   }
@@ -211,25 +230,6 @@ export default function QueryBuilder(props) {
     if(keys.length === 2){
       delete obj[keys[0]][keys[1]]
     }
-
-      // if (!obj || !path) {
-      //   return;
-      // }
-    
-      // if (typeof path === 'string') {
-      //   path = path.split('.');
-      // }
-    
-      // for (var i = 0; i < path.length - 1; i++) {
-    
-      //   obj = obj[path[i]];
-    
-      //   if (typeof obj === 'undefined') {
-      //     return;
-      //   }
-      // }
-    
-      // delete obj[path.pop()];
   }
 
   return (
