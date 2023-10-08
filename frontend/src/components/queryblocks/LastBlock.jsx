@@ -33,16 +33,18 @@ export default function LastBlock(props) {
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
 
-    // React.useEffect(() => {
-    //     // Update current values for queryline
-    //     props.setQueryValues((current) => {
-    //         const prev = {...current};
-    //         prev[strKey] = values;
-    //         return prev;
-    //     })
-    // },[values])
+    React.useEffect(() => {
+        // Update current values for queryline
+        props.setQueryValues(values)
+    },[values])
 
-    console.log("Values => ", values)
+    React.useEffect(() => {
+        props.setQueryCurrentOptions(prev => {
+            let current = {...prev}
+            current[strKey] = currentOption
+            return current
+        })
+    }, [currentOption])
 
     return (
         <Stack 
@@ -89,6 +91,11 @@ export default function LastBlock(props) {
                 onClick={(event) => {
                     props.onFilterRemove(strKey)
                     setValues(prev => {
+                        let current = {...prev}
+                        delete current[strKey]
+                        return current
+                    })
+                    props.setQueryCurrentOptions(prev => {
                         let current = {...prev}
                         delete current[strKey]
                         return current
