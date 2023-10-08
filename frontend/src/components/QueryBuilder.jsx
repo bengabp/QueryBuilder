@@ -28,6 +28,9 @@ export default function QueryBuilder(props) {
   const [queryValues, setQueryValues] = React.useState([]);
   const [queryCurrentOptions, setQueryCurrentOptions] = React.useState({})
   const [queries, setQueries] = React.useState({}) // Tree of queries
+
+  console.log("querieValues", queryValues)
+  console.log("queryCurrentOptions", queryCurrentOptions)
   
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
@@ -129,9 +132,8 @@ export default function QueryBuilder(props) {
 
 
   async function search (event) {
-    // const [values, setValues] = React.useContext(ValueContext);
-
     
+    console.log("search", queryValues, queryCurrentOptions)
     if (Object.keys(requestQueries).length > 0){
       setIsSearching(true);
       try {
@@ -164,24 +166,70 @@ export default function QueryBuilder(props) {
   }
 
   const onFilterRemove = (strKey) => {
+    console.log("str", strKey)
       setQueries((current) => {
         let prev = {...current}
-        return deleteNestedKey(prev, strKey)
-        // return prev
+        deleteNestedKey(prev, strKey)
+        return prev
       });
   }
   function deleteNestedKey(obj, path){
     const keys = path.split('.');
-    const currentKey = keys[0];
+    // const currentKey = keys[];
 
-    if (currentKey in obj) {
-      if (keys.length === 1) {
-        delete obj[currentKey];
-      } else {
-        deleteNestedKey(obj[currentKey], keys.slice(1).join('.'));
+    // if (currentKey in obj) {
+    //   if (keys.length === 1) {
+    //     delete obj[currentKey];
+    //   } else {
+    //     deleteNestedKey(obj[currentKey], keys.slice(1).join('.'));
+    //   }
+    // }
+    // console.log("obj", Object.keys(obj[keys[0]][keys[1]][keys[2]]).length)
+
+    if (window.UndefinedVariable) {
+      Object.assign(window.UndefinedVariable, {})
+  }
+    
+    if(keys.length === 4){
+      if(Object.keys(obj[keys[0]][keys[1]][keys[2]]).length > 1){
+        delete obj[keys[0]][keys[1]][keys[2]][keys[3]]
+      } else if(Object.keys(obj[keys[0]][keys[1]]).length > 1){
+        delete obj[keys[0]][keys[1]][keys[2]]
+      } else if(Object.keys(obj[keys[0]][keys[1]][keys[2]]).length === 1) {
+        delete obj[keys[0]][keys[1]]
       }
     }
-    return obj
+
+    if(keys.length === 3){
+      if(Object.keys(obj[keys[0]][keys[1]]).length > 1){
+        delete obj[keys[0]][keys[1]][keys[2]]
+      } else if(Object.keys(obj[keys[0]][keys[1]]).length === 1) {
+        delete obj[keys[0]][keys[1]]
+      }
+    }
+
+    if(keys.length === 2){
+      delete obj[keys[0]][keys[1]]
+    }
+
+      // if (!obj || !path) {
+      //   return;
+      // }
+    
+      // if (typeof path === 'string') {
+      //   path = path.split('.');
+      // }
+    
+      // for (var i = 0; i < path.length - 1; i++) {
+    
+      //   obj = obj[path[i]];
+    
+      //   if (typeof obj === 'undefined') {
+      //     return;
+      //   }
+      // }
+    
+      // delete obj[path.pop()];
   }
 
   return (
