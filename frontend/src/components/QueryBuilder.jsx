@@ -132,8 +132,8 @@ export default function QueryBuilder(props) {
 
 
   async function search (event) {
-    
     console.log("search", queryValues, queryCurrentOptions)
+
     if (Object.keys(requestQueries).length > 0){
       setIsSearching(true);
       try {
