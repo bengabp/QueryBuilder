@@ -21,49 +21,29 @@ export default function LastBlock(props) {
     if (props.index === 0){
         className += ` noUpLine`
     }
-
+    const optionsNoMultiSelect = ["is_blank", "equals", "does_not_equal"];
     const properties = JSON.parse(props.properties);
     const text = properties.text;
     const dataKey = properties.dataKey;
     const parentsList = properties.parents
     const dType = properties.dType
     const strKey = [...parentsList, dataKey].join(".")
-
-    // const [values, setValues] = React.useState(["default"]);
     const {values, setValues} = React.useContext(ValueContext)
-    // React.useEffect(() => {
-    //   setValues(prev => {
-    //     const current = {...prev}
-    //     current[strKey] = ["default"]
-    //     return current
-    //   })
-    // }, [strKey])
-
-    console.log("values", values)
-    
-    const [mainValue, setMainValue] = React.useState()
     
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
 
     // React.useEffect(() => {
-    //     // Update current option for queryline
-    //     props.setQueryCurrentOptions((current) => {
+    //     // Update current values for queryline
+    //     props.setQueryValues((current) => {
     //         const prev = {...current};
-    //         prev[strKey] = currentOption
+    //         prev[strKey] = values;
     //         return prev;
     //     })
-    // },[currentOption])
+    // },[values])
 
-    React.useEffect(() => {
-        // Update current values for queryline
-        props.setQueryValues((current) => {
-            const prev = {...current};
-            prev[strKey] = values;
-            return prev;
-        })
-    },[values])
-    
+    console.log("Values => ", values)
+
     return (
         <Stack 
             direction="row"
@@ -100,11 +80,8 @@ export default function LastBlock(props) {
                 settings={settings}
                 dType={dType}
                 strKey={strKey}
-                queryCurrentOptions={props.queryCurrentOptions}
-                queryValues={props.queryValues}
-                setQueryCurrentOptions={props.setQueryCurrentOptions}
-                setQueryValues={props.setQueryValues}
                 currentOption={currentOption}
+                optionsNoMultiSelect={optionsNoMultiSelect}
             />}
             <IconButton
                 className="removeFilterButton"
@@ -136,10 +113,6 @@ function DynamicValueBlock(props) {
                 <TwoDateValues
                     setValues={props.setValues}
                     values={props.values}
-                    // queryCurrentOptions={props.queryCurrentOptions}
-                    // queryValues={props.queryValues}
-                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    // setQueryValues={props.setQueryValues}
                     strKey={props.strKey}
                 >
                 </TwoDateValues>
@@ -150,10 +123,6 @@ function DynamicValueBlock(props) {
                 <SingleDateValue
                     setValues={props.setValues}
                     values={props.values}
-                    // queryCurrentOptions={props.queryCurrentOptions}
-                    // queryValues={props.queryValues}
-                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    // setQueryValues={props.setQueryValues}
                     strKey={props.strKey}
                 >
                 </SingleDateValue>
@@ -166,10 +135,6 @@ function DynamicValueBlock(props) {
                 <TwoNumberValues
                     setValues={props.setValues}
                     values={props.values}
-                    // queryCurrentOptions={props.queryCurrentOptions}
-                    // queryValues={props.queryValues}
-                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    // setQueryValues={props.setQueryValues}
                     strKey={props.strKey}
                 >
                 </TwoNumberValues>
@@ -179,10 +144,6 @@ function DynamicValueBlock(props) {
             return (<SingleNumberValue
                     setValues={props.setValues}
                     values={props.values}
-                    // queryCurrentOptions={props.queryCurrentOptions}
-                    // queryValues={props.queryValues}
-                    // setQueryCurrentOptions={props.setQueryCurrentOptions}
-                    // setQueryValues={props.setQueryValues}
                     strKey={props.strKey}
                 >
                 </SingleNumberValue>
@@ -198,10 +159,8 @@ function DynamicValueBlock(props) {
             dType={props.dType}
             values={props.values}
             currentOption={props.currentOption}
-            // queryCurrentOptions={props.queryCurrentOptions}
             queryValues={props.queryValues}
-            // setQueryCurrentOptions={props.setQueryCurrentOptions}
-            setQueryValues={props.setQueryValues}
+            optionsNoMultiSelect={props.optionsNoMultiSelect}
         />)
     }
 }

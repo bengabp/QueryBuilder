@@ -35,9 +35,10 @@ export default function SingleDateValue(props){
                 <DatePicker 
                     className="styledDateField"
                     onChange={(val) => {
+                        const parsedDate = parseDate(val);
                         props.setValues(prev => {
                             const current = {...prev}
-                            current[props.strKey] = [parseDate(val)]
+                            current[props.strKey] = [parsedDate]
                             return current
                           })
                     }}
