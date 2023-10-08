@@ -2,22 +2,14 @@ import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { SettingsContext } from '../../contexts/SettingsContext';
 import { Chip } from '@mui/material';
 export const api_uri = "http://127.0.0.1:8000"
 
 export default function AutoCompleteSearchField(props) {
-  const optionsSingle = ["is_blank", "equals", "does_not_equal"];
   const [suggestions, setSuggestions] = React.useState([]);
-  // const [value, setValue] = React.useState([{
-  //   id: "",
-  //   values: ["default"]
-  // }])
-  // console.log("value", value)
-  const settings = React.useContext(SettingsContext);
-  const [isMulti, setIsMulti] = React.useState(!optionsSingle.includes(props.currentOption) || props.dType === "boolean");
+  const isMulti = !(props.optionsNoMultiSelect.includes(props.currentOption) || props.dType === "boolean");
   const getSuggestions = async (inputValue) => {
-    if (optionsSingle.includes(props.currentOption)){
+    if (props.optionsNoMultiSelect.includes(props.currentOption)){
       setSuggestions(["true","false"])
       return
     }
@@ -32,13 +24,6 @@ export default function AutoCompleteSearchField(props) {
     }
   };
 
-  // console.log(`selected${props.strKey}`, props.values?.filter(item => item.id === props.strKey)[0]?.selectedSugs)
-
-// React.useEffect(() => {
-//     setIsMulti(!optionsSingle.includes(props.currentOption))
-
-//   },[props.currentOption])
-
   return (
     <Stack spacing={3} 
       id="valuesAutoCompleteContainer"
@@ -52,7 +37,7 @@ export default function AutoCompleteSearchField(props) {
         options={suggestions}
         autoComplete={true}
         freeSolo
-        defaultValue={["default"]}
+        // defaultValue={[]}
         value={(isMulti === true && props.values !== undefined) && props.values[props.strKey]}
         getOptionDisabled={(option) => props.values !== undefined && props.values[props.strKey]?.includes(option)}
         getOptionLabel={(option) => {return typeof option === "string" && option.length > 0 ? option : ""}}
@@ -60,7 +45,6 @@ export default function AutoCompleteSearchField(props) {
         onFocus={() => {
           getSuggestions("")
         }}
-        // value={props.values.length <= 0 ? []: isMulti ? props.values: props.values[0]}
         fullWidth={false}
         // onInputChange={(event, newInputValue) => {
         //   getSuggestions(newInputValue);
@@ -93,6 +77,7 @@ export default function AutoCompleteSearchField(props) {
           value.map((option, index) => (
             <Chip
               variant='filled'
+              key={index}
               label={option}
               {...getTagProps(index)}
             />

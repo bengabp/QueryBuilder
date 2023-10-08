@@ -4,4 +4,6 @@ COPY . .
 
 RUN pip install -r backend/requirements.txt
 
-CMD [ "uvicorn" , "main:app", "--app-dir=backend/"]
+EXPOSE 8000
+
+CMD [ "uvicorn" , "main:app", "--app-dir=backend/", "--host=0.0.0.0"]

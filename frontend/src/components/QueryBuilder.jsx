@@ -14,6 +14,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { api_uri } from './queryblocks/AutocompleteField';
 import mergeObjectWithNestedArray from "./utils";
+import {ValueContext} from "../contexts/ValueContext";
 
 
 
@@ -128,6 +129,9 @@ export default function QueryBuilder(props) {
 
 
   async function search (event) {
+    // const [values, setValues] = React.useContext(ValueContext);
+
+    
     if (Object.keys(requestQueries).length > 0){
       setIsSearching(true);
       try {
