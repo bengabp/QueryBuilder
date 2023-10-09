@@ -1,5 +1,6 @@
 import * as React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { Chip } from "@mui/material";
@@ -96,29 +97,35 @@ export default function AutoCompleteSearchField(props) {
           });
         }}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            placeholder="Value"
-            // inputProps={{
-            //   sx: {
-            //     textAlign: "right"
-            //   }
-            // }}
-            sx={{
-              direction: 'rtl'
-            }}
-          />
+          <Box id="autoCompleteTextFieldContainer">
+            <TextField
+              {...params}
+              variant="standard"
+              placeholder="Type.."
+              // inputProps={{
+              //   sx: {
+              //     textAlign: "right"
+              //   }
+              // }}
+              sx={{
+                direction: 'ltr'
+              }}
+            />
+          </Box>
         )}
         renderTags={(value, getTagProps) => (
-          value.map((option, index) => (
-            <Chip
-              variant='filled'
-              key={index}
-              label={option}
-              {...getTagProps(index)}
-            />
-          ))
+          <Box id="autoCompleteChipsContainer">
+            {
+              value.map((option, index) => (
+                <Chip
+                  variant='filled'
+                  key={index}
+                  label={option}
+                  {...getTagProps(index)}
+                />
+              ))
+            }
+          </Box>
         )}
         sx={{
           height: "10px",

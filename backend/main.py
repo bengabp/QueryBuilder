@@ -27,6 +27,56 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def find_companies(index = 0, query = {}):
+    search_result = [
+        company for company in db.companies.find(query, {"_id": 0}).skip(index).limit(PAGE_SIZE)
+    ]
+    companies = []
+    for index, company in enumerate(search_result):
+        address = "Not Available"
+        hq_locations: List[Dict] = company.get("hq_locations", [])
+
+        if hq_locations:
+            address = ", ".join([loc.get("address") for loc in hq_locations])
+
+        images = company.get("images")
+        if len(images) > 0:
+            thumbNail = images.get("74x74")
+        else:
+            thumbNail = ""
+
+        data = {
+            "id": company.get("uuid", company.get("_id")),
+            "name": company.get("name"),
+            "address": address,
+            "employeesRange": company.get("employees", "Not available"),
+            "companyStatus": company.get("company_status", "Not available"),
+            "growthStage": company.get("growth_stage"),
+            "thumbnailUrl": thumbNail,
+            "launchYear": company.get("launch_year"),
+            "totalPatents": company.get("patents_count"),
+            "type": company.get("type"),
+            "totalJobs": company.get("total_jobs_available"),
+            "tagline": company.get("tagline"),
+        }
+        companies.append(data)
+    total_results = db.companies.count_documents(query)  
+    return companies, total_results
+
+def convert_search_filters_to_query(filters):
+    query = {}
+    for search_filter in filters:
+        collection_field = field_mappings[search_filter.query]["dKey"]
+        dtype = field_mappings[search_filter.query]["dType"]
+        try:
+            stage_function_data = pipeline_builder[search_filter.current_option][dtype]
+            stage = stage_function_data["get_pipeline"](
+                collection_field, search_filter.values
+            )
+            query.update(stage["$match"])
+        except IndexError:
+            continue
+    return query
 
 @app.get(
     "/completions",
@@ -60,84 +110,19 @@ def get_completions(
     name="companies_search",
     tags=["Search"],
     summary="Companies Search",
+   
     description="Companies search endpoint for react frontend",
     responses={status.HTTP_200_OK: {"model": CompaniesSearchResult}},
 )
-def companies_search(request: Request, search_filters: SearchRequest):
-    """Start building pipeline"""
-    pipeline = []
-    for search_filter in search_filters.filters:
-        query = ".".join([*search_filter.parents, search_filter.data_key])
-        collection_field = field_mappings[query]["dKey"]
+def companies_search(request: Request, search_filters: SearchRequest,  index: int = Query(description = "Pagination index", default =0),):
+    """ Start building pipeline """
 
-        if search_filter.d_type not in [
-            "number",
-            "string_long",
-            "string_among",
-            "boolean",
-            "date",
-        ]:
-            print("dType support has not been added ! => ", search_filter.d_type)
-            continue
+    query = {}
+    if search_filters.filters:
+        query = convert_search_filters_to_query(search_filters.filters)
 
-        try:
-            stage_function_data = pipeline_builder[search_filter.current_option][
-                search_filter.d_type
-            ]
-            stage = stage_function_data["get_pipeline"](
-                collection_field, search_filter.values
-            )
-            pipeline.append(stage)
-        except IndexError:
-            continue
-
-    search_results = []
-    if pipeline:
-        pipeline.extend(
-            [
-                # {"$project": {"_id": 0}},
-                {"$addFields": {"total_results": {"$sum": 1}}},
-                {"$limit": 500},
-            ]
-        )
-        try:
-            search_results = db.companies.aggregate(pipeline)
-        except pymongo_errors.OperationFailure:
-            print("There is an error in your pipeline")
-
-    companies = []
-
-    for index, company in enumerate(search_results):
-#         print("Company Name => ", company.get("name"))
-        hq_locations: List[Dict] = company.get("hq_locations", [])
-
-        if hq_locations:
-            address = ", ".join([loc.get("address") for loc in hq_locations])
-        else:
-            address = "Not available"
-
-        images = company.get("images")
-        if len(images) > 0:
-            thumb_nail = images.get("74x74")
-        else:
-            thumb_nail = ""
-
-        data = {
-            "id": company.get("uuid", company.get("_id")),
-            "name": company.get("name"),
-            "address": address,
-            "employeesRange": company.get("employees", "Not available"),
-            "companyStatus": company.get("company_status", "Not available"),
-            "growthStage": company.get("growth_stage"),
-            "thumbnailUrl": thumb_nail,
-            "launchYear": company.get("launch_year"),
-            "totalPatents": company.get("patents_count"),
-            "type": company.get("type"),
-            "totalJobs": company.get("total_jobs_available"),
-            "tagline": company.get("tagline"),
-        }
-        companies.append(data)
-    response = CompaniesSearchResult(results=companies, total_results=len(companies))
+    companies, total_results = find_companies(index, query)
+    response = CompaniesSearchResult(results=companies, total_results=total_results, index = index)
     return response
 
 
@@ -150,40 +135,7 @@ def get_settings(
     response = SettingsResponse(companies=companies_result)
 
     if include_companies:
-        # Get first 5 companies:
-        search_result = [
-            company for company in db.companies.find({}, {"_id": 0})[:PAGE_SIZE]
-        ]
-        companies = []
-        for index, company in enumerate(search_result):
-            address = "Not Available"
-            hq_locations: List[Dict] = company.get("hq_locations", [])
-
-            if hq_locations:
-                address = ", ".join([loc.get("address") for loc in hq_locations])
-
-            images = company.get("images")
-            if len(images) > 0:
-                thumbNail = images.get("74x74")
-            else:
-                thumbNail = ""
-
-            data = {
-                "id": company.get("uuid", company.get("_id")),
-                "name": company.get("name"),
-                "address": address,
-                "employeesRange": company.get("employees", "Not available"),
-                "companyStatus": company.get("company_status", "Not available"),
-                "growthStage": company.get("growth_stage"),
-                "thumbnailUrl": thumbNail,
-                "launchYear": company.get("launch_year"),
-                "totalPatents": company.get("patents_count"),
-                "type": company.get("type"),
-                "totalJobs": company.get("total_jobs_available"),
-                "tagline": company.get("tagline"),
-            }
-            companies.append(data)
-        total_results = db.companies.count_documents({})
+        companies, total_results = find_companies()
         response.companies = CompaniesSearchResult(
             results=companies, total_results=total_results
         )

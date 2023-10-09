@@ -45,10 +45,10 @@
 }
 
 ::-webkit-scrollbar{
-  /* width:10px; */
-  background-color:transparent;
-  width:10px;
-  height:10px;
+  background-color: transparent;
+  width: 9px;
+  height: 5px;
+  border-radius: 10px;
 }
 
 
@@ -185,7 +185,13 @@
 
 
 #values-autocomplete{
-  
+  margin-left:10px;
+  min-width:50px;
+}
+
+#valuesAutoCompleteContainer  .MuiInput-underline{
+  display:flex;
+  flex-direction:row-reverse;
 }
 
 .MuiLinearProgress-indeterminate{

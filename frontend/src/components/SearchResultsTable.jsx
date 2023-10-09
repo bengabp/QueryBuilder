@@ -44,13 +44,13 @@ export default function SearchResultsTable(props) {
     {
       field: "launchYear",
       headerName: "Launch Year",
-      width: 100,
+      width: 80,
       editable: false
     },
     {
       field: "totalPatents",
       headerName: "Patents",
-      width: 100,
+      width: 80,
       editable: false
     },
     {
@@ -82,17 +82,13 @@ export default function SearchResultsTable(props) {
   return (
       <DataGrid
         rows={props.companies == undefined ? []: props.companies}
+        columnHeaderHeight={45}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              // pageSize: 5,
-            },
-          },
-        }}
-        // pageSizeOptions={[5]}
+        hideFooter={true}
+        pageSizeOptions={[]}
         checkboxSelection
         disableRowSelectionOnClick
+        scrollbarSize={3}
       />
   );
 }
