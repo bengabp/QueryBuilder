@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,7 +15,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { api_uri } from './queryblocks/AutocompleteField';
 import mergeObjectWithNestedArray from "./utils";
-import {ValueContext} from "../contexts/ValueContext";
+import { ValueContext } from "../contexts/ValueContext";
+import NavigateNext from '@mui/icons-material/NavigateNext';
+import NavigateBefore from "@mui/icons-material/NavigateBefore";
 
 
 
@@ -28,28 +31,28 @@ export default function QueryBuilder(props) {
   const [queryCurrentOptions, setQueryCurrentOptions] = React.useState({})
   const [queries, setQueries] = React.useState({}) // Tree of queries
 
-  console.log("querieValues", queryValues)
-  console.log("queryCurrentOptions", queryCurrentOptions)
-  
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
 
   const [exportBtnMenuAnchorEl, setExportBtnMenuAnchorEl] = React.useState("");
   const exportBtnMenuOpen = Boolean(exportBtnMenuAnchorEl);
 
+  const [paginationFilters, setPaginationFilters] = React.useState([])
+
   const handleExportBtnMenuItemClick = (event) => setExportBtnMenuAnchorEl(event.currentTarget)
   const handleExportBtnMenuClose = (event) => {
     const fileType = event.currentTarget.id;
-    if (["json", "csv"].includes(fileType)){
+    if (["json", "csv"].includes(fileType)) {
       sendExportRequest(fileType);
     }
     setExportBtnMenuAnchorEl("");
   }
 
 
+
   React.useEffect(() => {
     props.setIsLoading(false);
-  },[])
+  }, [])
 
   const sendExportRequest = (fileType) => {
     setIsExporting(true);
@@ -58,42 +61,42 @@ export default function QueryBuilder(props) {
     myHeaders.append("Content-Type", "application/json");
 
     fetch(`${api_uri}/export`, {
-        body: JSON.stringify({
-          targetResults: searchResults.results,
-          fileType: fileType
-        }),
-        redirect: "follow",
-        headers: myHeaders,
-        method: "POST"
-      },
+      body: JSON.stringify({
+        targetResults: searchResults.results,
+        fileType: fileType
+      }),
+      redirect: "follow",
+      headers: myHeaders,
+      method: "POST"
+    },
     )
-    .then((response) => response.blob())
-    .then((blob) => {
-      setIsExporting(false);
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', "results."+fileType);
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-    })
-    .catch((error) => {
-      console.error('Error downloading file: ', error);
-      setIsExporting(false)
-    });
+      .then((response) => response.blob())
+      .then((blob) => {
+        setIsExporting(false);
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', "results." + fileType);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch((error) => {
+        console.error('Error downloading file: ', error);
+        setIsExporting(false)
+      });
   }
-  
+
   const onNewFilter = (filter, panelN) => {
     let filtersArray = [...filterKeysHistory]
-    if (panelN === 1){
+    if (panelN === 1) {
       filtersArray.pop();
     }
     toggleFiltersDialog(false);  // Close filters dialog   
     // Convert last querykey details to json string so it can be parsed and converted back to a js object
     const jsonData = {
-      dataKey:filter.dataKey,
-      dType:filter.dType,
+      dataKey: filter.dataKey,
+      dType: filter.dType,
       text: filter.text,
       parents: [...filtersArray],
     }
@@ -102,12 +105,12 @@ export default function QueryBuilder(props) {
     const queryTree = mergeObjectWithNestedArray(queries, strKey.split("."), jsonString)
     setQueries(queryTree)
     setQueryCurrentOptions((current) => {
-      const prev = {...current};
+      const prev = { ...current };
       prev[strKey] = settings.dataTypesAndOptions[filter.dType].options[0]
       return prev;
     })
     setQueryValues((current) => {
-      const prev = {...current};
+      const prev = { ...current };
       prev[strKey] = [];
       return prev;
     })
@@ -115,7 +118,7 @@ export default function QueryBuilder(props) {
 
   const onNavBlockClicked = () => {
     setFilterKeysHistory((current) => {
-      if (current.length > 1){
+      if (current.length > 1) {
         const currentCopy = [...current];
         currentCopy.pop();
         return currentCopy;
@@ -126,26 +129,25 @@ export default function QueryBuilder(props) {
   }
 
 
-  async function search (event) {
-    console.log("search", queryValues, queryCurrentOptions)
-    if (Object.keys(queryValues).length > 0){
+  async function search(event) {
+    if (Object.keys(queryValues).length > 0) {
       // setIsSearching(true)
       let queries = [];
       Object.keys(queryValues).forEach((key) => {
         const values = queryValues[key]
         const currentOption = queryCurrentOptions[key]
         queries.push({
-          query:key, 
-          values: values, 
+          query: key,
+          values: values,
           currentOption: currentOption
         })
       })
-      if (queries.length > 0){
+      if (queries.length > 0) {
         setIsSearching(true);
         try {
           let headers = new Headers();
           headers.append("Content-Type", "application/json");
-          const filters = JSON.stringify({filters: queries})
+          const filters = JSON.stringify({ filters: queries })
           await fetch(`${api_uri}/search`, {
             method: 'POST',
             headers: headers,
@@ -154,6 +156,7 @@ export default function QueryBuilder(props) {
           }).then(response => response.json())
             .then(result => {
               setSearchResults(result)
+              setPaginationFilters(queries)
             })
         } catch (err) {
           console.error(err)
@@ -161,73 +164,42 @@ export default function QueryBuilder(props) {
           setIsSearching(false);
         }
       }
-
-
     }
-    // if (Object.keys(requestQueries).length > 0){
-    //   setIsSearching(true);
-    //   try {
-    //     // Fetch the settings from the backend API
-    //       let myHeaders = new Headers();
-    //       myHeaders.append("Content-Type", "application/json");
-    //       let rawData = Object.keys(requestQueries).map(
-    //         (filterKey, index) => JSON.parse(requestQueries[filterKey])
-    //       )
-    //       var raw = JSON.stringify({
-    //         filters: rawData
-    //       });
-          
-    //       await fetch(`${api_uri}/search`, {
-    //         method: 'POST',
-    //         headers: myHeaders,
-    //         body: raw,
-    //         redirect: 'follow'
-    //       })
-    //         .then(response => response.json())
-    //         .then(result => {
-    //           setSearchResults(result)
-    //         })
-    //   } catch (err) {
-    //       console.log(err)
-    //   } finally {
-    //     setIsSearching(false);
-    //   }
-    // }
   }
 
   const onFilterRemove = (strKey) => {
     console.log("str", strKey)
-      setQueries((current) => {
-        let prev = {...current}
-        deleteNestedKey(prev, strKey)
-        return prev
-      });
+    setQueries((current) => {
+      let prev = { ...current }
+      deleteNestedKey(prev, strKey)
+      return prev
+    });
   }
-  function deleteNestedKey(obj, path){
+  function deleteNestedKey(obj, path) {
     const keys = path.split('.');
     if (window.UndefinedVariable) {
       Object.assign(window.UndefinedVariable, {})
-  }
-    
-    if(keys.length === 4){
-      if(Object.keys(obj[keys[0]][keys[1]][keys[2]]).length > 1){
+    }
+
+    if (keys.length === 4) {
+      if (Object.keys(obj[keys[0]][keys[1]][keys[2]]).length > 1) {
         delete obj[keys[0]][keys[1]][keys[2]][keys[3]]
-      } else if(Object.keys(obj[keys[0]][keys[1]]).length > 1){
+      } else if (Object.keys(obj[keys[0]][keys[1]]).length > 1) {
         delete obj[keys[0]][keys[1]][keys[2]]
-      } else if(Object.keys(obj[keys[0]][keys[1]][keys[2]]).length === 1) {
+      } else if (Object.keys(obj[keys[0]][keys[1]][keys[2]]).length === 1) {
         delete obj[keys[0]][keys[1]]
       }
     }
 
-    if(keys.length === 3){
-      if(Object.keys(obj[keys[0]][keys[1]]).length > 1){
+    if (keys.length === 3) {
+      if (Object.keys(obj[keys[0]][keys[1]]).length > 1) {
         delete obj[keys[0]][keys[1]][keys[2]]
-      } else if(Object.keys(obj[keys[0]][keys[1]]).length === 1) {
+      } else if (Object.keys(obj[keys[0]][keys[1]]).length === 1) {
         delete obj[keys[0]][keys[1]]
       }
     }
 
-    if(keys.length === 2){
+    if (keys.length === 2) {
       delete obj[keys[0]][keys[1]]
     }
   }
@@ -246,22 +218,22 @@ export default function QueryBuilder(props) {
           {
             Object.keys(queries).map((queryChild, index) => { // Last element is the query key
               return (
-                  <div className="queryBlock" key={index}>
-                    <QueryBlock
-                        queries={queries[queryChild]}
-                        parent={queryChild}
-                        index={index}
-                        queryCurrentOptions={queryCurrentOptions}
-                        queryValues={queryValues}
-                        onFilterRemove={onFilterRemove}
-                        setQueryCurrentOptions={setQueryCurrentOptions}
-                        setQueryValues={setQueryValues}
-                    />
-                  </div>
+                <div className="queryBlock" key={index}>
+                  <QueryBlock
+                    queries={queries[queryChild]}
+                    parent={queryChild}
+                    index={index}
+                    queryCurrentOptions={queryCurrentOptions}
+                    queryValues={queryValues}
+                    onFilterRemove={onFilterRemove}
+                    setQueryCurrentOptions={setQueryCurrentOptions}
+                    setQueryValues={setQueryValues}
+                  />
+                </div>
               )
             })
           }
-          <Box sx={{margin:'0', padding:'0'}}>
+          <Box sx={{ margin: '0', padding: '0' }}>
             <AddFilterButton // Open Dialog to add new companies filter
               toggleFiltersDialog={toggleFiltersDialog}
               isSearching={isSearching}
@@ -274,15 +246,15 @@ export default function QueryBuilder(props) {
         </Stack>
       </Stack>
       <Stack direction="column" sx={{
-          position:'fixed',
-          bottom: '0px',
-          height:'50%',
-          display:'flex',
-          flexDirection: 'column',
-          width:'100%'
-        }}>
-        <Box sx={{width:'100%'}}>
-          { isSearching && <LinearProgress />}
+        position: 'fixed',
+        bottom: '0px',
+        height: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%'
+      }}>
+        <Box sx={{ width: '100%' }}>
+          {isSearching && <LinearProgress />}
         </Box>
         <Box
           display="flex"
@@ -295,19 +267,54 @@ export default function QueryBuilder(props) {
               onClick={search}
               disabled={isSearching}
             >SEARCH</Button>
-            <Typography variant="span">{`${searchResults.totalResults} results`}</Typography>
           </Box>
-          <Box
-            sx={{
-              display:"flex",
-              flexDirection:"column",
-              gap:"0px",
-              alignItems:"center",
-              justifyContent:"center"
-            }}
-          >
+          <Box sx={{
+            display: 'flex',
+            gap: "50px"
+          }}>
+            <Stack 
+              direction="row"
+              sx={{
+                alignItems: "center",
+                flexDirection: "row",
+                gap: "10px"
+              }}
+            >
+              <Typography variant="span">{`${searchResults.index+1} - ${searchResults.index+searchResults.resultsPerPage} of ${searchResults.totalResults}`}</Typography>
+              <Box sx={{
+                display:"flex",
+                flexDirection:"row",
+                gap:"10px",
+                alignItems:"center"
+              }}>
+                <PaginationButton direction="prev" 
+                  setIsSearching={setIsSearching}
+                  paginationFilters={paginationFilters}
+                  currentIndex={searchResults.index}
+                  pageSize={searchResults.resultsPerPage}
+                  setSearchResults={setSearchResults}
+                />
+                <PaginationButton direction="next" 
+                  setIsSearching={setIsSearching}
+                  paginationFilters={paginationFilters}
+                  currentIndex={searchResults.index}
+                  pageSize={searchResults.resultsPerPage}
+                  setSearchResults={setSearchResults}
+                />
+              </Box>
+            </Stack>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0px",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
               <Button
-                disabled={true ? isExporting: false}
+                disabled={true ? isExporting : false}
                 id={"export-btn"}
                 aria-controls={exportBtnMenuOpen ? 'export-btn-menu' : undefined}
                 aria-haspopup={"true"}
@@ -315,24 +322,23 @@ export default function QueryBuilder(props) {
                 onClick={handleExportBtnMenuItemClick}
               >
                 {isExporting ? "Exporting..." : "Export Results"}
-            </Button>
-            {isExporting && <LinearProgress sx={{width:"120px", height:"3px"}} />}
+              </Button>
+              {isExporting && <LinearProgress sx={{ width: "120px", height: "3px" }} />}
+            </Box>
           </Box>
 
           <Menu
-              id="export-btn-menu"
-              anchorEl={exportBtnMenuAnchorEl}
-              open={exportBtnMenuOpen}
-              onClose={handleExportBtnMenuClose}
-              MenuListProps={{'aria-labelledby': 'export-btn'}}
+            id="export-btn-menu"
+            anchorEl={exportBtnMenuAnchorEl}
+            open={exportBtnMenuOpen}
+            onClose={handleExportBtnMenuClose}
+            MenuListProps={{ 'aria-labelledby': 'export-btn' }}
           >
             <MenuItem onClick={handleExportBtnMenuClose} id="json">Export to json</MenuItem>
             <MenuItem onClick={handleExportBtnMenuClose} id="csv">Export to csv</MenuItem>
           </Menu>
         </Box>
-        <SearchResultsTable 
-          companies={searchResults.results}
-        />
+        <SearchResultsTable companies={searchResults.results} />
       </Stack>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}
@@ -343,5 +349,59 @@ export default function QueryBuilder(props) {
         onNavBlockClicked={onNavBlockClicked}
       ></FiltersDialog>
     </Grid>
+  );
+}
+
+
+const PaginationButton = (props) => {
+  const doPagination = async () => {
+    // Calculate index
+    // if direction is prev and index > 0. index = currentIndex - pagesize
+    
+    let requestIndex = 0;
+  
+    if (props.direction === "prev"){
+      if (props.currentIndex > 0){
+        requestIndex = props.currentIndex - props.pageSize;
+      }
+    } else if (props.direction === "next"){
+      requestIndex = (props.currentIndex + props.pageSize)
+    }
+
+    // Send Api request
+    props.setIsSearching(true);
+    try {
+      let headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      const filters = JSON.stringify({ filters: props.paginationFilters.length > 0 ? props.paginationFilters:[] })
+      await fetch(`${api_uri}/search?index=${requestIndex}`, {
+        method: 'POST',
+        headers: headers,
+        body: filters,
+        redirect: 'follow'
+      }).then(response => response.json())
+        .then(result => {
+          props.setSearchResults(result)
+        })
+    } catch (err) {
+      console.error(err)
+    } finally {
+      props.setIsSearching(false);
+    }
+    
+  }
+
+  return (
+    <IconButton
+      onClick={doPagination}
+    >
+      {
+        props.direction === "prev" 
+        ? 
+          <NavigateBefore></NavigateBefore> 
+        : 
+          <NavigateNext></NavigateNext>
+      }
+    </IconButton>
   );
 }

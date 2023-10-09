@@ -11,7 +11,7 @@ table_headings = [
     "participated_events.total",
     "founders.name",
 ]
-PAGE_SIZE = 10
+PAGE_SIZE = 30
 
 
 class CompletionsResponse(BaseModel):
@@ -47,11 +47,11 @@ class CompaniesSearchResult(BaseModel):
     total_results: int = Field(
         description="Total number of matches", serialization_alias="totalResults"
     )
-    index: int = Field(descripition="Current page index", default=1)
+    index: int = Field(descripition="Current page index", default=0)
     results_per_page: int = Field(
         description="Results per page",
         serialization_alias="resultsPerPage",
-        default=PAGE_SIZE,
+        default=PAGE_SIZE
     )
 
 
