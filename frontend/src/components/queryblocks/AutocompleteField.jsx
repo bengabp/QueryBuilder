@@ -55,9 +55,9 @@ export default function AutoCompleteSearchField(props) {
         classes={{ paper: classes.paper }}
         // defaultValue={[]}
         value={
-          isMulti === true &&
+          (isMulti === true &&
           props.values !== undefined &&
-          props.values[props.strKey]
+          props.values[props.strKey]) || []
         }
         getOptionDisabled={(option) =>
           props.values !== undefined &&

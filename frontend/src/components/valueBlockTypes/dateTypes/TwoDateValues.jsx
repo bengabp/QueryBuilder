@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -30,6 +30,15 @@ export default function TwoDateValues(props){
 
         return `${year}-${month+1}-${day}`;
     }
+
+    useEffect(() => {
+        props.setValues(prev => {
+            const current = {...prev}
+            current[props.strKey] = [null, null]
+            return current
+        })
+    }, [])
+
     return (
         <Stack
             direction="row"
@@ -39,11 +48,11 @@ export default function TwoDateValues(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
-                    value={props.values && props.values[props.strKey] && dayjs(props.values[props.strKey][0])}
+                    value={(props.values[props.strKey] && dayjs(props.values[props.strKey][0])) || null}
                     onChange={(val) => {
                         props.setValues(prev => {
                             const current = {...prev}
-                            current[props.strKey] = [parseDate(val)]
+                            current[props.strKey][0] = parseDate(val)
                             return current
                           })
                     }}
@@ -53,7 +62,7 @@ export default function TwoDateValues(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
-                    value={props.values && props.values[props.strKey] && dayjs(props.values[props.strKey][1])}
+                    value={(props.values && props.values[props.strKey] && dayjs(props.values[props.strKey][1])) || []}
                     onChange={(val) => {
                         // let vals = props.values;
                         // if (vals.length <= 0){
@@ -62,7 +71,7 @@ export default function TwoDateValues(props){
                         // vals[1] = parseDate(val)
                         props.setValues(prev => {
                             const current = {...prev}
-                            current[props.strKey].push(parseDate(val))
+                            current[props.strKey][1] = parseDate(val)
                             return current
                           })
                     }}
