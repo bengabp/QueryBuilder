@@ -8,7 +8,7 @@ class SearchFilter(BaseModel):
     values: List = Field(alias="values")
 
 class SearchRequest(BaseModel):
-    filters: List[SearchFilter]
+    filters: List[SearchFilter] = Field(description = "List of filters", default = [])
 
 
 class ExportResultsRequest(BaseModel):

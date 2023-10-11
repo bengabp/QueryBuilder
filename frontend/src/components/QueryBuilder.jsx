@@ -280,7 +280,7 @@ export default function QueryBuilder(props) {
                 gap: "10px"
               }}
             >
-              <Typography variant="span">{`${searchResults.index+1} - ${searchResults.index+searchResults.resultsPerPage} of ${searchResults.totalResults}`}</Typography>
+              <Typography variant="span">{`${searchResults.index+1} - ${searchResults.index + searchResults.resultsPerPage >= searchResults.totalResults? searchResults.totalResults : searchResults.index+searchResults.resultsPerPage} of ${searchResults.totalResults}`}</Typography>
               <Box sx={{
                 display:"flex",
                 flexDirection:"row",
@@ -292,6 +292,7 @@ export default function QueryBuilder(props) {
                   paginationFilters={paginationFilters}
                   currentIndex={searchResults.index}
                   pageSize={searchResults.resultsPerPage}
+                  totalSearchResults={searchResults.totalResults}
                   setSearchResults={setSearchResults}
                 />
                 <PaginationButton direction="next" 
@@ -299,6 +300,7 @@ export default function QueryBuilder(props) {
                   paginationFilters={paginationFilters}
                   currentIndex={searchResults.index}
                   pageSize={searchResults.resultsPerPage}
+                  totalSearchResults={searchResults.totalResults}
                   setSearchResults={setSearchResults}
                 />
               </Box>
@@ -391,9 +393,17 @@ const PaginationButton = (props) => {
     
   }
 
+  let isDisabled = false;
+  if (props.direction==="next"){
+    if (props.currentIndex + props.pageSize >= props.totalSearchResults){
+      isDisabled = true;
+    }
+  }
+
   return (
     <IconButton
       onClick={doPagination}
+      disabled={isDisabled}
     >
       {
         props.direction === "prev" 

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import NumberValue from "./NumberValue";
 
 export default function TwoNumberValues(props) {
   useEffect(() => {
@@ -26,12 +25,6 @@ export default function TwoNumberValues(props) {
       alignItems="center"
       className="elevatedValueBlock datePickerContainer"
     >
-      {/* <NumberValue 
-                isFirst={true} 
-                values={props.values} 
-                setValues={props.setValues} 
-                strKey={props.strKey}
-            /> */}
       <TextField
         required
         type="number"
@@ -58,12 +51,6 @@ export default function TwoNumberValues(props) {
         }}
       />
       <Typography>and</Typography>
-      {/* <NumberValue 
-                isFirst={false} 
-                values={props.values} 
-                setValues={props.setValues} 
-                strKey={props.strKey}
-            /> */}
       <TextField
         required
         type="number"
