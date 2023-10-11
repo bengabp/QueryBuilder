@@ -31,6 +31,8 @@ export default function QueryBuilder(props) {
   const [queryCurrentOptions, setQueryCurrentOptions] = React.useState({})
   const [queries, setQueries] = React.useState({}) // Tree of queries
 
+  console.log("queries", queries)
+
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
 
@@ -168,7 +170,6 @@ export default function QueryBuilder(props) {
   }
 
   const onFilterRemove = (strKey) => {
-    console.log("str", strKey)
     setQueries((current) => {
       let prev = { ...current }
       deleteNestedKey(prev, strKey)
@@ -187,7 +188,9 @@ export default function QueryBuilder(props) {
       } else if (Object.keys(obj[keys[0]][keys[1]]).length > 1) {
         delete obj[keys[0]][keys[1]][keys[2]]
       } else if (Object.keys(obj[keys[0]][keys[1]][keys[2]]).length === 1) {
-        delete obj[keys[0]][keys[1]]
+        delete obj[keys[0]]
+      } else {
+        delete obj[keys[0]]
       }
     }
 
@@ -195,12 +198,16 @@ export default function QueryBuilder(props) {
       if (Object.keys(obj[keys[0]][keys[1]]).length > 1) {
         delete obj[keys[0]][keys[1]][keys[2]]
       } else if (Object.keys(obj[keys[0]][keys[1]]).length === 1) {
-        delete obj[keys[0]][keys[1]]
-      }
+        delete obj[keys[0]]
+      } 
     }
 
     if (keys.length === 2) {
-      delete obj[keys[0]][keys[1]]
+      if (Object.keys(obj[keys[0]]).length > 1) {
+        delete obj[keys[0]][keys[1]]
+      } else {
+        delete obj[keys[0]]
+      }
     }
   }
 

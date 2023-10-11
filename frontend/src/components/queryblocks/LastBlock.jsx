@@ -29,6 +29,8 @@ export default function LastBlock(props) {
     const dType = properties.dType
     const strKey = [...parentsList, dataKey].join(".")
     const {values, setValues} = React.useContext(ValueContext)
+
+    console.log("values", values)
     
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
