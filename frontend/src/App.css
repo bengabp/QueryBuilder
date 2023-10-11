@@ -194,6 +194,11 @@
   flex-direction:row-reverse;
 }
 
+.MuiChip-deleteIcon{
+  position:relative;
+  left: -12px
+}
+
 .MuiLinearProgress-indeterminate{
   transition: width 0.1s;
 }

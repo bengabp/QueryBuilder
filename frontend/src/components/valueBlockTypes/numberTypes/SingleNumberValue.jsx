@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import NumberValue from './NumberValue';
 
 
 export default function SingleNumberValue(props){
@@ -24,7 +23,6 @@ export default function SingleNumberValue(props){
             alignItems="center"
             className="elevatedValueBlock datePickerContainer"
         >
-            {/* <NumberValue isFirst={true} values={props.values} setValues={props.setValues} strKey={props.strKey}/> */}
             <TextField 
                 required
                 type="number"
