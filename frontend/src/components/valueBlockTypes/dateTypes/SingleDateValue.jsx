@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from "dayjs";
 
 
 export default function SingleDateValue(props){
@@ -26,6 +27,14 @@ export default function SingleDateValue(props){
         return `${year}-${month+1}-${day}`;
     }
 
+    useEffect(() => {
+        props.setValues(prev => {
+            let current = {...prev}
+            current[props.strKey] = []
+            return current
+        })
+    }, [])
+
     return (
         <Stack
             direction="row"
@@ -34,11 +43,12 @@ export default function SingleDateValue(props){
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker 
                     className="styledDateField"
+                    value={(props.values && props.values[props.strKey] && dayjs(props.values[props.strKey])) || []}
                     onChange={(val) => {
                         const parsedDate = parseDate(val);
                         props.setValues(prev => {
                             const current = {...prev}
-                            current[props.strKey] = [parsedDate]
+                            current[props.strKey][0] = parsedDate
                             return current
                           })
                     }}
