@@ -170,31 +170,31 @@ export default function QueryBuilder(props) {
   }
 
   const onFilterRemove = (strKey) => {
-    deleteObjectKey(queries, strKey)
-    // setQueries((current) => {
-    //   let prev = { ...current }
-    //   deleteNestedKey(prev, strKey)
-    //   return prev
-    // });
+    // deleteObjectKey(queries, strKey)
+    setQueries((current) => {
+      let prev = { ...current }
+      deleteNestedKey(prev, strKey)
+      return prev
+    });
   }
 
-  function deleteObjectKey(obj, keyToDelete) {
-    const keys = keyToDelete.split('.');
-    let currentObj = obj;
+  // function deleteObjectKey(obj, keyToDelete) {
+  //   const keys = keyToDelete.split('.');
+  //   let currentObj = obj;
   
-    for (let i = 0; i < keys.length - 1; i++) {
-      if (currentObj[keys[i]] && typeof currentObj[keys[i]] === 'object') {
-        currentObj = currentObj[keys[i]];
-      } else {
-        // Key not found in the object, nothing to delete
-        return;
-      }
-    }
+  //   for (let i = 0; i < keys.length - 1; i++) {
+  //     if (currentObj[keys[i]] && typeof currentObj[keys[i]] === 'object') {
+  //       currentObj = currentObj[keys[i]];
+  //     } else {
+  //       // Key not found in the object, nothing to delete
+  //       return;
+  //     }
+  //   }
   
-    if (currentObj.hasOwnProperty(keys[keys.length - 1])) {
-      delete currentObj[keys[keys.length - 1]];
-    }
-  }
+  //   if (currentObj.hasOwnProperty(keys[keys.length - 1])) {
+  //     delete currentObj[keys[keys.length - 1]];
+  //   }
+  // }
 
   
   function deleteNestedKey(obj, path) {

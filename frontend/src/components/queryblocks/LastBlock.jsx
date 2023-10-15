@@ -33,9 +33,15 @@ export default function LastBlock(props) {
     const options = settings.dataTypesAndOptions[dType].options;
     const [currentOption, setCurrentOption] = React.useState(options[0]);
 
+    console.log("values", props.queryValues)
+
     React.useEffect(() => {
         // Update current values for queryline
-        props.setQueryValues(values)
+        props.setQueryValues((current) => {
+                    const prev = {...current};
+                    prev[strKey] = values;
+                    return prev;
+                })
     },[values])
 
     React.useEffect(() => {
@@ -83,6 +89,7 @@ export default function LastBlock(props) {
                 dType={dType}
                 strKey={strKey}
                 currentOption={currentOption}
+                queryCurrentOption={props.queryCurrentOption}
                 optionsNoMultiSelect={optionsNoMultiSelect}
             />}
             <IconButton
@@ -91,6 +98,11 @@ export default function LastBlock(props) {
                 onClick={(event) => {
                     props.onFilterRemove(strKey)
                     setValues(prev => {
+                        let current = {...prev}
+                        delete current[strKey]
+                        return current
+                    })
+                    props.setQueryValues(prev => {
                         let current = {...prev}
                         delete current[strKey]
                         return current
@@ -166,6 +178,7 @@ function DynamicValueBlock(props) {
             dType={props.dType}
             values={props.values}
             currentOption={props.currentOption}
+            queryCurrentOption={props.queryCurrentOption}
             queryValues={props.queryValues}
             optionsNoMultiSelect={props.optionsNoMultiSelect}
         />)
