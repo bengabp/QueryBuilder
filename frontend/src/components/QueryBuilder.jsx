@@ -31,8 +31,6 @@ export default function QueryBuilder(props) {
   const [queryCurrentOptions, setQueryCurrentOptions] = React.useState({})
   const [queries, setQueries] = React.useState({}) // Tree of queries
 
-  console.log("queries", queries)
-
   const settings = React.useContext(SettingsContext);
   const [searchResults, setSearchResults] = React.useState(settings.companies);
 
@@ -132,6 +130,8 @@ export default function QueryBuilder(props) {
 
 
   async function search(event) {
+    console.log("Values => ", queryValues, queryCurrentOptions)
+
     if (Object.keys(queryValues).length > 0) {
       // setIsSearching(true)
       let queries = [];
@@ -170,12 +170,33 @@ export default function QueryBuilder(props) {
   }
 
   const onFilterRemove = (strKey) => {
-    setQueries((current) => {
-      let prev = { ...current }
-      deleteNestedKey(prev, strKey)
-      return prev
-    });
+    deleteObjectKey(queries, strKey)
+    // setQueries((current) => {
+    //   let prev = { ...current }
+    //   deleteNestedKey(prev, strKey)
+    //   return prev
+    // });
   }
+
+  function deleteObjectKey(obj, keyToDelete) {
+    const keys = keyToDelete.split('.');
+    let currentObj = obj;
+  
+    for (let i = 0; i < keys.length - 1; i++) {
+      if (currentObj[keys[i]] && typeof currentObj[keys[i]] === 'object') {
+        currentObj = currentObj[keys[i]];
+      } else {
+        // Key not found in the object, nothing to delete
+        return;
+      }
+    }
+  
+    if (currentObj.hasOwnProperty(keys[keys.length - 1])) {
+      delete currentObj[keys[keys.length - 1]];
+    }
+  }
+
+  
   function deleteNestedKey(obj, path) {
     const keys = path.split('.');
     if (window.UndefinedVariable) {
