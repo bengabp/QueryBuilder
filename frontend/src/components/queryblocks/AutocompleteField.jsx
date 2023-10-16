@@ -9,7 +9,7 @@ export const api_uri = "http://127.0.0.1:8000";
 
 const styles = makeStyles({
   paper: {
-    maxWidth: "400px",
+    maxWidth: "400px"
   },
 });
 
@@ -45,6 +45,9 @@ export default function AutoCompleteSearchField(props) {
       id="valuesAutoCompleteContainer"
       direction="row"
       className={"elevatedValueBlock"}
+      sx={{
+        position: "relative"
+      }}
     >
       <Autocomplete
         key={props.strKey}
@@ -55,6 +58,21 @@ export default function AutoCompleteSearchField(props) {
         freeSolo
         classes={{ paper: classes.paper }}
         // defaultValue={[]}
+        disablePortal={true}
+        componentsProps={{
+          popper: {
+            modifiers: [
+              {
+                name: 'flip',
+                enabled: false
+              },
+              {
+                 name: 'preventOverflow',
+                 enabled: false
+               }
+            ]
+          }
+        }}
         value={
           (
           props.values !== undefined &&
@@ -122,6 +140,12 @@ export default function AutoCompleteSearchField(props) {
                   key={index}
                   label={option}
                   {...getTagProps(index)}
+                  sx={{
+                    padding: '0 8px',
+                    '& .MuiChip-label': {
+                      overflow: 'visible',
+                    },
+                  }}
                 />
               ))
             }
