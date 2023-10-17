@@ -190,8 +190,8 @@
 }
 
 #valuesAutoCompleteContainer  .MuiInput-underline{
-  display:flex;
-  flex-direction:row-reverse;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .MuiChip-deleteIcon{

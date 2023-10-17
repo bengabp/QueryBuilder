@@ -9,35 +9,44 @@ export const api_uri = "http://127.0.0.1:8000";
 
 const styles = makeStyles({
   paper: {
-    maxWidth: "400px"
+    maxWidth: "400px",
   },
 });
 
 export default function AutoCompleteSearchField(props) {
   const [suggestions, setSuggestions] = React.useState([]);
-  const isMulti = !(
-    props.optionsNoMultiSelect.includes(props.currentOption) ||
-    props.dType === "boolean"
-  );
+
+  const isSolo =
+    props.optionsNoMultiSelect.includes(props.currentOption[props.strKey]) ||
+    props.dType === "boolean";
+
   const getSuggestions = async (inputValue) => {
-    if (props.optionsNoMultiSelect.includes(props.currentOption)) {
+    if (props.optionsNoMultiSelect.includes(props.currentOption[props.strKey])) {
       setSuggestions(["true", "false"]);
-      return;
-    }
-    try {
-      // Replace 'your-api-endpoint' with the actual API endpoint
-      const response = await fetch(
-        `${api_uri}/completions?q=${inputValue}&field_path=${props.strKey}`
-      );
-      const data = await response.json();
-      const suggestionsSet = new Set(data.completions);
-      setSuggestions([...suggestionsSet]);
-    } catch (error) {
-      console.error("Error fetching options:", error);
+    } else {
+      try {
+        // Replace 'your-api-endpoint' with the actual API endpoint
+        const response = await fetch(
+          `${api_uri}/completions?q=${inputValue}&field_path=${props.strKey}`
+        );
+        const data = await response.json();
+        const suggestionsSet = new Set(data.completions);
+        setSuggestions([...suggestionsSet]);
+      } catch (error) {
+        console.error("Error fetching options:", error);
+      }
     }
   };
 
   const classes = styles();
+
+  React.useEffect(() => {
+    if(!isSolo){props.setValues((prev) => {
+      const current = { ...prev };
+      current[props.strKey] = [];
+      return current;
+    });}
+  }, [props.currentOption[props.strKey]]);
 
   return (
     <Stack
@@ -46,12 +55,12 @@ export default function AutoCompleteSearchField(props) {
       direction="row"
       className={"elevatedValueBlock"}
       sx={{
-        position: "relative"
+        position: "relative",
       }}
     >
       <Autocomplete
         key={props.strKey}
-        multiple={isMulti}
+        multiple={!isSolo}
         id="values-autocomplete"
         options={suggestions}
         autoComplete={true}
@@ -63,20 +72,21 @@ export default function AutoCompleteSearchField(props) {
           popper: {
             modifiers: [
               {
-                name: 'flip',
-                enabled: false
+                name: "flip",
+                enabled: false,
               },
               {
-                 name: 'preventOverflow',
-                 enabled: false
-               }
-            ]
-          }
+                name: "preventOverflow",
+                enabled: false,
+              },
+            ],
+          },
         }}
         value={
-          (
-          props.values !== undefined &&
-          props.values[props.strKey]) || []
+          (!isSolo
+            ? props.values !== undefined && props.values[props.strKey]
+            : props.values !== undefined && props.values[props.strKey]?.[0]) ||
+          []
         }
         getOptionDisabled={(option) =>
           props.values !== undefined &&
@@ -94,10 +104,6 @@ export default function AutoCompleteSearchField(props) {
           getSuggestions("");
         }}
         fullWidth={false}
-        // onInputChange={(event, newInputValue) => {
-        //   getSuggestions(newInputValue);
-        // }}
-        // value={suggestions}
         onChange={(event, selectedSugs, reason) => {
           // Update values and queryPropsString
           if (selectedSugs == null) {
@@ -116,39 +122,25 @@ export default function AutoCompleteSearchField(props) {
         }}
         renderInput={(params) => (
           <Box id="autoCompleteTextFieldContainer">
-            <TextField
-              {...params}
-              variant="standard"
-              placeholder="Type.."
-              // inputProps={{
-              //   sx: {
-              //     textAlign: "right"
-              //   }
-              // }}
-              sx={{
-                direction: 'ltr'
-              }}
-            />
+            <TextField {...params} variant="standard" placeholder="Type.." />
           </Box>
         )}
         renderTags={(value, getTagProps) => (
           <Box id="autoCompleteChipsContainer">
-            {
-              value.map((option, index) => (
-                <Chip
-                  variant='filled'
-                  key={index}
-                  label={option}
-                  {...getTagProps(index)}
-                  sx={{
-                    padding: '0 8px',
-                    '& .MuiChip-label': {
-                      overflow: 'visible',
-                    },
-                  }}
-                />
-              ))
-            }
+            {value.map((option, index) => (
+              <Chip
+                variant="filled"
+                key={index}
+                label={option}
+                {...getTagProps(index)}
+                sx={{
+                  padding: "0 8px",
+                  "& .MuiChip-label": {
+                    overflow: "visible",
+                  },
+                }}
+              />
+            ))}
           </Box>
         )}
         sx={{
@@ -156,7 +148,7 @@ export default function AutoCompleteSearchField(props) {
           width: "max-content",
           minWidth: "300px",
           borderBottomColor: "#808080a1",
-          paddingLeft: "10px"
+          paddingLeft: "10px",
         }}
       />
     </Stack>

@@ -10,7 +10,11 @@ export default function OptionBlock (props) {
 
     const onOptionSelect = (option) => {
         closeMenu()
-        props.setCurrentOption(option)
+        props.setCurrentOptions(prev => {
+            const current = {...prev}
+            current[props.strKey] = option
+            return current
+        })
     }
     
     const closeMenu = () => {
@@ -18,8 +22,16 @@ export default function OptionBlock (props) {
     }
 
     const refineOptionText = (textWithUnderscores) =>{
-        return textWithUnderscores.replaceAll("_", " ")
+        return textWithUnderscores?.replaceAll("_", " ")
     }
+
+    React.useEffect(() => {
+        props.setCurrentOptions(prev => {
+            const current = {...prev}
+            current[props.strKey] = props.options[0]
+            return current
+        })
+    }, [])
 
     return (
         <div>
@@ -27,7 +39,7 @@ export default function OptionBlock (props) {
                 id="open-menu-btn"
                 onClick={toggleMenuState}
             >
-                {refineOptionText(props.currentOption)}
+                {refineOptionText(props.currentOptions[props.strKey])}
             </Button>
             <Menu
                 open = {Boolean(menuState)}
