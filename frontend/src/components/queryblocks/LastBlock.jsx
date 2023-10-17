@@ -28,18 +28,19 @@ export default function LastBlock(props) {
     const parentsList = properties.parents
     const dType = properties.dType
     const strKey = [...parentsList, dataKey].join(".")
-    const {values, setValues} = React.useContext(ValueContext)
+    const {values, setValues, currentOptions, setCurrentOptions} = React.useContext(ValueContext)
     
     const options = settings.dataTypesAndOptions[dType].options;
-    const [currentOption, setCurrentOption] = React.useState(options[0]);
+    // const [currentOption, setCurrentOption] = React.useState(options[0]);
 
     console.log("values", props.queryValues)
+    console.log("options", props.queryCurrentOptions)
 
     React.useEffect(() => {
         // Update current values for queryline
         props.setQueryValues((current) => {
                     const prev = {...current};
-                    prev[strKey] = values;
+                    prev[strKey] = values[strKey];
                     return prev;
                 })
     },[values])
@@ -47,10 +48,10 @@ export default function LastBlock(props) {
     React.useEffect(() => {
         props.setQueryCurrentOptions(prev => {
             let current = {...prev}
-            current[strKey] = currentOption
+            current[strKey] = currentOptions[strKey]
             return current
         })
-    }, [currentOption])
+    }, [currentOptions])
 
     return (
         <Stack 
@@ -76,9 +77,10 @@ export default function LastBlock(props) {
                 </Button>
             </Box>
             <OptionBlock
-                currentOption={currentOption}
-                setCurrentOption={setCurrentOption}
+                currentOptions={currentOptions}
+                setCurrentOptions={setCurrentOptions}
                 options={options}
+                strKey={strKey}
             ></OptionBlock>
             {<DynamicValueBlock
                 properties={properties}
@@ -88,7 +90,7 @@ export default function LastBlock(props) {
                 settings={settings}
                 dType={dType}
                 strKey={strKey}
-                currentOption={currentOption}
+                currentOption={currentOptions}
                 queryCurrentOption={props.queryCurrentOption}
                 optionsNoMultiSelect={optionsNoMultiSelect}
             />}
