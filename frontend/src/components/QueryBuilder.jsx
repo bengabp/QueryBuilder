@@ -38,6 +38,7 @@ export default function QueryBuilder(props) {
   const exportBtnMenuOpen = Boolean(exportBtnMenuAnchorEl);
 
   const [paginationFilters, setPaginationFilters] = React.useState([])
+  const [selectedRows, setSelectedRows] = React.useState([])
 
   const handleExportBtnMenuItemClick = (event) => setExportBtnMenuAnchorEl(event.currentTarget)
   const handleExportBtnMenuClose = (event) => {
@@ -54,6 +55,20 @@ export default function QueryBuilder(props) {
     props.setIsLoading(false);
   }, [])
 
+  const getSelectedRowResults = (all_results) => {
+    // Iterate through the selectedRows array and get them in the searchResults.results array
+    
+    if (selectedRows.length > 0){
+      let selectedResults = all_results.filter(
+        result => selectedRows.includes(result.id)
+      );
+      return selectedResults
+
+    } else {
+      return all_results
+    }
+  }
+
   const sendExportRequest = (fileType) => {
     setIsExporting(true);
 
@@ -62,7 +77,7 @@ export default function QueryBuilder(props) {
 
     fetch(`${api_uri}/export`, {
       body: JSON.stringify({
-        targetResults: searchResults.results,
+        targetResults:getSelectedRowResults(searchResults.results),
         fileType: fileType
       }),
       redirect: "follow",
@@ -130,11 +145,8 @@ export default function QueryBuilder(props) {
 
 
   async function search(event) {
-    console.log("Values => ", queryValues, queryCurrentOptions)
-
-    if (Object.keys(queryValues).length > 0) {
-      // setIsSearching(true)
-      let queries = [];
+    let queries = [];
+    if (Object.keys(queryValues).length > 0){
       Object.keys(queryValues).forEach((key) => {
         const values = queryValues[key]
         const currentOption = queryCurrentOptions[key]
@@ -144,59 +156,37 @@ export default function QueryBuilder(props) {
           currentOption: currentOption
         })
       })
-      console.log(queries)
-      // if (queries.length > 0) {
-      //   setIsSearching(true);
-      //   try {
-      //     let headers = new Headers();
-      //     headers.append("Content-Type", "application/json");
-      //     const filters = JSON.stringify({ filters: queries })
-      //     await fetch(`${api_uri}/search`, {
-      //       method: 'POST',
-      //       headers: headers,
-      //       body: filters,
-      //       redirect: 'follow'
-      //     }).then(response => response.json())
-      //       .then(result => {
-      //         setSearchResults(result)
-      //         setPaginationFilters(queries)
-      //       })
-      //   } catch (err) {
-      //     console.error(err)
-      //   } finally {
-      //     setIsSearching(false);
-      //   }
-      // }
+    } 
+
+    setIsSearching(true);
+    try {
+      let headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      const filters = JSON.stringify({ filters: queries })
+      await fetch(`${api_uri}/search`, {
+        method: 'POST',
+        headers: headers,
+        body: filters,
+        redirect: 'follow'
+      }).then(response => response.json())
+        .then(result => {
+          setSearchResults(result)
+          setPaginationFilters(queries)
+        })
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSearching(false);
     }
   }
 
-  const onFilterRemove = (strKey) => {
-    // deleteObjectKey(queries, strKey)
+  const onFilterRemove = (strKey) => { 
     setQueries((current) => {
       let prev = { ...current }
       deleteNestedKey(prev, strKey)
       return prev
     });
   }
-
-  // function deleteObjectKey(obj, keyToDelete) {
-  //   const keys = keyToDelete.split('.');
-  //   let currentObj = obj;
-  
-  //   for (let i = 0; i < keys.length - 1; i++) {
-  //     if (currentObj[keys[i]] && typeof currentObj[keys[i]] === 'object') {
-  //       currentObj = currentObj[keys[i]];
-  //     } else {
-  //       // Key not found in the object, nothing to delete
-  //       return;
-  //     }
-  //   }
-  
-  //   if (currentObj.hasOwnProperty(keys[keys.length - 1])) {
-  //     delete currentObj[keys[keys.length - 1]];
-  //   }
-  // }
-
   
   function deleteNestedKey(obj, path) {
     const keys = path.split('.');
@@ -296,6 +286,7 @@ export default function QueryBuilder(props) {
               onClick={search}
               disabled={isSearching}
             >SEARCH</Button>
+            <Typography>{`${selectedRows.length} rows selected`}</Typography>
           </Box>
           <Box sx={{
             display: 'flex',
@@ -345,7 +336,7 @@ export default function QueryBuilder(props) {
               }}
             >
               <Button
-                disabled={true ? isExporting : false}
+                disabled={true ? isExporting || searchResults.results.length === 0 : false}
                 id={"export-btn"}
                 aria-controls={exportBtnMenuOpen ? 'export-btn-menu' : undefined}
                 aria-haspopup={"true"}
@@ -369,7 +360,11 @@ export default function QueryBuilder(props) {
             <MenuItem onClick={handleExportBtnMenuClose} id="csv">Export to csv</MenuItem>
           </Menu>
         </Box>
-        <SearchResultsTable companies={searchResults.results} />
+        <SearchResultsTable 
+          companies={searchResults.results} 
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+        />
       </Stack>
       <FiltersDialog
         toggleFiltersDialog={toggleFiltersDialog}

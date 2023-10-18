@@ -33,9 +33,6 @@ export default function LastBlock(props) {
     const options = settings.dataTypesAndOptions[dType].options;
     // const [currentOption, setCurrentOption] = React.useState(options[0]);
 
-    console.log("values", props.queryValues)
-    console.log("options", props.queryCurrentOptions)
-
     React.useEffect(() => {
         // Update current values for queryline
         props.setQueryValues((current) => {

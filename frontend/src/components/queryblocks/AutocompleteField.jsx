@@ -132,8 +132,8 @@ export default function AutoCompleteSearchField(props) {
             {value.map((option, index) => (
               <Chip
                 variant="filled"
-                key={option}
-                label={`${index}-${option}`}
+                key={`${index}-${option}`}
+                label={option}
                 {...getTagProps(index)}
                 sx={{
                   padding: "0 8px",

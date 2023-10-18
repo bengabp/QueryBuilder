@@ -89,6 +89,10 @@ export default function SearchResultsTable(props) {
         checkboxSelection
         disableRowSelectionOnClick
         scrollbarSize={3}
+        onRowSelectionModelChange={(ids) => {
+          const selectedIDs = new Set(ids);
+          props.setSelectedRows([...selectedIDs]);
+        }}
       />
   );
 }
