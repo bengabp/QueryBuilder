@@ -55,7 +55,7 @@ export default function SearchResultsTable(props) {
     },
     {
       field: "type",
-      headerName: "type",
+      headerName: "Type",
       width: 80,
       editable: false
     },
