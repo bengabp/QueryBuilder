@@ -190,8 +190,8 @@
 }
 
 #valuesAutoCompleteContainer  .MuiInput-underline{
-  display:flex;
-  flex-direction:row-reverse;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .MuiChip-deleteIcon{
@@ -242,4 +242,8 @@
 
 .MuiChip-deleteIcon{
   margin: 0px -8px 0px 2px !important;
+}
+
+#values-autocomplete-listbox{
+  max-height:28vh;
 }

@@ -28,23 +28,27 @@ export default function LastBlock(props) {
     const parentsList = properties.parents
     const dType = properties.dType
     const strKey = [...parentsList, dataKey].join(".")
-    const {values, setValues} = React.useContext(ValueContext)
+    const {values, setValues, currentOptions, setCurrentOptions} = React.useContext(ValueContext)
     
     const options = settings.dataTypesAndOptions[dType].options;
-    const [currentOption, setCurrentOption] = React.useState(options[0]);
+    // const [currentOption, setCurrentOption] = React.useState(options[0]);
 
     React.useEffect(() => {
         // Update current values for queryline
-        props.setQueryValues(values)
+        props.setQueryValues((current) => {
+                    const prev = {...current};
+                    prev[strKey] = values[strKey];
+                    return prev;
+                })
     },[values])
 
     React.useEffect(() => {
         props.setQueryCurrentOptions(prev => {
             let current = {...prev}
-            current[strKey] = currentOption
+            current[strKey] = currentOptions[strKey]
             return current
         })
-    }, [currentOption])
+    }, [currentOptions])
 
     return (
         <Stack 
@@ -70,9 +74,10 @@ export default function LastBlock(props) {
                 </Button>
             </Box>
             <OptionBlock
-                currentOption={currentOption}
-                setCurrentOption={setCurrentOption}
+                currentOptions={currentOptions}
+                setCurrentOptions={setCurrentOptions}
                 options={options}
+                strKey={strKey}
             ></OptionBlock>
             {<DynamicValueBlock
                 properties={properties}
@@ -82,7 +87,8 @@ export default function LastBlock(props) {
                 settings={settings}
                 dType={dType}
                 strKey={strKey}
-                currentOption={currentOption}
+                currentOption={currentOptions}
+                queryCurrentOption={props.queryCurrentOption}
                 optionsNoMultiSelect={optionsNoMultiSelect}
             />}
             <IconButton
@@ -91,6 +97,11 @@ export default function LastBlock(props) {
                 onClick={(event) => {
                     props.onFilterRemove(strKey)
                     setValues(prev => {
+                        let current = {...prev}
+                        delete current[strKey]
+                        return current
+                    })
+                    props.setQueryValues(prev => {
                         let current = {...prev}
                         delete current[strKey]
                         return current
@@ -113,14 +124,15 @@ export default function LastBlock(props) {
 
 
 function DynamicValueBlock(props) {
-    if (props.dType === "date" && props.currentOption !== "is_blank"){
-        if (props.currentOption === "between"){
+    if (props.dType === "date" && props.currentOption[props.strKey] !== "is_blank"){
+        if (props.currentOption[props.strKey] === "between"){
             // Return <TwoDateValues>
             return (
                 <TwoDateValues
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </TwoDateValues>
             );
@@ -131,18 +143,20 @@ function DynamicValueBlock(props) {
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </SingleDateValue>
             );
         }
-    } else if (props.dType === "number" && props.currentOption !== "is_blank"){
-        if (props.currentOption === "between"){
+    } else if (props.dType === "number" && props.currentOption[props.strKey] !== "is_blank"){
+        if (props.currentOption[props.strKey] === "between"){
             // Return <TwoNumberValues>
             return (
                 <TwoNumberValues
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </TwoNumberValues>
             );
@@ -152,6 +166,7 @@ function DynamicValueBlock(props) {
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </SingleNumberValue>
             );
@@ -166,6 +181,7 @@ function DynamicValueBlock(props) {
             dType={props.dType}
             values={props.values}
             currentOption={props.currentOption}
+            queryCurrentOption={props.queryCurrentOption}
             queryValues={props.queryValues}
             optionsNoMultiSelect={props.optionsNoMultiSelect}
         />)

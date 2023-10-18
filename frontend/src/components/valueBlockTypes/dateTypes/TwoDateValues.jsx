@@ -32,11 +32,11 @@ export default function TwoDateValues(props){
     }
 
     useEffect(() => {
-        props.setValues(prev => {
+        if(props.values[props.strKey] === undefined){props.setValues(prev => {
             const current = {...prev}
             current[props.strKey] = [null, null]
             return current
-        })
+        })}
     }, [])
 
     return (
@@ -56,6 +56,11 @@ export default function TwoDateValues(props){
                             return current
                           })
                     }}
+                    slotProps={{
+                        textField: {
+                            error: false
+                        }
+                    }}
                 />
             </LocalizationProvider>
             <Typography>and</Typography>
@@ -74,6 +79,11 @@ export default function TwoDateValues(props){
                             current[props.strKey][1] = parseDate(val)
                             return current
                           })
+                    }}
+                    slotProps={{
+                        textField: {
+                            error: false
+                        }
                     }}
                 />
             </LocalizationProvider>

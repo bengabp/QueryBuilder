@@ -11,7 +11,7 @@ table_headings = [
     "participated_events.total",
     "founders.name",
 ]
-PAGE_SIZE = 30
+PAGE_SIZE = 50
 
 
 class CompletionsResponse(BaseModel):

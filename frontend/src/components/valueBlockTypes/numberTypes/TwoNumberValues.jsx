@@ -32,9 +32,9 @@ export default function TwoNumberValues(props) {
         className="styledNumberField"
         size="small"
         value={
-          (props.value &&
-          props.value[props.strKey] &&
-          props.value[props.strKey][0])
+          (props.values &&
+          props.values[props.strKey] &&
+          props.values[props.strKey][0])
         }
         onChange={(e) => {
           let value;
@@ -58,9 +58,9 @@ export default function TwoNumberValues(props) {
         className="styledNumberField"
         size="small"
         value={
-          props.value &&
-          props.value[props.strKey] &&
-          props.value[props.strKey][1]
+          props.values &&
+          props.values[props.strKey] &&
+          props.values[props.strKey][1]
         }
         onChange={(e) => {
           let value;

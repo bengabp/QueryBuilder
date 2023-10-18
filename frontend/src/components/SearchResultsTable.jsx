@@ -55,7 +55,7 @@ export default function SearchResultsTable(props) {
     },
     {
       field: "type",
-      headerName: "type",
+      headerName: "Type",
       width: 80,
       editable: false
     },
@@ -89,6 +89,10 @@ export default function SearchResultsTable(props) {
         checkboxSelection
         disableRowSelectionOnClick
         scrollbarSize={3}
+        onRowSelectionModelChange={(ids) => {
+          const selectedIDs = new Set(ids);
+          props.setSelectedRows([...selectedIDs]);
+        }}
       />
   );
 }

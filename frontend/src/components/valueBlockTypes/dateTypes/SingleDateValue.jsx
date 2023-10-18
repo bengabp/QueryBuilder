@@ -28,12 +28,17 @@ export default function SingleDateValue(props){
     }
 
     useEffect(() => {
-        props.setValues(prev => {
+        if(props.values[props.strKey] === undefined){
+            props.setValues(prev => {
             let current = {...prev}
             current[props.strKey] = []
             return current
-        })
-    }, [])
+        })} else {
+            props.setValues(prev => {
+                let current = {...prev}
+                current[props.strKey] = [props.values[props.strKey]?.[0]]
+                return current
+        })}}, [])
 
     return (
         <Stack
@@ -51,6 +56,11 @@ export default function SingleDateValue(props){
                             current[props.strKey][0] = parsedDate
                             return current
                           })
+                    }}
+                    slotProps={{
+                        textField: {
+                            error: false
+                        }
                     }}
                 />
             </LocalizationProvider>
