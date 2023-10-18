@@ -10,6 +10,8 @@ export const api_uri = "http://127.0.0.1:8000";
 const styles = makeStyles({
   paper: {
     maxWidth: "400px",
+    maxHeight: "300px",
+    overflow: "clip"
   },
 });
 
@@ -41,7 +43,7 @@ export default function AutoCompleteSearchField(props) {
   const classes = styles();
 
   React.useEffect(() => {
-    if(!isSolo){props.setValues((prev) => {
+    if(!isSolo && props.currentOption[props.strKey] === "is_blank"){props.setValues((prev) => {
       const current = { ...prev };
       current[props.strKey] = [];
       return current;

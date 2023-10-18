@@ -29,7 +29,7 @@ export default function SingleNumberValue(props){
                 placeholder="Number (eg. 8)"
                 className="styledNumberField"
                 size="small"
-                value={(props.value && props.value[props.strKey] && props.value[props.strKey][0])}
+                value={(props.values && props.values[props.strKey] && props.values[props.strKey][0])}
                 onChange={e => {
                     const value = parseInt(e.target.value)
                     props.setValues(prev => {

@@ -127,14 +127,15 @@ export default function LastBlock(props) {
 
 
 function DynamicValueBlock(props) {
-    if (props.dType === "date" && props.currentOption !== "is_blank"){
-        if (props.currentOption === "between"){
+    if (props.dType === "date" && props.currentOption[props.strKey] !== "is_blank"){
+        if (props.currentOption[props.strKey] === "between"){
             // Return <TwoDateValues>
             return (
                 <TwoDateValues
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </TwoDateValues>
             );
@@ -145,18 +146,20 @@ function DynamicValueBlock(props) {
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </SingleDateValue>
             );
         }
-    } else if (props.dType === "number" && props.currentOption !== "is_blank"){
-        if (props.currentOption === "between"){
+    } else if (props.dType === "number" && props.currentOption[props.strKey] !== "is_blank"){
+        if (props.currentOption[props.strKey] === "between"){
             // Return <TwoNumberValues>
             return (
                 <TwoNumberValues
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </TwoNumberValues>
             );
@@ -166,6 +169,7 @@ function DynamicValueBlock(props) {
                     setValues={props.setValues}
                     values={props.values}
                     strKey={props.strKey}
+                    currentOption={props.currentOption}
                 >
                 </SingleNumberValue>
             );
