@@ -1,5 +1,4 @@
 import React, { createContext, useState } from 'react';
-import { SettingsContext } from './SettingsContext';
 
 const ValueContext = createContext();
 

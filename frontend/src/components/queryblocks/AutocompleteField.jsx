@@ -124,16 +124,16 @@ export default function AutoCompleteSearchField(props) {
         }}
         renderInput={(params) => (
           <Box id="autoCompleteTextFieldContainer">
-            <TextField {...params} variant="standard" placeholder="Type.." />
+            <TextField key={params.toString()} {...params} variant="standard" placeholder="Type.." />
           </Box>
         )}
         renderTags={(value, getTagProps) => (
-          <Box id="autoCompleteChipsContainer">
+          <Box id="autoCompleteChipsContainer" key={value.toString()}>
             {value.map((option, index) => (
               <Chip
                 variant="filled"
-                key={index}
-                label={option}
+                key={option}
+                label={`${index}-${option}`}
                 {...getTagProps(index)}
                 sx={{
                   padding: "0 8px",

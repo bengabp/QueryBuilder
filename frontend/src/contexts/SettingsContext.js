@@ -1,4 +1,5 @@
 // SettingsContext.js
+import React from "react";
 import { createContext, useState, useEffect } from 'react';
 import { api_uri } from '../components/queryblocks/AutocompleteField';
 

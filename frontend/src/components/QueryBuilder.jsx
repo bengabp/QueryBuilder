@@ -15,7 +15,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { SettingsContext } from '../contexts/SettingsContext';
 import { api_uri } from './queryblocks/AutocompleteField';
 import mergeObjectWithNestedArray from "./utils";
-import { ValueContext } from "../contexts/ValueContext";
+// import { ValueContext } from "../contexts/ValueContext";
 import NavigateNext from '@mui/icons-material/NavigateNext';
 import NavigateBefore from "@mui/icons-material/NavigateBefore";
 
@@ -144,28 +144,29 @@ export default function QueryBuilder(props) {
           currentOption: currentOption
         })
       })
-      if (queries.length > 0) {
-        setIsSearching(true);
-        try {
-          let headers = new Headers();
-          headers.append("Content-Type", "application/json");
-          const filters = JSON.stringify({ filters: queries })
-          await fetch(`${api_uri}/search`, {
-            method: 'POST',
-            headers: headers,
-            body: filters,
-            redirect: 'follow'
-          }).then(response => response.json())
-            .then(result => {
-              setSearchResults(result)
-              setPaginationFilters(queries)
-            })
-        } catch (err) {
-          console.error(err)
-        } finally {
-          setIsSearching(false);
-        }
-      }
+      console.log(queries)
+      // if (queries.length > 0) {
+      //   setIsSearching(true);
+      //   try {
+      //     let headers = new Headers();
+      //     headers.append("Content-Type", "application/json");
+      //     const filters = JSON.stringify({ filters: queries })
+      //     await fetch(`${api_uri}/search`, {
+      //       method: 'POST',
+      //       headers: headers,
+      //       body: filters,
+      //       redirect: 'follow'
+      //     }).then(response => response.json())
+      //       .then(result => {
+      //         setSearchResults(result)
+      //         setPaginationFilters(queries)
+      //       })
+      //   } catch (err) {
+      //     console.error(err)
+      //   } finally {
+      //     setIsSearching(false);
+      //   }
+      // }
     }
   }
 
