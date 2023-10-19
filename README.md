@@ -8,15 +8,20 @@ Before running the frontend make sure you have Node.js and npm installed on your
 Make sure to change the api_uri in `/frontend/src/components/queryblocks/AutocompleteField.jsx`
 You can start the React frontend by running this command inside the `frontend/` directory
 
-```commandline
-npm install
-npm start
-```
-
-Additionally, you could build the project
-```commandline
-npm build
-```
+### Running the frontend
+- Linux
+    if you already run linux, then you could use the bash script `start_frontend.sh`
+- Windows
+    ```bash
+    # Install packages
+    cd frontend/
+    npm install --legacy-peer-deps
+    # Build project
+    npm run build
+    # Serve project
+    npm install --legacy-peer-deps serve
+    npm run serve
+    ```
 
 ## Backend
 The backend has been written in fastapi
@@ -29,6 +34,11 @@ pip install -r requirements.txt
 Start the api server. This command must be run inside the `backend/` directory
 ```commandline
 uvicorn --host 0.0.0.0 --port 8080
+```
+
+Alternatively you could run the backend using docker
+```commandline
+docker-compose up --build
 ```
 
 ## Database
