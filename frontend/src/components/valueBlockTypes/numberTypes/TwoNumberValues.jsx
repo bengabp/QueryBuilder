@@ -28,7 +28,7 @@ export default function TwoNumberValues(props) {
       <TextField
         required
         type="number"
-        placeholder="Number (eg. 8)"
+        placeholder={props.placeholder ?? props.defaultPlaceholder}
         className="styledNumberField"
         size="small"
         value={
@@ -54,7 +54,7 @@ export default function TwoNumberValues(props) {
       <TextField
         required
         type="number"
-        placeholder="Number (eg. 8)"
+        placeholder={props.placeholder ?? props.defaultPlaceholder}
         className="styledNumberField"
         size="small"
         value={

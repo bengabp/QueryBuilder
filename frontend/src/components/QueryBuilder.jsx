@@ -148,38 +148,44 @@ export default function QueryBuilder(props) {
     let queries = [];
     if (Object.keys(queryValues).length > 0){
       Object.keys(queryValues).forEach((key) => {
-        const values = queryValues[key]
+        const values = queryValues[key] ?? [];
         const currentOption = queryCurrentOptions[key]
-        queries.push({
-          query: key,
-          values: values,
-          currentOption: currentOption
-        })
+        if (values.length){
+          queries.push({
+            query: key,
+            values: values,
+            currentOption: currentOption
+          })
+        }
       })
     } 
-
     setIsSearching(true);
     try {
       let headers = new Headers();
       headers.append("Content-Type", "application/json");
-      const filters = JSON.stringify({ filters: queries })
-      await fetch(`${api_uri}/search`, {
+      const filters = JSON.stringify({ filters: queries });
+      const response = await fetch(`${api_uri}/search`, {
         method: 'POST',
         headers: headers,
         body: filters,
         redirect: 'follow'
-      }).then(response => response.json())
-        .then(result => {
-          setSearchResults(result)
-          setPaginationFilters(queries)
-        })
+      });
+    
+      if (response.status === 200) {
+        const result = await response.json();
+        setSearchResults(result);
+        setPaginationFilters(queries);
+      } else {
+        // Handle non-200 status code here, for example:
+        console.error(`Request failed with status: ${response.status}`);
+      }
     } catch (err) {
-      console.error(err)
+      console.error(err);
     } finally {
       setIsSearching(false);
     }
   }
-
+    
   const onFilterRemove = (strKey) => { 
     setQueries((current) => {
       let prev = { ...current }
@@ -300,7 +306,7 @@ export default function QueryBuilder(props) {
                 gap: "10px"
               }}
             >
-              <Typography variant="span">{`${searchResults.index+1} - ${searchResults.index + searchResults.resultsPerPage >= searchResults.totalResults? searchResults.totalResults : searchResults.index+searchResults.resultsPerPage} of ${searchResults.totalResults}`}</Typography>
+              <Typography variant="span">{`${searchResults.totalResults > 0 ? searchResults.index+1 : 0} - ${searchResults.index + searchResults.resultsPerPage >= searchResults.totalResults? searchResults.totalResults : searchResults.index+searchResults.resultsPerPage} of ${searchResults.totalResults}`}</Typography>
               <Box sx={{
                 display:"flex",
                 flexDirection:"row",
@@ -380,11 +386,11 @@ export default function QueryBuilder(props) {
 
 
 const PaginationButton = (props) => {
+
+  let requestIndex = 0;
   const doPagination = async () => {
     // Calculate index
-    // if direction is prev and index > 0. index = currentIndex - pagesize
-    
-    let requestIndex = 0;
+    // if direction is prev and index > 0. index = currentIndex - pagesize  
   
     if (props.direction === "prev"){
       if (props.currentIndex > 0){
@@ -420,6 +426,10 @@ const PaginationButton = (props) => {
   let isDisabled = false;
   if (props.direction==="next"){
     if (props.currentIndex + props.pageSize >= props.totalSearchResults){
+      isDisabled = true;
+    }
+  } else if (props.direction === "prev") {
+    if ((props.currentIndex - props.pageSize) <= 0){
       isDisabled = true;
     }
   }

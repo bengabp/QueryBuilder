@@ -31,7 +31,7 @@ export default function LastBlock(props) {
     const {values, setValues, currentOptions, setCurrentOptions} = React.useContext(ValueContext)
     
     const options = settings.dataTypesAndOptions[dType].options;
-    // const [currentOption, setCurrentOption] = React.useState(options[0]);
+    const placeholder = settings.fieldMappings[strKey].placeholder;
 
     React.useEffect(() => {
         // Update current values for queryline
@@ -90,6 +90,7 @@ export default function LastBlock(props) {
                 currentOption={currentOptions}
                 queryCurrentOption={props.queryCurrentOption}
                 optionsNoMultiSelect={optionsNoMultiSelect}
+                placeholder={placeholder}
             />}
             <IconButton
                 className="removeFilterButton"
@@ -157,6 +158,8 @@ function DynamicValueBlock(props) {
                     values={props.values}
                     strKey={props.strKey}
                     currentOption={props.currentOption}
+                    placeholder={props.placeholder}
+                    defaultPlaceholder={"Number (eg. 8)"}
                 >
                 </TwoNumberValues>
             );
@@ -167,6 +170,8 @@ function DynamicValueBlock(props) {
                     values={props.values}
                     strKey={props.strKey}
                     currentOption={props.currentOption}
+                    placeholder={props.placeholder}
+                    defaultPlaceholder={"Number (eg. 8)"}
                 >
                 </SingleNumberValue>
             );
@@ -184,6 +189,8 @@ function DynamicValueBlock(props) {
             queryCurrentOption={props.queryCurrentOption}
             queryValues={props.queryValues}
             optionsNoMultiSelect={props.optionsNoMultiSelect}
+            placeholder={props.placeholder}
+            defaultPlaceholder={"Text"}
         />)
     }
 }

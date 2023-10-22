@@ -2,13 +2,14 @@ field_mappings = {
     "basic_info.name": {
         "dType": "string_among",
         "dKey": "name",
+        "placeholder":"Name"
     },
     # "basic_info.crunchbase_url": {"dType": "string", "dKey": "crunchbase_url"},
     "basic_info.create_date": {"dType": "date", "dKey": "create_date"},
     "basic_info.company_status": {"dType": "string_among", "dKey": "company_status"},
     # "basic_info.facebook_url": {"dType": "string", "dKey": "facebook_url"},
     "basic_info.launch_month": {"dType": "number", "dKey": "launch_month"},
-    "basic_info.launch_year": {"dType": "number", "dKey": "launch_year"},
+    "basic_info.launch_year": {"dType": "number", "dKey": "launch_year", "placeholder":"Year (1992)"},
     "basic_info.linkedin_url": {"dType": "string_among", "dKey": "linkedin_url"},
     "basic_info.tags": {"dType": "string_among", "dKey": "tags.name"},
     "basic_info.tagline": {"dType": "string_among", "dKey": "tagline"},
@@ -145,7 +146,7 @@ field_mappings = {
         "dType": "string_among",
         "dKey": "participated_events.items.type",
     },
-    "events.events.participated_events.path": {
+    "events.participated_events.path": {
         "dType": "string_among",
         "dKey": "participated_events.items.path",
     },
@@ -153,11 +154,11 @@ field_mappings = {
     #     "dType": "string",
     #     "dKey": "participated_events.items.twitter_url",
     # },
-    "events.events.participated_events.event_date_start": {
+    "events.participated_events.event_date_start": {
         "dType": "date",
         "dKey": "participated_events.items.event_date_start",
     },
-    "events.events.participated_events.event_date_end": {
+    "events.participated_events.event_date_end": {
         "dType": "date",
         "dKey": "participated_events.items.event_date_end",
     },
@@ -310,6 +311,9 @@ field_mappings = {
     "ipo_round.date": {"dType": "date", "dKey": ""},
     "ipo_round.amount": {"dType": "number", "dKey": "ipo_round.amount"},
     "ipo_round.round": {"dType": "string_among", "dKey": "ipo_round.round"},
+    "ipo_round.valuation": {"dType":"number", "dKey":"ipo_round.valuation"},
+    "ipo_round.valuation_min":{"dType":"number", "dKey":"ipo_round.valuation_generated_min"},
+    "ipo_round.valuation_max":{"dType":"number", "dKey":"ipo_round.valuation_generated_max"},
     "ipo_round.is_undisclosed": {
         "dType": "boolean",
         "dKey": "ipo_round.is_undisclosed",
@@ -511,12 +515,12 @@ field_mappings = {
     "revenues.revenues": {"dType": "string_among", "dKey": "revenues.name"},
     "revenues.latest_revenue_enhanced": {
         "dType": "number",
-        "dKey": "latest_revenue_enhanced",
+        "dKey": "latest_revenue_enhanced.amount",
     },
     "innovations.innovations": {"dType": "string_among", "dKey": "innovations"},
     "innovations.innovations_count": {"dType": "number", "dKey": "innovations_count"},
     "innovations.innovations_corporate_rank": {
         "dType": "number",
-        "dKey": "innovation_corporate_rank",
+        "dKey": "innovation_corporate_rank"
     },
 }

@@ -26,7 +26,7 @@ export default function SingleNumberValue(props){
             <TextField 
                 required
                 type="number"
-                placeholder="Number (eg. 8)"
+                placeholder={props.placeholder ?? props.defaultPlaceholder}
                 className="styledNumberField"
                 size="small"
                 value={(props.values && props.values[props.strKey] && props.values[props.strKey][0])}

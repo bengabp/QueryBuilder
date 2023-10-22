@@ -6,9 +6,12 @@ const HomeAppBar  = (props) => {
     return (
         <Box>
             <AppBar position='static'
-                sx={{}}
+                sx={{
+                    minHeight:"50px"
+                }}
+                
             >
-                <Toolbar>
+                <Toolbar style={{minHeight:'50px'}}>
                     <Typography variant='h5' fontWeight="bold">Companies Query Builder</Typography>
                 </Toolbar>
             </AppBar>

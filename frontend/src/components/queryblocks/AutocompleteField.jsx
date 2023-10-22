@@ -125,7 +125,7 @@ export default function AutoCompleteSearchField(props) {
         }}
         renderInput={(params) => (
           <Box id="autoCompleteTextFieldContainer">
-            <TextField key={params.toString()} {...params} variant="standard" placeholder="Type.." />
+            <TextField key={params.toString()} {...params} variant="standard" placeholder={props.placeholder ?? props.defaultPlaceholder} />
           </Box>
         )}
         renderTags={(value, getTagProps) => (
